@@ -1,0 +1,108 @@
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+  <title>Slab Tab</title>
+  <meta name="author" content="Ram Nethaji">
+  <meta name="description" content="Responsive Mobile App Design">
+  <meta name="keywords" content="responsive app, mobile app, inspiration, creative, multipage, ramnethaji">
+  <link rel="canonical" href="">
+  <meta name="theme-color" content="#4473EC">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="img/favicon/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+  <link rel="manifest" href="img/favicon/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
+  <!-- bootstarp.css -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!-- default.css -->
+  <link rel="stylesheet" type="text/css" href="../../assets/css/default.css">
+ 
+</head>
+
+<body class="login-container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+          <a class="navbar-brand" href="#">Slab Tab</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item"><a class="nav-link">Home</a></li>
+                  <li class="nav-item"><a class="nav-link">About</a></li>
+                  <li class="nav-item"><a class="nav-link">Signin</a></li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+  <div class="login-page">
+      <div class="register-card row">
+          <div class="col-md-5 col-sm-6 col-xs-12 left form-box">
+              <h6 class=""><strong>Login</strong></h6>
+              <p>Please enter your e-mail address and password, then click "Login". You should have cookies enabled in your browser for successfull login.</p>
+              <br>
+              <p>Don't have an account?</p>
+              <a href="index.html" class="btn btn-light no-margin">Create New Account</a>
+          </div>
+          <div class="col-md-7 col-sm-6 col-xs-12 right form-box">
+              <br><br>
+              <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+              <div class="form-group">
+                  <input class="form-control" type="email" placeholder="Email" ngModel name='email' required #email = "ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" >
+                  <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                      <div  *ngIf="email.errors && email.errors.pattern">
+                          Email is invalid
+                      </div>
+
+  <div *ngIf="email.errors.required">
+    Email is required.
+  </div>
+     </div></div>
+              <div class="form-group">
+                  <input class="form-control" type="password" placeholder="Password" ngModel name='password' required #pass = "ngModel" minlength="6">
+                  <div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="alert alert-danger" >
+                     
+                      <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
+                          Email is invalid
+                      </div> -->
+
+  <div *ngIf="pass.errors.required">
+    password is required.
+  </div>
+  <div *ngIf="pass.errors.minlength">
+      password should not be less than 6 character.
+    </div>
+   
+    
+     </div> <div [hidden]="err" class="alert alert-danger" >
+        Invalid credentials.Please try again later.
+      </div>
+              </div>
+
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block" [disabled]="!f.valid">Login</button>
+                  <!-- <a href="" class="btn btn-primary btn-block">Login</a> -->
+              </div>
+            </form>
+              <p class="note"><a href="forgot-password.html">Forgot Password?</a></p>
+          </div>
+      </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="../../assets/js/script.js"></script>
