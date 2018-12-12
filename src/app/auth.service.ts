@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpErrorResponse } from '@angular/common/http';
 import { Observable,throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import {ENV} from './core/env.config';
+
+
 
 
 @Injectable({
@@ -25,14 +28,14 @@ export class AuthService {
   }
 
   doLogin(data): Observable<any>{
-    return this.http.post('http://localhost:3002/customer/login',data)
+    return this.http.post(ENV.customer+'/login',data)
 
    
 
   }
 
   doReset(data):Observable<any>{
-    return this.http.post('http://localhost:3002/customer/reset',data).pipe(
+    return this.http.post(ENV.customer+'/reset',data).pipe(
       catchError(err=>this.handleError(err))
 
     );
@@ -40,13 +43,13 @@ export class AuthService {
 
 
   doRegister(data):Observable<any>{
-    return this.http.post('http://localhost:3002/customer/register',data).pipe(
+    return this.http.post(ENV.customer+'/register',data).pipe(
       catchError(err=>this.handleError(err))
 
     );
   }
   doSupplierRegister(data):Observable<any>{
-    return this.http.post('http://localhost:3002/supplier/register',data).pipe(
+    return this.http.post(ENV.supplier+'/register',data).pipe(
       catchError(err=>this.handleError(err))
 
     );
