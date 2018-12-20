@@ -1,0 +1,214 @@
+<div id="page-container">
+  
+  <div class="page-wrapper">
+    <app-navbar></app-navbar>
+    <div class="page-wrapper" *ngIf="!isfirst">
+        <section class="sub-menu">
+            <ul>
+                <li>
+                    <a class="active" (click)="stepSecond()">Order Status</a>
+                </li>
+                <li>
+                    <a (click)="stepThird()">Shipping Details</a>
+                </li>
+            </ul>
+        </section>
+
+
+      </div>
+
+
+
+<div class="page-inner sub-menu-inner">
+  <div class="container" *ngIf="isfirst">
+      <section class="order-table">
+          <h5 class="sub-title">Orders</h5>
+          <div class="table-details orders">
+              <table class="table table-bordered text-center">
+                  <thead>
+                      <tr>
+                          <th scope="col">Order Id</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Date</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <ng-template ngFor let-item [ngForOf]= "order" let-i="index">
+
+                      <tr>
+                          <td><a (click)="getOrderDetail(order)" class="fields">#{{item._id}}</a></td>
+                          <td><a (click)="getOrderDetail(order)" class="fields">{{item.name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                          <td><a (click)="getOrderDetail(order)" class="fields">{{item.created_at}}</a></td>
+                          <td><a (click)="getOrderDetail(order)" class="fields"><span class="badge badge-warning">{{item.cancel_status}}</span></a></td>
+                          <td>
+                              <a href="#" class="btn btn-primary">Edit</a>
+                              <a href="#" class="btn btn-danger">Delete</a>
+                          </td>
+                      </tr>
+                   </ng-template>
+
+                  </tbody>
+              </table>
+          </div>
+      </section>
+  </div>
+  <div class="container" *ngIf="issecond" >
+
+      
+          <section class="shipping-process">
+              <div class="timeline-shipping">
+                  <div class="timeline">
+                      <div class="shipping-content current right" *ngIf="live_status>=1">
+                          <div class="content">
+                              <p>Pending</p>
+                          </div>
+                      </div>
+
+                      <div class="shipping-content done right" *ngIf="live_status<1">
+                            <div class="content">
+                                <p>Pending</p>
+                            </div>
+                        </div>
+
+                      <div class="shipping-content current right" *ngIf="live_status>=2">
+                          <div class="content">
+                              <p>Processing</p>
+                          </div>
+                      </div>
+
+                      <div class="shipping-content done right" *ngIf="live_status<2">
+                            <div class="content">
+                                <p>Processing</p>
+                            </div>
+                        </div>
+
+                      <div class="shipping-content current right" *ngIf="live_status>=3">
+                          <div class="content">
+                              <p>Confirmed</p>
+                          </div>
+                      </div>
+
+                      <div class="shipping-content done right" *ngIf="live_status<3">
+                            <div class="content">
+                                <p>Confirmed</p>
+                            </div>
+                        </div>
+
+                      <div class="shipping-content current right" *ngIf="live_status>=4">
+                          <div class="content">
+                              <p class="sizes">Shipped</p>
+                          </div>
+                      </div>
+
+                      <div class="shipping-content done right" *ngIf="live_status<4">
+                            <div class="content">
+                                <p class="sizes">Shipped</p>
+                            </div>
+                        </div>
+
+                      <div class="shipping-content current right" *ngIf="live_status>=5">
+                          <div class="content">
+                              <p>Arrived</p>
+                          </div>
+                      </div>
+
+                      <div class="shipping-content done  right" *ngIf="live_status<5" >
+                            <div class="content">
+                                <p>Arrived</p>
+                            </div>
+                        </div>
+
+                      <div class="shipping-content current right" *ngIf="live_status>=6">
+                          <div class="content">
+                              <p>Delivered</p>
+                          </div>
+                      </div>
+
+                      <div class="shipping-content right" *ngIf="live_status<6">
+                            <div class="content">
+                                <p>Delivered</p>
+                            </div>
+                        </div>
+
+                  </div>
+              </div>
+          </section>
+      
+
+
+
+
+
+  </div>
+
+
+  <div class="container" *ngIf="isthird">
+
+      <section class="shipping-card-address">
+          <div class="shipping-box">
+              <div class="row">
+                  <div class="col-md-6">
+                      <h4>My Shipping Address</h4>
+                      <p>Mr. Douglas E. Carter (Dear Mr.Carter:)
+                          American Consul General
+                          Department of State
+                          5520 Quebec Place
+                          Washington, DC 20521-5520</p>
+                  </div>
+                  <div class="col-md-6">
+                      <h4>Supplier Shipping Address</h4>
+                      <p>Mr. William J. Bryant (Dear Mr. Bryant:)
+                          American Consul
+                          Department of State
+                          6170 Peshwar Place
+                          Washington, DC 20521-6170</p>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="supplier-verification">
+          <div class="supplier-doc">
+              <h4 class="sub-title">Shipping Document</h4>
+              <div class="documet-box">
+                  <div class="row document-list">
+                      <div class="col-md-6">
+                          <h4>Document Name 1</h4>
+                      </div>
+                      <div class="col-md-6 text-right">
+                          <a href="#" class="btn btn-primary btn-sm">View</a>
+                          <a href="#" class="btn btn-secondary btn-sm">Download</a>
+                      </div>
+                  </div>
+                  <div class="row document-list">
+                      <div class="col-md-6">
+                          <h4>Document Name 2</h4>
+                      </div>
+                      <div class="col-md-6 text-right">
+                          <a href="#" class="btn btn-primary btn-sm">View</a>
+                          <a href="#" class="btn btn-secondary btn-sm">Download</a>
+                      </div>
+                  </div>
+                  <div class="row document-list">
+                      <div class="col-md-6">
+                          <h4>Document Name 3</h4>
+                      </div>
+                      <div class="col-md-6 text-right">
+                          <a href="#" class="btn btn-primary btn-sm">View</a>
+                          <a href="#" class="btn btn-secondary btn-sm">Download</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+
+
+
+
+
+
+  </div>
+
+
+</div>

@@ -1,0 +1,403 @@
+<div id="page-container">
+        <app-sidebar></app-sidebar>
+        <div class="page-wrapper">
+          <app-navbar></app-navbar>
+<div class="page-inner">
+    <div id="smartwizard">
+        <ul class="nav justify-content-center">
+            <li><a href="#step-1">Slab Info<br /></a></li>
+            <li><a href="#step-2">Bundle Info<br /></a></li>
+            <li><a href="#step-3">Images<br /></a></li>
+            <li><a href="#step-4">Addition info<br /></a></li>
+        </ul>
+        <div>
+            <div id="step-1" class="page-content">
+                <form >
+                    <div class="row form-box">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Product</label>
+                                <input type="text" class="form-control" placeholder="Product" [(ngModel)] = "bundle.product_name" name="product_name" required minlength="6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Product Type</label>
+                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.product_type" [ngModelOptions]="{standalone: true}" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Quality</label>
+                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.quality" [ngModelOptions]="{standalone: true}" required>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Price</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Price" [(ngModel)] = "bundle.price" [ngModelOptions]="{standalone: true}" required minlength="6">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">USD</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Color</label>
+                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.color" [ngModelOptions]="{standalone: true}" required>
+                                    <option >#000</option>
+                                    <option>#fff</option>
+                                    <option>#888</option>
+                                    <option>#f0f0f0</option>
+                                    <option>#adb6ff</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#requestNew">
+                                Request For New
+                            </button>
+                            <div class="modal fade" id="requestNew" tabindex="-1" role="dialog" aria-labelledby="requestNewLabel" aria-hidden="true" style="z-index: 9999;">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="requestNewLabel">Request For New Color</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="formGroupExampleInput">Color Name</label>
+                                                        <input type="text" class="form-control" placeholder="Color Name" [(ngModel)]="new_color.name" name = "new_color">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="formGroupExampleInput">Color Code</label>
+                                                        <input type="text" class="form-control" placeholder="Color Code" [(ngModel)]="new_color.code" name = "new_color_code">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" (click)="onDimensionChange()" [disabled]="!f.valid">Save changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-sm-12">
+                            <label for="formGroupExampleInput">Dimension</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Width" [(ngModel)] = "bundle.width" name="width" required minlength="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Height" [(ngModel)] = "bundle.height" name = "height" required minlength="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-primary active" [ngClass]="{'active': unit=='inch'}" (click)="onUnitChange($event)" value="inch" >
+                                            <input type="radio" name="options" ng-control="options" id="option10" autocomplete="off" value="inch" > inch
+                                        </label>
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
+                                            <input type="radio" name="options" ng-control="options" id="option20" autocomplete="off" value="cm" > cm
+                                        </label>
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='m'}">
+                                            <input type="radio" name="options" ng-control="options" id="option30" autocomplete="off" value="m"  > m
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-sm-12">
+                            <label for="formGroupExampleInput">Thickness</label>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Thickness" [(ngModel)] = "bundle.dimension[0].thickness" name="thickness" required minlength="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='inch'}">
+                                            <input type="radio" name="options" id="option1" autocomplete="off" value="inch" checked  (click)="onUnitChange($event)" name="t_inch"> inch
+                                        </label>
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
+                                            <input type="radio" name="options" id="option2" autocomplete="off" value="cm" (click)="onUnitChange($event)" name="t_cm"> cm
+                                        </label>
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='m'}">
+                                            <input type="radio" name="options" id="option3" autocomplete="off" value="m" (click)="onUnitChange($event)" name = "t_m"> m
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Weight</label>
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.weight" name="weight" required minlength="1">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2">LB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="step-2" class="page-content">
+                <form>
+                    <div class="row form-box">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Block Number</label>
+                                <input type="text" class="form-control" placeholder="Block Number" [(ngModel)] = "bundle.bundle_number" name="block_number" required minlength="6">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Slabs</label>
+                                <input class="form-control" type="number" value="5" min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required minlength="1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#editSlabs">
+                                Edit Dimension For Selected Slabs
+                            </button>
+                            <div class="modal fade" id="editSlabs" tabindex="-1" role="dialog" aria-labelledby="editSlabsLabel" aria-hidden="true" style="z-index: 9999;">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editSlabsLabel">Edit Dimension For Slabs</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        
+                                        <form #f = ngForm (ngSubmit)="onDimensionSave(f)" >
+                                        <div class="modal-body">
+                                            
+                                            <div class="row">
+                                                    <ng-template ngFor  [ngForOf]= "createRange(bundle.no_of_slabs)" let-i="index" >
+                                                <div class="col-sm-12" >
+                                                    <label for="formGroupExampleInput">Slab {{i}}</label>
+                                                    <div class="row">
+                                                        <div class="col-md-4" >
+                                                            <div class="form-group">
+                                                                <input  type="text" class="form-control" placeholder="Width" name="dimension[{{i}}]['width']" [(ngModel)]="aray[i]['width']" (keyup)="dimensionKeyUp($event)">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" placeholder="Height" name="dimension[{{i}}]['height']" [(ngModel)]="aray[i]['height']" (keyup)="dimensionKeyUp($event)">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                                <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='inch'}">
+                                                                    <input type="radio" name="options" id="option1" autocomplete="off" checked value="inch" (click)="onUnitChange($event)"> inch
+                                                                </label>
+                                                                <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
+                                                                    <input type="radio" name="options" id="option2" autocomplete="off" value="cm" (click)="onUnitChange($event)"> cm
+                                                                </label>
+                                                                <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='m'}">
+                                                                    <input type="radio" name="options" id="option3" autocomplete="off" value="m" (click)="onUnitChange($event)"> m
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div></ng-template>
+                                             
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                   </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-sm-12">
+                            <label for="formGroupExampleInput">Net Square Feet</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" [(ngModel)] = "bundle.net_area" name = "net_area" required minlength="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="#" class="btn btn-light no-margin edit-btn">Edit</a>
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='inch'}">
+                                            <input type="radio" name="options" id="option1" autocomplete="off" value="inch" checked (click)="onUnitChange($event)" > inch
+                                        </label>
+                                        <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
+                                            <input type="radio" name="options" id="option2" autocomplete="off" value="cm" (click)="onUnitChange($event)"> cm
+                                        </label>
+                                        <label class="btn btn-primary" (click)="onUnitChange($event) " [ngClass]="{'active': unit=='m'}">
+                                            <input type="radio" name="options" id="option3" autocomplete="off" value="m" (click)="onUnitChange($event)"> m
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-box">
+                        <div class="col-sm-12">
+                            <label for="formGroupExampleInput">Net Weight</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" [(ngModel)] = "bundle.net_weight" name = "net_weight" required minlength="1">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="#" class="btn btn-light no-margin edit-btn">Edit</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="step-3" class="page-content">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="prev-img-blk-outer">
+                            <div class="prev-img-blk">
+                                <div class="img_outer" id="prev_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Preview+Image);">
+                                </div>
+                                <div class="fileUpload up-btn prev-up-btn">
+                                    <input type="file" name="image[0]" id="prev_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12 form-box">
+                                <h6 class="mb-2"><strong>Instruction</strong></h6>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-1 mt-3">
+                        <p><strong>Other Images</strong></p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="other-img-blk-outer">
+                            <div class="other-img-blk">
+                                <div class="img_outer" id="other_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                                </div>
+                                <div class="fileUpload up-btn other-up-btn">
+                                    <input type="file" name="image[0]" id="other_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="other-img-blk-outer">
+                            <div class="other-img-blk">
+                                <div class="img_outer" id="other2_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                                </div>
+                                <div class="fileUpload up-btn other-up-btn">
+                                    <input type="file" name="image[0]" id="other2_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="other-img-blk-outer">
+                            <div class="other-img-blk">
+                                <div class="img_outer" id="other3_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                                </div>
+                                <div class="fileUpload up-btn other-up-btn">
+                                    <input type="file" name="image[0]" id="other3_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="other-img-blk-outer">
+                            <div class="other-img-blk">
+                                <div class="img_outer" id="other4_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                                </div>
+                                <div class="fileUpload up-btn other-up-btn">
+                                    <input type="file" name="image[0]" id="other4_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="step-4" class="page-content">
+                <form>
+                    <div class="row padding">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Product Description</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onProductDescriptionChange($event)" name="product_description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Bundle Description</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onBundleDescriptionChange($event)" name = "bundle_description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Inspection Report</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onInspectionReportChange($event)" name="inspection_report"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="onCreateBundle()">Create Bundle</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>

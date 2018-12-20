@@ -1,0 +1,127 @@
+<div id="page-container">
+  <app-sidebar></app-sidebar>
+  <div class="page-wrapper">
+    <app-navbar></app-navbar>
+    <div class="page-inner sub-menu-inner">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-3">
+                  <div class="scheme-block mb-5">
+                      <div class="scheme-view">
+                          <div class="scheme-icon">
+                              <i class="fas fa-dollar-sign"></i>
+                          </div>
+                          <div class="scheme-title">
+                              <h4>{{count.total_sales}}</h4>
+                              <p>Total Sales</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="scheme-block mb-5">
+                      <div class="scheme-view">
+                          <div class="scheme-icon">
+                              <i class="fas fa-users"></i>
+                          </div>
+                          <div class="scheme-title">
+                              <h4>{{count.customer_count}}</h4>
+                              <p>Total Customers</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="scheme-block mb-5">
+                      <div class="scheme-view">
+                          <div class="scheme-icon">
+                              <i class="fas fa-briefcase"></i>
+                          </div>
+                          <div class="scheme-title">
+                              <h4>{{count.supplier_count}}</h4>
+                              <p>Total Suppliers</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <div class="scheme-block mb-5">
+                      <div class="scheme-view">
+                          <div class="scheme-icon">
+                              <i class="fas fa-chart-bar"></i>
+                          </div>
+                          <div class="scheme-title">
+                              <h4>{{count.day_to_day_sales}}</h4>
+                              <p>Day to Day Sales Report</p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6 col-xs-12">
+                  <section class="dashboard order-table sm">
+                      <h5 class="sub-title mb-4">Pending Orders</h5>
+                      <div class="table-details orders">
+                          <table class="table data-table table-bordered text-center">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Order Id</th>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Date</th>
+                                      <th scope="col">Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <ng-template ngFor let-order [ngForOf]= "pendingOrder" let-i="index" >
+                                  <tr>
+                                      <td><a href="order-status.html" class="fields">#{{order._id}}</a></td>
+                                      <!-- {{pendingorder.user}} -->
+                                      <td><a href="order-status.html" class="fields">{{order.name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                                      <td><a href="order-status.html" class="fields">{{order.created_at}}</a></td>
+                                      <td>
+                                          <a class="btn btn-primary" (click)="approveOrder(order._id)">Accept</a>
+                                          <a class="btn btn-danger" (click)="rejectOrder(order._id)">Reject</a>
+                                      </td>
+                                  </tr></ng-template>
+                                 
+                              </tbody>
+                          </table>
+                      </div>
+                  </section>
+              </div>
+
+              <div class="col-md-6 col-xs-12">
+                  <section class="dashboard order-table sm">
+                      <h5 class="sub-title mb-4">Approved Orders</h5>
+                      <div class="table-details orders">
+                          <table class="table data-table table-bordered text-center">
+                              <thead>
+                                  <tr>
+                                      <th scope="col">Order Id</th>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Date</th>
+                                      <th scope="col">Action</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <ng-template ngFor let-approveorder [ngForOf]= "approvedOrder" let-i="index" >
+                                  <tr>
+                                      <td><a href="order-status.html" class="fields">#{{approveorder._id}}</a></td>
+                                      <td><a href="order-status.html" class="fields">{{approveorder.name}}<span class="flag-icon flag-icon-us"></span></a></td>
+                                      <td><a href="order-status.html" class="fields">{{approveorder.created_at}}</a></td>
+                                      <td>
+                                          <a class="btn btn-primary" (click)="approveOrder(order._id)">Accept</a>
+                                          <a class="btn btn-danger" (click)="rejectOrder(order._id)">Reject</a>
+                                      </td>
+                                  </tr>
+                                </ng-template>
+                              </tbody>
+                          </table>
+                      </div>
+                  </section>
+              </div>
+
+          </div>
+      </div>
+  </div>

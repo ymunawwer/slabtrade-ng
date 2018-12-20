@@ -1,0 +1,464 @@
+<head>
+    <title>Slab Tab</title>
+    <!-- bootstrap.css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!-- default.css -->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/user/default.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/user/jquery.exzoom.css">
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/default.css">
+</head>
+
+<nav class="top-nav navbar navbar-expand-md navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">SLAB TAB</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Slab</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Help</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i data-feather="shopping-cart"></i><span class="badge badge-light">4</span></a>
+                </li>
+            </ul>
+        </div></div>
+</nav>
+<section class="img-slider" *ngIf = "!isitemclicked"> 
+   
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="img-slider" style="background-image: url(img/20.jpg);" >
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="img-slider" style="background-image: url(img/21.jpg);">
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="img-slider" style="background-image: url(img/a10.jpg);">
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+
+</section>
+
+
+      <section class="card-overlay">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-3 left-card" *ngIf = "!isitemclicked">
+                      <div class="inner-bar">
+                          <div class="side-bar">
+                              <div class="input-group mb-3">
+                                  <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" (keydown)="searchByColor($event)">
+                                  <div class="input-group-append">
+                                      <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                                  </div>
+                              </div>
+                              <label class="box">One
+                                  <input type="checkbox" checked="checked">
+                                  <span class="checkmark"></span>
+                              </label>
+                              <label class="box">Two
+                                  <input type="checkbox">
+                                  <span class="checkmark"></span>
+                              </label>
+                              <label class="box">Three
+                                  <input type="checkbox">
+                                  <span class="checkmark"></span>
+                              </label>
+                              <label class="box">Four
+                                  <input type="checkbox">
+                                  <span class="checkmark"></span>
+                              </label>
+                          </div>
+                          <div class="inner-bar">
+                              <div class="side-bar">
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2" (keydown)="searchByName($event)">
+                                      <div class="input-group-append">
+                                          <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                                      </div>
+                                  </div>
+                                  <label class="box">One
+                                      <input type="checkbox" checked="checked">
+                                      <span class="checkmark"></span>
+                                  </label>
+                                  <label class="box">Two
+                                      <input type="checkbox">
+                                      <span class="checkmark"></span>
+                                  </label>
+                                  <label class="box">Three
+                                      <input type="checkbox">
+                                      <span class="checkmark"></span>
+                                  </label>
+                                  <label class="box">Four
+                                      <input type="checkbox">
+                                      <span class="checkmark"></span>
+                                  </label>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-9 right-card">
+                    <div [hidden]="isitemclicked || issearched"> 
+                    <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
+                      <div class="outer-bar">
+                        <div class="row link-button">
+                          <div class="col-md-12">
+                              <h2>{{item._id}}</h2>
+                             <a href="billing-info.html" class="btn btn-secondary ml-auto">View More</a>
+                         </div>
+                       </div>
+                       <div class="row">
+                       <ng-template ngFor let-doc [ngForOf]= "item.docs" let-i="index" >
+                       
+                          
+                              <div class="col-md-4">
+                                  <div class="card-img-header">
+                                      <div class="bg-img">
+                                          <a>
+                                <div class="card-img" style="background-image: url({{doc.images[0]===undefined?noImage:doc.images[0].path}});" >
+                                </div>
+                                <h4>{{doc.product_name}}</h4>
+                                <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
+                                <span class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
+                               
+                                   <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
+                                </a>
+                                      </div>
+                                  </div>
+                              </div></ng-template>
+                            </div>
+                            
+
+                          </div>
+                     
+                    </ng-template>
+                    
+                    
+                    </div>
+
+                    <div *ngIf="issearched">
+                        <div class="row">
+                        <ng-template ngFor let-docsearch [ngForOf]= "items" let-i="index" >
+                            <div class="col-md-4" >
+                                <div class="card-img-header">
+                                    <div class="bg-img">
+                                        <a>
+                              <div class="card-img" style="background-image: url({{docsearch.images[0]===undefined?noImage:docsearch.images[0].path}});" >
+                              </div>
+                              <h4>{{docsearch.product_name}}</h4>
+                              <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
+                              <span class="price">{{docsearch.price===undefined?'':'$'+docsearch.price}}</span>
+                             
+                                 <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(docsearch)'>View Details</button>
+                              </a>
+                                    </div>
+                                </div>
+                            </div>
+                                       
+                         
+                          </ng-template> 
+                    </div>
+                      </div>
+                  
+                  
+                  
+                  </div></div>
+
+
+
+
+
+
+                    <!-- search result -->
+                
+   </div>                
+      </section>
+     
+      <script type="text/javascript">
+      feather.replace()
+      </script>
+      <!-- bootstrap-carousel -->
+      <script type="text/javascript">
+      $('.carousel').carousel()
+      </script>
+
+
+
+<div *ngIf="isitemclicked" #top id = "top">
+
+    <div class="zoom-carousel">
+        <div class="container">
+            <div class="carousel-bg-white">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="exzoom" id="exzoom">
+                            <!-- Images -->
+                            <div class="exzoom_img_box">
+                                <ul class='exzoom_img_ul'>
+                                    <li><img src="img/s1.jpg"/></li>
+                                    <li><img src="img/s2.jpg"/></li>
+                                    <li><img src="img/s3.jpg"/></li>
+                                    <li><img src="img/s4.jpg"/></li>
+                                    <li><img src="img/s5.jpg"/></li>
+                                </ul>
+                            </div>
+                            <!-- <a href="https://www.jqueryscript.net/tags.php?/Thumbnail/">Thumbnail</a> Nav-->
+                            <div class="exzoom_nav"></div>
+                            <!-- Nav Buttons -->
+                            <p class="exzoom_btn">
+                                <a href="javascript:void(0);" class="exzoom_prev_btn">  </a>
+                                <a href="javascript:void(0);" class="exzoom_next_btn"> > </a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 right-box-shaddow">
+                        <div class="right-description">
+                            <h4 class="bundle-header">Bundle Block No:#{{doc.bundle_number}}</h4>
+                            <table class="table-description">
+                                <tbody>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Type : </td>
+                                        <td class="table-option1 col col-md-4">
+                                            <ul>
+                                                <li class="item">{{doc.product_type}} </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Color :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{doc.color}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Price</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{doc.price}} </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Bundle Count :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{doc.no_of_slabs}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Net Weight :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{doc.net_weight}}kg</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Gross Weight :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">400kg</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="range row">
+                                <div class="col-md-8 form-box">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Slabs</label>
+                                        <input class="form-control" type="number" value="5" min="0" max="6" step="1" [(ngModel)] = "number">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">{{6-number}} Remaining</label>
+                                        <div class="fill-container">
+                                            <span class="fill gray"[hidden] = "number>=1" ></span>
+                                            <span class="fill red" [hidden] = "number<1"></span>
+                                            <span class="fill gray" [hidden] = "number>=2"></span>
+                                            <span class="fill red" [hidden] = "number<2"></span>
+                                            <span class="fill gray" [hidden] = "number>=3"></span>
+                                            <span class="fill red" [hidden] = "number<3"></span>
+                                            <span class="fill gray"[hidden] = "number>=4" ></span>
+                                            <span class="fill red" [hidden] = "number<4"></span>
+                                            <span class="fill gray" [hidden] = "number>=5"></span>
+                                            <span class="fill red" [hidden] = "number<5"></span>
+                                            <span class="fill gray" [hidden] = "number>=6"></span>
+                                            <span class="fill red" [hidden] = "number<6"></span>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a  class="btn btn-secondary" (click)="toCart(doc,number)">Add To Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+
+            <div class="outer-bar">
+                <div class="row link-button">
+                    <div class="col-md-12">
+                        <h2>slab type </h2>
+                        <a href="billing-info.html" class="btn btn-secondary ml-auto">View More</a>
+                    </div>
+                </div>
+                <div class="row">
+                        <!-- <ng-template ngFor let-doc1 [ngForOf]= "similarproduct" let-i="index" >
+                            
+                                <div class="col-md-3">
+                                    <div class="card-img-header">
+                                        <div class="bg-img">
+                                            <a>
+                                                            <div class="card-img" style="background-image: url(img/a2.jpg);">
+                                                            </div>
+                                                            <h4>{{doc1.product_name}}</h4> -->
+
+
+                                                            <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
+                                        
+                                        
+                                                            <!-- <span class="price">{{doc1.price===undefined?'':'$'+doc1.price}}</span>
+                                                       
+                                                           <button  type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc1)'>View Details</button>
+                                                        </a>
+                                        </div>
+                                    </div>
+                                </div></ng-template> -->
+                    
+                  
+                  
+                </div></div>
+        </div>
+    </div>
+    
+    <!-- bootstrap.js -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <!-- feather-icon -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <!-- zoom-carousel.js -->
+    <!-- <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjsHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous"></script>
+    <script src="../../assets/js/jquery.exzoom.js">
+    </script>
+    <script src="../../../assets/js/InputSpinner.js"></script>
+    <script src="../../../assets/js/script.js"></script>
+    <script src="../../../assets/js/script1.js"></script> -->
+    <script type="text/javascript">
+    feather.replace()
+    </script>
+    <!-- bootstrap-carousel -->
+    <script type="text/javascript">
+    $('.carousel').carousel()
+    </script>
+    <!-- zoom-carousel -->
+    <script type="text/javascript">
+    $(function() {
+        $("#exzoom").exzoom({
+            // options here
+        });
+    });
+    </script>
+
+
+
+
+
+
+
+</div>
+
+
+    
+
+
+
+
+<!-- footer -->
+
+
+<div class="footer">
+    <div class="container">
+        <div class="row row-col">
+            <div class="col-md-3">
+                <h1 class="footer-title">Slab Tab</h1>
+                <p>Lorem Ipsum, giving information on its origins, Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins.</p>
+            </div>
+            <div class="col-md-3">
+                <h5>Company</h5>
+                <ul class="company-links">
+                    <li><a class="about-company" href="#">Help</a></li>
+                    <li><a class="about-company" href="#">Careers</a></li>
+                    <li><a class="about-company" href="#">News</a></li>
+                    <li><a class="about-company" href="#">Insurance</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>About</h5>
+                <ul class="company-links">
+                    <li><a class="about-company" href="#">Help</a></li>
+                    <li><a class="about-company" href="#">Careers</a></li>
+                    <li><a class="about-company" href="#">News</a></li>
+                    <li><a class="about-company" href="#">Insurance</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h5>Company</h5>
+                <ul class="company-links">
+                    <li><a class="about-company" href="#">Help</a></li>
+                    <li><a class="about-company" href="#">Careers</a></li>
+                    <li><a class="about-company" href="#">News</a></li>
+                    <li><a class="about-company" href="#">Insurance</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p class="company-links">&copy 2018 Slab Tab</p>
+          </div>
+        </div>
+    </div>
+</div>
+
+                
+
+
+

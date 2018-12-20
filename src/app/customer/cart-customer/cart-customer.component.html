@@ -1,0 +1,414 @@
+<div id="page-container">
+    
+    <div class="page-wrapper">
+      <app-navbar></app-navbar>
+
+
+    <div class="page-content">
+        <div class="shop-cart" *ngIf="!is_check_out">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="fill-container lg">
+                            <span class="fill green"></span>
+                            <span class="fill green"></span>
+                            <span class="fill red"></span>
+                            <span class="fill red"></span>
+                            <span class="fill yellow"></span>
+                            <span class="fill yellow"></span>
+                            <span class="fill gray"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-12 form-box">
+                                <h5 class="mb-3"><strong>Instruction</strong></h5>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered table-content">
+                    <thead>
+                        <tr>
+                            <th rowspan="2">Name</th>
+                            <th colspan="3" class="text-center">Info</th>
+                            <th rowspan="2">Quantity</th>
+                            <th rowspan="2">Total</th>
+                            <th rowspan="2"></th>
+                        </tr>
+                        <tr>
+                            <th>Sqft</th>
+                            <th>Thickness</th>
+                            <th>Dimension</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            <ng-template ngFor let-item [ngForOf]= "cart_item" let-i="index">
+                        <tr>
+                            <td>{{item.bundle_name}}</td>
+                            <td>{{item.net_area}}</td>
+                            <td>{{item.thickness}}</td>
+                            <td>{{item.Dimension[0].width}}X{{item.Dimension[0].height}}</td>
+                            <td>{{item.quantity}}</td>
+                            <td>${{(item.total===undefined?0:item.total)}}</td>
+                            <td class="text-center" (click)="remove(i)"><a class="remove">Remove</a></td>
+                        </tr></ng-template>
+                       
+                        <tr>
+                            <td colspan="4">Tax</td>
+                            <td>{{tax}}</td>
+                            <td colspan="2">${{tax}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Shipping</td>
+                            <td>-</td>
+                            <td colspan="2">${{shipping}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4">Total</th>
+                            <th>{{total_item}}</th>
+                            <th colspan="2">${{total}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4">Amount</th>
+                            <th></th>
+                            <th colspan="2">${{total}}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="cart-button">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a (click)="clearCart()" class="btn btn-primary" [class.disabled]   ="iscartempty">Clear Container</a>
+                        </div>
+                        <div class="col-md-8 text-right">
+                            <a href="/" class="btn btn-outline-primary">Continue shopping</a>
+                            <a class="btn btn-primary" [class.disabled]   ="iscartempty" (click)="confirmToCheckOut()">Confirm To checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="is_check_out">
+
+
+
+
+                    
+                        
+                        <div class="billing-form">
+                            <div class="container">
+                                <div class="billing-bar">
+                                    <div class="header-bar row mb-5">
+                                        <div class="col-md-12">
+                                            <h2>Edit billing address</h2>
+                                            <a href="#" class="btn btn-secondary ml-auto">Add New address</a>
+                                        </div>
+                                    </div>
+                                    <div class="row billing-box">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 right form-box">
+                                        <form #f="ngForm" (ngSubmit)="shippingDetail(f)">    <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="First Name" required minlength="4" name = "first_name" #first="ngModel" [(ngModel)]="user.first_name">
+                                                        <div *ngIf="first.invalid && (first.dirty || first.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="first.errors && first.errors.minlength">
+                                                                    Atleast 4 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="first.errors.required">
+                                              First name is required.
+                                            </div>
+                                               </div>
+                                                 </div></div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Last Name" required minlength="4" name = "last_name" #last="ngModel" [(ngModel)]="user.last_name">
+                                                        <div *ngIf="last.invalid && (last.dirty || last.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="last.errors && last.errors.minlength">
+                                                                    Atleast 4 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="last.errors.required">
+                                             Last name is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="contact" required minlength="10" name = "contact" #contact="ngModel" [(ngModel)]="user.contact">
+                                                        <div *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="contact.errors && contact.errors.minlength">
+                                                                    Atleast 10 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="contact.errors.required">
+                                            contact is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p><strong>Address1</strong></p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Street" required #addr1="ngModel" name = "address1_street" [(ngModel)]="user.address1_street"> 
+                                                        <div *ngIf="addr1.invalid && (addr1.dirty || addr1.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="addr1.errors && addr1.errors.minlength">
+                                                                    Atleast 10 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="addr1.errors.required">
+                                            Address is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="City" required minlength="3" name = "address1_city" #city="ngModel" [(ngModel)]="user.address1_city">
+                                                        <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="city.errors && city.errors.minlength">
+                                                                    Atleast 3 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="city.errors.required">
+                                            City is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="State" name = "address1_state" required minlength="3" #state1="ngModel" [(ngModel)]="user.address1_state">
+                                                        <div *ngIf="state1.invalid && (state1.dirty || state1.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="state1.errors && state1.errors.minlength">
+                                                                    Atleast 3 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="state1.errors.required">
+                                            State is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Country" name = "address1_country" required minlength="3" #country="ngModel" [(ngModel)]="user.address1_country">
+                                                        <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="country.errors && country.errors.minlength">
+                                                                    Atleast 3 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="country.errors.required">
+                                            Country is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Zip" name = "address1_zip" required minlength="6" #zip="ngModel" [(ngModel)]="user.address1_zip">
+                                                        <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="zip.errors && zip.errors.minlength">
+                                                                    Atleast 10 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="zip.errors.required">
+                                            Zip is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p><strong>Address2</strong></p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Street" name = "address2_street" [(ngModel)]="user.address2_street">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="City" name = "address2_city" [(ngModel)]="user.address2_city">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="State" name = "address2_state" [(ngModel)]="user.address2_state">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Country" name = "address2_country" [(ngModel)]="user.address2_country">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <input class="form-control" type="text" placeholder="Zip" name = "address2_zip" required minlength="6" #zip2="ngModel" [(ngModel)]="user.address2_zip">
+                                                        <div *ngIf="zip2.invalid && (zip2.dirty || zip2.touched)" class="alert alert-danger">
+                                                                <div  *ngIf="zip2.errors && zip2.errors.minlength">
+                                                                    Atleast 10 Digit.
+                                                                </div>
+                                          
+                                            <div *ngIf="zip2.errors.required">
+                                            contact is required.
+                                            </div>
+                                               </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p><strong>Port</strong></p>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <select class="form-control" name = "port" ngModel >
+                                                            <option selected>Port</option>
+                                                            <option>22</option>
+                                                            <option>33</option>
+                                                            <option>43</option>
+                                                            <option>55</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <p><strong>Un Load Faculty</strong></p>
+                                                </div>
+                                                <div class="col-md-4 form-check-inline">
+                                                    <label class="radio-button">Yes
+                                                        <input type="radio" name="radio" ngModel>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <label class="radio-button">No
+                                                        <input type="radio" name="radio" ngModel>
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-12"><br></div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-primary btn-block click-button" [disabled]="!f.valid" value="Confirm Check Out">
+                                                    </div>
+                                                </div>
+                                            </div></form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer">
+                            <div class="container">
+                                <div class="row row-col">
+                                    <div class="col-md-4">
+                                        <h1 class="footer-title">Slab Tab</h1>
+                                        <p>Reference site about Lorem Ipsum, giving information on its origins.</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5>Company</h5>
+                                        <ul class="company-links">
+                                            <li><a class="about-company" href="#">Help</a></li>
+                                            <li><a class="about-company" href="#">Careers</a></li>
+                                            <li><a class="about-company" href="#">News</a></li>
+                                            <li><a class="about-company" href="#">Insurance</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h5>About</h5>
+                                        <ul class="company-links">
+                                            <li><a class="about-company" href="#">Help</a></li>
+                                            <li><a class="about-company" href="#">Careers</a></li>
+                                            <li><a class="about-company" href="#">News</a></li>
+                                            <li><a class="about-company" href="#">Insurance</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <p class="company-links">&copy 2018 Slab Tab</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- bootstrap.js -->
+                      
+                        <script type="text/javascript">
+                        feather.replace()
+                        </script>
+                        <!-- bootstrap-carousel -->
+                        <script type="text/javascript">
+                        $('.carousel').carousel()
+                        </script>
+                        <!-- zoom-carousel -->
+                        <script type="text/javascript">
+                        $(function() {
+                            $("#exzoom").exzoom({
+                                // options here
+                            });
+                        });
+                        </script>
+                  
+                    
+
+
+
+        </div>
+
+
+    </div>
+    <div class="footer">
+        <div class="container">
+            <div class="row row-col">
+                <div class="col-md-4">
+                    <h1 class="footer-title">Slab Tab</h1>
+                    <p>Reference site about Lorem Ipsum, giving information on its origins.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Company</h5>
+                    <ul class="company-links">
+                        <li><a class="about-company" href="#">Help</a></li>
+                        <li><a class="about-company" href="#">Careers</a></li>
+                        <li><a class="about-company" href="#">News</a></li>
+                        <li><a class="about-company" href="#">Insurance</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>About</h5>
+                    <ul class="company-links">
+                        <li><a class="about-company" href="#">Help</a></li>
+                        <li><a class="about-company" href="#">Careers</a></li>
+                        <li><a class="about-company" href="#">News</a></li>
+                        <li><a class="about-company" href="#">Insurance</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="company-links">&copy 2018 Slab Tab</p>
+                </div>
+            </div>
+        </div>
+        </div>
+     
+        <script type="text/javascript">
+        feather.replace()
+        </script>
+        <!-- bootstrap-carousel -->
+        <script type="text/javascript">
+        $('.carousel').carousel()
+        </script>
+        <!-- zoom-carousel -->
+        <script type="text/javascript">
+        $(function() {
+            $("#exzoom").exzoom({
+                // options here
+            });
+        });
+        </script>
+

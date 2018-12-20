@@ -11,7 +11,7 @@ import {ENV} from './core/env.config';
   providedIn: 'root'
 })
 export class AuthService {
-
+  token;
   constructor(private http:HttpClient) { }
 
   private handleError(error: HttpErrorResponse) {
@@ -53,6 +53,44 @@ export class AuthService {
       catchError(err=>this.handleError(err))
 
     );
+  }
+
+  getToken(){
+    this.token = sessionStorage.getItem('currentUser');
+    if(this.token){
+   
+   this.token = JSON.parse(this.token);
+   
+   return this.token.token;
+    }
+    return false
+  }
+  getUser(){
+    this.token = sessionStorage.getItem('currentUser');
+    if(this.token){
+    
+    this.token = JSON.parse(this.token);
+    console.log(this.token.user_detail.user_detail)
+    return this.token.user_detail.user_detail;
+    }
+    return false
+
+  }
+
+  isAuthenticated(){
+    this.token = sessionStorage.getItem('currentUser');
+    this.token = JSON.parse(this.token);
+    console.log(this.token)
+    if(this.token){
+    return this.token.token != null;
+    }else{
+      return false;
+    }
+  }
+
+  logOut(){
+    sessionStorage.removeItem('currentUser');
+
   }
 
 

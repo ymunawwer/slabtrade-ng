@@ -1,9 +1,9 @@
-const nodeApi = 'http://localhost:3002/';
+const nodeApi = 'http://localhost:3000';
 export const ENV = {
-
-customer:  nodeApi + 'customer',
-supplier:  nodeApi + 'supplier',
-admin: nodeApi + 'admin',
+server:nodeApi,
+customer:  nodeApi + '/customer',
+supplier:  nodeApi + '/supplier',
+admin: nodeApi + '/admin',
 
 
 

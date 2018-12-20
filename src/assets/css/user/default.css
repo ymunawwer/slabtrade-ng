@@ -823,6 +823,9 @@ h6.mb-2 {
     padding: 0.2em;
 
 }
+.fill_red{
+    background-color: red;
+    }
 
 .fill-container span {
     height: 2em;
