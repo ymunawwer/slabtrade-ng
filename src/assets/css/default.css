@@ -442,7 +442,7 @@ img {
 }
 
 .input-group-text {
-    font-size: 0.6em;
+    font-size: 0.6em!important;
     height: 3.3em;
     font-weight: bold;
     border-radius: 0 !important;
@@ -563,7 +563,7 @@ img {
 }
 
 .btn-primary {
-    color: #fff;
+    color: #fff!important;
     font-size: 0.8em;
     /*margin-right: 1em;*/
     border: 1px solid transparent;
@@ -582,7 +582,7 @@ img {
 }
 
 .btn-secondary {
-    color: #fff;
+    color: #fff!important;
     font-size: 0.8em;
     /*margin-right: 1em;*/
     border: 1px solid transparent;
@@ -918,6 +918,7 @@ img {
 .sub-menu ul li a:active,
 .sub-menu ul li a.active {
     background-color: #eff3f6;
+    cursor: pointer;
 }
 
 .page-inner.sub-menu-inner {
@@ -951,6 +952,7 @@ img {
     font-weight: 400;
     color: #000;
     text-decoration: none;
+    cursor: pointer;
 
 }
 

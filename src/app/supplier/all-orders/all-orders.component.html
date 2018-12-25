@@ -1,14 +1,14 @@
-<div id="page-container">
+<div >
         <app-sidebar></app-sidebar>
-        <div class="page-wrapper">
+        <div>
           <app-navbar></app-navbar>
 
-<div id="page-container" >
-        <div class="page-wrapper" *ngIf="isOrderClicked">
+<div class="page-inner sub-menu-inner">
+        <div *ngIf="isOrderClicked">
    <section class="sub-menu">
         <ul>
             <li>
-                <a  (click)="orderDetailTab()">Order Details</a>
+                <a class="active" (click)="orderDetailTab()">Order Details</a>
             </li>
             <li>
                 <a  (click)="purchaseOrderTab()">Purchase Order</a>
@@ -17,12 +17,12 @@
                 <a (click)="paymentDetailTab()">Payment Details</a>
             </li>
             <li>
-                <a class="active" (click)="shippingDetailUploadTab()">Upload</a>
+                <a (click)="shippingDetailUploadTab()">Upload</a>
             </li>
         </ul>
     </section></div>
-<div class="page-inner sub-menu-inner">
-    <div class="container">
+<div >
+    <div class = "container">
         <section class="order-table" *ngIf="isorderlist">
             <div class="table-details orders text-center">
                 <table class="table table-bordered">
@@ -41,7 +41,7 @@
                             <td><a (click)="orderDetail(order)" class="fields">#{{order._id}}</a></td>
                             <td><a (click)="orderDetail(order)" class="fields">{{name[i]}} <span class="flag-icon flag-icon-us"></span></a></td>
                             <td><a (click)="orderDetail(order)" class="fields">"{{order.created_at}}"</a></td> 
-                            <td><a (click)="orderDetail(order)" class="fields"><span class="badge badge-warning">{{order.status}}</span></a></td>
+                            <td><a (click)="orderDetail(order)" class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
                             <td>
                                 <a href="#" class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-danger">Delete</a>
@@ -56,8 +56,8 @@
 
 
      
-            <div class="page-inner sub-menu-inner">
-                <div class="container">
+            <div >
+                <div >
                     <section class="order-table">
                         <div class="table-details">
                             <table class="table table-bordered table-content">
@@ -126,8 +126,8 @@
      
 
 
-        <div class="page-inner sub-menu-inner">
-            <div class="container">
+        <div >
+            <div >
                 <section class="purchase-detail">
                     <div class="purchase-doc">
                         <div class="row">
@@ -173,8 +173,8 @@
 
     <div *ngIf="ispaymentdetails">
       
-        <div class="page-inner sub-menu-inner">
-            <div class="container">
+        <div >
+            <div >
                 <section class="supplier-status">
                     <div class="supplier-details">
                         <div class="row">
@@ -243,8 +243,8 @@
 
 
 
-        <div class="page-inner sub-menu-inner">
-            <div class="container">
+        <div >
+            <div >
                 <div class="page-content">
                     <div class="row">
                         <div class="col-md-4">

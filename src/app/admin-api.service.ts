@@ -30,25 +30,27 @@ export class AdminApiService {
   getCount():Observable<any>{
     let token = this.auth.getToken();
 
-    return this.http.get(ENV.admin + '/customer/count',{headers:{'Auth':'Bearer ' + token,'role':'admin'}}).pipe(
+    return this.http.get(ENV.admin + '/customer/count',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
       catchError(err=>this.handleError(err))
 
     );
   }
 
   getOrdes():Observable<any>{
-    let token = this.auth.getToken();
+    
 
-    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':'admin'}}).pipe(
-      catchError(err=>this.handleError(err))
+  let token = this.auth.getToken();
 
-    );
+
+    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
+
+    
   }
 
   getUser():Observable<any>{
     let token = this.auth.getToken();
 
-    return this.http.get(ENV.admin + '/confirmuser/list',{headers:{'Auth':'Bearer ' + token,'role':'admin'}}).pipe(
+    return this.http.get(ENV.admin + '/confirmuser/list',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
       catchError(err=>this.handleError(err))
 
     );
@@ -58,7 +60,7 @@ export class AdminApiService {
   getPort():Observable<any>{
     let token = this.auth.getToken();
 
-    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':'admin'}}).pipe(
+    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
       catchError(err=>this.handleError(err))
 
     );
@@ -67,7 +69,7 @@ export class AdminApiService {
 
     let token = this.auth.getToken();
 
-    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':'admin'}}).pipe(
+    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
       catchError(err=>this.handleError(err))
 
     );
@@ -75,6 +77,99 @@ export class AdminApiService {
 
 
   }
+
+  addPort(data):Observable<any>{
+    let token = this.auth.getToken();
+
+    return this.http.post(ENV.admin + '/port/add',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
+
+ 
+
+
+  }
+
+
+  removePort(id):Observable<any>{
+    let token = this.auth.getToken();
+    let data = {
+      "port_id":id
+    }
+
+    return this.http.post(ENV.admin + '/port/remove',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
+
+ 
+
+
+  }
+
+  // /order/orderstatus
+
+  updateStatus(id,status):Observable<any>{
+    let token = this.auth.getToken();
+    let data = {
+      '_id':id,
+      'status':status
+    }
+    return this.http.post(ENV.admin + '/order/orderstatus',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}} )
+
+  }
+
+  getPortByCountry(country):Observable<any>{
+    let token = this.auth.getToken();
+
+    return this.http.get(ENV.admin + '/port/getportbycountry?country='+country,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+      catchError(err=>this.handleError(err))
+
+    );
+  }
+
+// getproductdetail
+getProductDetail(bundel_number):Observable<any>{
+
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.admin + '/user/getproductdetail?bundle_number='+bundel_number,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+
+
+}
+
+onUserApproval(email){
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.admin + '/confirmuser/approve?id='+email,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+
+}
+
+onRegisterUserCancel(email){
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.admin + '/confirmuser/reject?id='+email,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+
+}
+
+onTypeUpdate(email,type){
+
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.admin + '/confirmuser/typeupdate?id='+email+'&type='+type,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+}
+
 
 
 

@@ -8,6 +8,11 @@ import { NodeapiService } from '../../nodeapi.service';
 })
 export class OrderComponent implements OnInit {
   order:any;
+  street:String;
+  city:String;
+  state:String;
+  country:String;
+  zip:number;
   orderDetail:any;
   isfirst:boolean;
   issecond:boolean;
@@ -63,12 +68,18 @@ export class OrderComponent implements OnInit {
 
 
   getOrderDetail(doc){
+    
     this.stepSecond();
-    console.log(doc)
-    this.node.getOrderByCustomer(doc[0]._id).subscribe((res)=>{
+    console.log('order',doc)
+    this.node.getOrderByCustomer(doc._id).subscribe((res)=>{
       if(res['error_code']===200){
+        
+        this.street = doc['shipping_Addr'][0]['street']
+        this.city = doc['shipping_Addr'][0]['city']
+        this.state = doc['shipping_Addr'][0]['state']
+        this.country = doc['shipping_Addr'][0]['country']
+        this.zip = doc['shipping_Addr'][0]['zip']
 
-        console.log(res)
         this.status = res['data']['cancel_status']
         if(this.status==='Pending'){
           this.live_status=1

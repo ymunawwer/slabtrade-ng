@@ -39,17 +39,21 @@ export class HomeComponent implements OnInit {
   getCount(){
     this.admin_api.getCount().subscribe((res)=>{
       console.log(res.data);
+      
       this.count = res.data;
       this.count['total_sales']='loading...';
       this.count['day_to_day_sales']='loading...';
+      
     })
 
   }
 
   getOrders(){
     this.admin_api.getOrdes().subscribe((res)=>{
+      console.log(res);
+
       
-      res.forEach(element => {
+      res['data'].forEach(element => {
         
         if(element['cancel_status']==='Accepted'){
           this.approvedOrder.push(element)
@@ -62,8 +66,9 @@ export class HomeComponent implements OnInit {
       });
       console.log('pending',this.pendingOrder)
       console.log('accepted',this.approvedOrder)
-
+    
     })
+  
 
   }
 
@@ -72,6 +77,7 @@ export class HomeComponent implements OnInit {
     console.log(element)
     this.node.changeOrderStatus(element,"Accepted").subscribe((result)=>{
       alert("Order Accepted")
+      window.location.reload();
       
       this.bool = false;
     },(err)=>{
@@ -82,7 +88,7 @@ export class HomeComponent implements OnInit {
   rejectOrder(element){
     this.node.changeOrderStatus(element,"Reject").subscribe((result)=>{
       alert("Order Rejected")
-      
+      window.location.reload();
       this.bool =false;
     },(err)=>{
       alert("Please try again")

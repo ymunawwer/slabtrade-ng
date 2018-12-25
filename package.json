@@ -29,6 +29,7 @@
     "json2csv": "^4.3.2",
     "rxjs": "~6.3.3",
     "tether": "^1.4.5",
+    "xzoom": "^1.0.14",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

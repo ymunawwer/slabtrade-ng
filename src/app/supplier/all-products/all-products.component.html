@@ -38,7 +38,7 @@
 </div>
 
         <div *ngIf="isBulk">
-                <div class="page-inner sub-menu-inner">
+                <div >
                         <div class="container">
                             <section class="bulk-order">
                                 <div class="bulk-order-details">
@@ -89,16 +89,25 @@
         </div>
 
         <div *ngIf="isUpdate">
-
-                <form >
-                        <div class="row form-box">
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <label for="formGroupExampleInput">Product</label>
-                                    <input type="text" class="form-control" placeholder="Product" [(ngModel)] = "bundle.product_name" name="product_name" required minlength="6">
-                                </div>
-                            </div>
-                        </div>
+                <div class="page-inner">
+                        <div id="smartwizard1">
+                            <ul class="nav justify-content-center">
+                                <li><a href="#step-1">Slab Info<br /></a></li>
+                                <li><a href="#step-2">Bundle Info<br /></a></li>
+                                <li><a href="#step-3">Images<br /></a></li>
+                                <li><a href="#step-4">Addition info<br /></a></li>
+                            </ul>
+                            <div class="page-content">
+                                    <div id="step-1" class="page-content">
+                                            <form >
+                                                <div class="row form-box">
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label for="formGroupExampleInput">Product</label>
+                                                            <input type="text" class="form-control" placeholder="Product" [(ngModel)] = "bundle.product_name" name="product_name" required minlength="6">
+                                                        </div>
+                                                    </div>
+                                                </div>
                         <div class="row form-box">
                             <div class="col-md-6">
                                 <div class="form-group">

@@ -136,7 +136,7 @@ export class NodeapiService {
   }
 
 
-  checkOut(payment,tax,service,total):Observable<any>{
+  checkOut(payment,tax,service,total,shipping_addr,port,unload):Observable<any>{
     let token = this.auth.getToken();
     let data = {
       "user_id":this.auth.getUser()._id,
@@ -144,7 +144,11 @@ export class NodeapiService {
       "payment":payment,
       "tax":tax,
       "service":service,
-      "total":total
+      "total":total,
+      "shipping_addr":shipping_addr,
+      "port":port,
+      "unload":unload
+
     }
 
     const headers = new HttpHeaders();
@@ -161,6 +165,15 @@ export class NodeapiService {
   getPortDetail(port_id):Observable<any>{
     let token = this.auth.getToken();
     return this.http.get(ENV.customer + '/getport?port_id='+port_id,{headers:{'Auth':'Bearer ' + token}})
+
+
+  }
+
+  // /getportbycountry
+
+  getPortDetailBycountry(country):Observable<any>{
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer + '/getportbycountry?port_id='+country,{headers:{'Auth':'Bearer ' + token}})
 
 
   }

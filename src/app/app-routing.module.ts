@@ -12,6 +12,7 @@ import { HomeComponent as customerHomeCumponent } from '../app/customer/home/hom
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { IsCustomerGuard } from './guard/is-customer.guard'
 import { IsSupplierGuard } from './guard/is-supplier.guard'
+import { IsAdminGuard } from './guard/is-admin.guard';
 
 const routes: Routes = [
   {path: 'db', component: CustomerDashboardComponent},

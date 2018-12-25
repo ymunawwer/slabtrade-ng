@@ -23,6 +23,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,7 +32,9 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
  
     SupplierRegisterComponent,
  
-    LoginRegisterComponent
+    LoginRegisterComponent,
+ 
+  
  
 
     

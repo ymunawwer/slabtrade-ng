@@ -61,6 +61,7 @@ export class AllProductsComponent implements OnInit {
   }
   
   constructor(private node:NodeapiService,private auth:AuthService) { 
+    feather.replace();
     this.product = [];
     this.step1=false;
     this.isUpdate = false;
@@ -73,6 +74,9 @@ export class AllProductsComponent implements OnInit {
     this.file = []
     
   }
+
+
+  // 9842597143 ramnetaji
 
   ngOnInit() {
     feather.replace();

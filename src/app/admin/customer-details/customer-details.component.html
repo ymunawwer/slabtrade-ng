@@ -2,6 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="page-wrapper">
     <app-navbar></app-navbar>
+    <div *ngIf="!isClicked">
   <div class="page-inner sub-menu-inner">
     <div class="container">
         <section class="order-table">
@@ -17,29 +18,177 @@
                         </tr>
                     </thead>
                     <tbody>
+                            <ng-template ngFor let-customer [ngForOf]= "customers_arr" let-i="index"> 
                         <tr>
-                            <td><a href="customer-list-details.html" class="fields">1</a></td>
-                            <td><a href="customer-list-details.html" class="fields">John <span class="flag-icon flag-icon-us"></span></a></td>
-                            <td><a href="customer-list-details.html" class="fields">Inventory</a></td>
-                            <td><a href="order-details.html" class="fields"><span class="badge badge-success">Verified</span></a></td>
+                            <td><a class="fields" (click) = onCustomerdetail(customer)>{{customer.alias}}</a></td>
+                            <td><a class="fields" (click) = onCustomerdetail(customer)>{{customer.first_name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                            <td><a  class="fields" (click) = onCustomerdetail(customer)>{{customer.account_type}}</a></td>
+                            <td><a  class="fields" (click) = onCustomerdetail(customer)><span class="badge badge-success">{{customer.admin_confirmation}}</span></a></td>
                             <td>
-                                <a href="#" class="btn btn-primary">Edit</a>
-                                <a href="#" class="btn btn-danger">Delete</a>
+                                <a class="btn btn-primary">Edit</a>
+                                <a  class="btn btn-danger" (click)="onDelete(customer)">Delete</a>
                             </td>
-                        </tr>
-                        <tr>
-                            <td><a href="customer-list-details.html" class="fields">2</a></td>
-                            <td><a href="customer-list-details.html" class="fields">Deep <span class="flag-icon flag-icon-in"></span></a></td>
-                            <td><a href="customer-list-details.html" class="fields">Non Inventory</a></td>
-                            <td><a href="customer-list-details.html" class="fields"><span class="badge badge-danger">Not Verified</span></a></td>
-                            <td>
-                                <a href="#" class="btn btn-primary">Edit</a>
-                                <a href="#" class="btn btn-danger">Delete</a>
-                            </td>
-                        </tr>
+                        </tr></ng-template>
+                     
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
+</div>
+
+
+</div>
+
+
+<div *ngIf="isClicked">
+
+
+        <div class="page-inner sub-menu-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 mb-4">
+                            <div class="customer-info">
+                                <div class="customer-status no-margin">
+                                    <h4>Customer Details</h4>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                </div>
+                            </div>
+                        </div>
+                        <section class="col-md-6 col-xs-12 mb-4">
+                            <div class="customer-order-status">
+                                <div class="order-details">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Status</label>
+                                        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "cancel_status" (select)="onStatusUpdate()">
+                                            
+                                            <option>Verified</option>
+                                            <option>Not Verified</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <a (click) = "onStatusUpdate()" class="btn btn-primary btn-sm no-margin">Update</a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <section class="customer-verification">
+                        <div class="customer-box">
+                            <!-- <div class="right-description"> -->
+                            <h4 class="bundle-header">Basic Information</h4>
+                            <table class="table-description">
+                                <tbody>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Type :  </td>
+                                        <td class="table-option1 col col-md-4">
+                                            <ul>
+                                                <li class="item">{{type}} </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Alias :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{alias}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">First Name:</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{first_name}} </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Last Name:</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{last_name}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">E-Mail :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{email}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Cell Phone :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{cell_phone}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">home Phone :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{home_phone}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Street :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{address}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">City :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{city}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">State :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{state}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Country :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{country}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="row-option row">
+                                        <td class="table-option col-md-8">Zip :</td>
+                                        <td class="table-option1 col-md-4">
+                                            <ul>
+                                                <li class="item">{{zip_code}}</li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- </div> -->
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+
+</div>
+
+
+
+
 </div>

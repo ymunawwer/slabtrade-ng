@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service'
 import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-supplier-register',
@@ -10,7 +11,7 @@ import { ViewChild } from '@angular/core';
 })
 export class SupplierRegisterComponent implements OnInit {
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService,private route:Router) { }
 
   @ViewChild('f') formRef;
 
@@ -33,11 +34,25 @@ export class SupplierRegisterComponent implements OnInit {
     var n = d.getMonth();
     
     // console.log(form)
-    let alias = 'CUS'+'-'+n+'-'+d.getTime();
+    let alias = 'SUP'+'-'+n+'-'+d.getTime();
     console.log(alias)
     var data = {'alias':alias,'data':form.value}
-    this.auth.doRegister(data).subscribe((res)=>{
+    this.auth.doSupplierRegister(data).subscribe((res)=>{
       console.log(res)
+      if(res['error_code']===200){
+        if(res['message']==='user register Succesfully'){
+          alert('Thank you for registering with us.');
+          this.route.navigate(['/']);
+
+        }else{
+          alert("Email or cell phone already register please try with different.")
+        }
+        }else if(res['error_code']===500){
+          alert("Please try with different email or try after some time.")
+
+        }
+    },(err)=>{
+      alert("Please try with different email or try after some time.")
     })
 
 

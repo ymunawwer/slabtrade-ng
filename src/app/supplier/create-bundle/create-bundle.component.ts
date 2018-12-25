@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import {ViewChild, ElementRef} from '@angular/core';
 import { AuthService } from '../../auth.service';
 import {NodeapiService} from '../../nodeapi.service'
+import { Router } from '@angular/router'
 declare var feather:any;
 @Component({
   selector: 'app-create-bundle',
@@ -59,7 +60,7 @@ new_color = {
   'code':''
 }
 
-  constructor(private renderer: Renderer2,private auth:AuthService,private node:NodeapiService) {
+  constructor(private renderer: Renderer2,private auth:AuthService,private node:NodeapiService,private route:Router) {
     this.unit = "cm";
     this.dimension = [];
     this.aray=[];
@@ -75,7 +76,7 @@ new_color = {
     var items: number[] = [];
     for(var i = 1; i <= number; i++){
        items.push(i);
-       console.log(i);
+      //  console.log(i);
        this.aray.push(new Object())
     }
     return items;
@@ -99,7 +100,7 @@ new_color = {
     const file: Array<File> = this.file;
     for (let [key, value] of Object.entries(this.bundle)) {
       if(key==="dimension"){
-        alert(JSON.stringify(value))
+        // alert(JSON.stringify(value))
         formData.append(key,JSON.stringify(value))
         
       }
@@ -113,9 +114,12 @@ new_color = {
       
       formData.append("image", file[i][0], file[i][0]['name']);
   }
-    console.log("bundle",this.bundle)
+    
+    // console.log("bundle",this.bundle)
     this.node.createBundle(formData).subscribe((res)=>{
-      console.log("success")
+      // console.log("success")
+      alert("Success");
+      this.route.navigate(['/supplier'])
     })
   }
 
@@ -277,7 +281,7 @@ new_color = {
     
     this.dimension.push(obj);
   }
-  console.log(this.dimension)
+  // console.log(this.dimension)
   this.bundle.dimension=this.dimension;
 
 

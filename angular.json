@@ -27,20 +27,22 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.sass",
-              "./node_modules/bootstrap/dist/css/bootstrap.css"
+              // "src/styles.sass",
+              // "./node_modules/bootstrap/dist/css/bootstrap.css",
+              // "node_modules/xzoom/dist/xzoom.css"
             ],
             "scripts": [
           
-              "src/assets/js/InputSpinner.js",
-              "src/assets/js/InputSpinner.1.js",
-              "src/assets/js/script.js",
-              "src/assets/js/script.1.js",
-              "src/assets/js/jquery.smartWizard.js",
+//               "src/assets/js/InputSpinner.js",
+//               "src/assets/js/InputSpinner.1.js",
+//               "src/assets/js/script.js",
+//               "src/assets/js/script.1.js",
+//               "src/assets/js/jquery.smartWizard.js",
+//               "node_modules/xzoom/dist/xzoom.min.js",
               
               
-"./node_modules/tether/dist/js/tether.js",
-"./node_modules/bootstrap/dist/js/bootstrap.js"
+// "./node_modules/tether/dist/js/tether.js",
+// "./node_modules/bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {

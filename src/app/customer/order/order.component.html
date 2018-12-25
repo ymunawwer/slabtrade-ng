@@ -38,10 +38,10 @@
                       <ng-template ngFor let-item [ngForOf]= "order" let-i="index">
 
                       <tr>
-                          <td><a (click)="getOrderDetail(order)" class="fields">#{{item._id}}</a></td>
-                          <td><a (click)="getOrderDetail(order)" class="fields">{{item.name}} <span class="flag-icon flag-icon-us"></span></a></td>
-                          <td><a (click)="getOrderDetail(order)" class="fields">{{item.created_at}}</a></td>
-                          <td><a (click)="getOrderDetail(order)" class="fields"><span class="badge badge-warning">{{item.cancel_status}}</span></a></td>
+                          <td><a (click)="getOrderDetail(item)" class="fields">#{{item._id}}</a></td>
+                          <td><a (click)="getOrderDetail(item)" class="fields">{{item.name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                          <td><a (click)="getOrderDetail(item)" class="fields">{{item.created_at}}</a></td>
+                          <td><a (click)="getOrderDetail(item)" class="fields"><span class="badge badge-warning">{{item.cancel_status}}</span></a></td>
                           <td>
                               <a href="#" class="btn btn-primary">Edit</a>
                               <a href="#" class="btn btn-danger">Delete</a>
@@ -151,11 +151,9 @@
               <div class="row">
                   <div class="col-md-6">
                       <h4>My Shipping Address</h4>
-                      <p>Mr. Douglas E. Carter (Dear Mr.Carter:)
-                          American Consul General
-                          Department of State
-                          5520 Quebec Place
-                          Washington, DC 20521-5520</p>
+                      <p>{{street}} 
+                          {{city}} {{state}}
+                          {{country}} {{zip}}</p>
                   </div>
                   <div class="col-md-6">
                       <h4>Supplier Shipping Address</h4>

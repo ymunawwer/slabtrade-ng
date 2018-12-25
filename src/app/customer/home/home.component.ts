@@ -8,16 +8,21 @@ import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { ENV } from 'src/app/core/env.config';
 declare var feather:any;
+declare var jquery:any;
+declare var $ :any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
+ 
   url = ENV.server;
   isitemclicked = false
   doc:any;
   items:any;
+  shipping_cost:number;
+  tax:number;
   
   number = 0;
   trustedUrl;
@@ -388,14 +393,27 @@ export class HomeComponent implements OnInit {
 
   }
 
-  toCart(doc,number){
+  async toCart(doc,number){
     // console.log(doc,number);
     let net_area = 0;
+    // this.tax=1.1
+    // this.shipping_cost = 1;
     // var total_quantity;
     var cart_total;
-    var shipping_cost;
-    var tax;
+   var tax_amount;
     var price;
+    var customer;
+    customer = this.auth.getUser()['country'];
+    await this.nodeapi.getPortDetailBycountry(customer).subscribe((result)=>{
+        this.tax = result['data']['tax_percentage'];
+        this.shipping_cost = result['data']['shipping_cost'];
+        // console.log('port',result['data'],tax,shipping_cost)
+        
+    },(err)=>{
+      alert("Fail to get port detail")
+      
+    })
+    console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
     price = doc['price']*<number>this.number;
     
@@ -413,6 +431,7 @@ export class HomeComponent implements OnInit {
          
 
           if(res.message==="Cart is Empty"){
+            tax_amount = price/(1+(this.tax/100));
           let data = {"user_id":this.auth.getUser()._id,
           "bundle":[
             {
@@ -430,11 +449,11 @@ export class HomeComponent implements OnInit {
               "height":200,
               "unit":"inch"
             }]}],
-            
+            "total_amount":price,
             "total_quantity":this.number,
-            "cart_total":price,
-            "shipping_cost":shipping_cost,
-            "tax":tax}
+            "cart_total":price + this.shipping_cost + tax_amount,
+            "shipping_cost":this.shipping_cost,
+            "tax":tax_amount}
 
             
 
@@ -452,9 +471,11 @@ export class HomeComponent implements OnInit {
          
           }else if(res.message!=="Cart is Empty"){
             console.log("document",doc)
-            cart_total = res.data[0].cart_total+price;
+            price = res.data[0].total+price;
+            tax_amount = price/(1+(this.tax/100));
             let total_quantity = res.data[0].total_quantity+this.number;
             let bundle={
+              "supplier_id":doc.supplier_id,
               "bundle_id":doc.bundle_number,
               "bundle_name":doc.product_name,
               "net_area":net_area,
@@ -470,11 +491,16 @@ export class HomeComponent implements OnInit {
               res.data[0].bundle.push(bundle)
             let data_updated = {"user_id":this.auth.getUser()._id,
             "bundle":res.data[0].bundle,
+
             "total_quantity":total_quantity,
-            "cart_total":cart_total,
-            "supplier_id":doc.supplier_id,
-            "shipping_cost":shipping_cost,
-            "tax":tax
+
+            "total_amount":cart_total,
+
+            "cart_total":cart_total+this.shipping_cost+tax_amount,
+            
+            "shipping_cost":this.shipping_cost,
+
+            "tax":tax_amount
           }
       
             

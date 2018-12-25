@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -8,6 +9,8 @@ import { ShippingDetailsComponent } from './shipping-details/shipping-details.co
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AdminRoutingModule } from './admin-routing.module';
+import { CustomerListDetailsComponent } from './customer-list-details/customer-list-details.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [    HomeComponent,
@@ -22,12 +25,17 @@ import { AdminRoutingModule } from './admin-routing.module';
 
     SidebarComponent,
 
-    NavbarComponent
+    NavbarComponent,
+
+    CustomerListDetailsComponent,
+
+    LoginComponent
 
     ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FormsModule
   ]
 })
 export class AdminModule { }

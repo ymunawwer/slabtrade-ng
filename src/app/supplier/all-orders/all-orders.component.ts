@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {NodeapiService} from '../../nodeapi.service'
 // const Json2csvParser = require('json2csv').Parser;
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth.service';
 
 declare var feather:any;
 @Component({
@@ -22,7 +23,7 @@ export class AllOrdersComponent implements OnInit {
   bool:boolean;
   isOrderClicked:boolean;
 
-  constructor(private node:NodeapiService,private route:Router) { 
+  constructor(private node:NodeapiService,private route:Router,private auth:AuthService) { 
     this.isorderdetail=false;
     this.ispaymentdetails=false
     this.ispurchaseorder=false
@@ -158,7 +159,7 @@ export class AllOrdersComponent implements OnInit {
     const formData:any = new FormData();
     // formData.append('shipping_file', this.files);
     formData.append( "_id",this.order._id)
-    formData.append("supplier_id",this.order.supplier_id)
+    formData.append("supplier_id",this.auth.getUser()._id)
     const file: Array<File> = this.files;
     console.log("shipping",this.order)
     if(file.length>0){
@@ -169,7 +170,7 @@ export class AllOrdersComponent implements OnInit {
 
   console.log('form data variable :   '+ formData.toString());
 
-  console.log(formData)
+  console.log('order',this.order)
     let data = {
       "_id":this.order._id,
       "supplier_id":this.order.supplier_id,

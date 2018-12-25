@@ -15,16 +15,20 @@ declare var feather:any;
 export class CartCustomerComponent implements OnInit {
   cart_item:any;
   tax:number;
+  
   shipping:number;
+  shipping_detail:any;
   total:number;
   total_item:number;
   is_check_out:boolean;
   iscartempty:boolean;
   name;
+  unload:boolean;
   user:any;
   port:any;
   constructor(private nodeApi:NodeapiService,private location:PlatformLocation,private auth:AuthService,private router:Router) {
-    
+    this.unload= true;
+    this.port = "Chennai";
     this.cart_item = []
     this.getCartItem();
     this.is_check_out = false;
@@ -63,9 +67,9 @@ export class CartCustomerComponent implements OnInit {
       if(res.error_code===200){
         if(res.message!=="Cart is Empty"){
           console.log("cart up",res)
-          this.tax = res.data.tax;
-          this.shipping = res.data.total;
-          this.total = res.data[0].cart_total;
+          this.tax = res['data'][0]['tax'];
+          this.shipping = res['data'][0]['shipping_cost'];
+          this.total = res.data[0]['cart_total'];
           this.cart_item = res.data[0].bundle;
           this.total_item = res.data[0].total_quantity;
           
@@ -100,24 +104,33 @@ confirmToCheckOut(){
     // this.nodeApi.getPortDetail(this.user.port).subscribe((result)=>{
     //   this.port = result;
     // })
-    let tax = 100;
-    let total=1000;
-    console.log(this.user);
     
-    this.onCheckout("cash",tax,"10",total);
+    console.log(this.user);
+    let shipping_addr = {
+      'street':this.user.address2_street,
+      'city':this.user.address2_city,
+      'state':this.user.address2_state,
+      'country':this.user.address2_country,
+      'zip':this.user.address2_zip
+
+    }
+    
+    
+    this.onCheckout("cash",this.tax,this.shipping,this.total,shipping_addr,this.port,this.unload);
   }
 
 
 
-  onCheckout(payment,tax,service,total){
+  onCheckout(payment,tax,service,total,shipping_addr,port,unload){
 
-    this.nodeApi.checkOut(payment,tax,service,total).subscribe((result)=>{
+    this.nodeApi.checkOut(payment,tax,service,total,shipping_addr,port,unload).subscribe((result)=>{
       console.log(result)
       if(result['message']==='Container is not full'){
         alert("Please add more item to your cart")
       }else if(result['message']!=='Container is not full'){
         // localStorage.setItem('cart',JSON.stringify(0))
         alert("Order is succefully placed");
+        this.router.navigate(['/']);
 
 
       }

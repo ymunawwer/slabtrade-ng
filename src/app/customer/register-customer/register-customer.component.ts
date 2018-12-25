@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../auth.service'
 import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-customer',
@@ -10,7 +11,7 @@ import { ViewChild } from '@angular/core';
 })
 export class RegisterCustomerComponent implements OnInit {
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService,private route:Router) { }
 
   @ViewChild('f') formRef;
 
@@ -36,8 +37,28 @@ export class RegisterCustomerComponent implements OnInit {
     let alias = 'CUS'+'-'+n+'-'+d.getTime();
     console.log(alias)
     var data = {'alias':alias,'data':form.value}
-    this.auth.doSupplierRegister(data).subscribe((res)=>{
+    this.auth.doRegister(data).subscribe((res)=>{
       console.log(res)
+      if(res['error_code']===200){
+        if(res['message']==='user register Succesfully'){
+          alert('Thank you for registering with us.');
+          this.route.navigate(['/']);
+
+        }else{
+          alert("Email or cell phone already register please try with different.")
+        }
+        }else if(res['error_code']===500){
+          alert("Please try with different email or try after some time.")
+
+        }
+        
+
+
+      
+      
+      
+    },(err)=>{
+      alert("Please try with different email or try after some time.")
     })
 
 

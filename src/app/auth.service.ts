@@ -34,6 +34,14 @@ export class AuthService {
 
   }
 
+
+  doAdminLogin(data): Observable<any>{
+    return this.http.post(ENV.admin+'/user/login',data)
+
+   
+
+  }
+
   doReset(data):Observable<any>{
     return this.http.post(ENV.customer+'/reset',data).pipe(
       catchError(err=>this.handleError(err))
@@ -43,16 +51,15 @@ export class AuthService {
 
 
   doRegister(data):Observable<any>{
-    return this.http.post(ENV.customer+'/register',data).pipe(
-      catchError(err=>this.handleError(err))
-
-    );
+    return this.http.post(ENV.customer+'/register',data);
+ 
   }
   doSupplierRegister(data):Observable<any>{
-    return this.http.post(ENV.supplier+'/register',data).pipe(
-      catchError(err=>this.handleError(err))
+    return this.http.post(ENV.supplier+'/register',data);
+    // .pipe(
+    //   catchError(err=>this.handleError(err))
 
-    );
+    // );
   }
 
   getToken(){
@@ -92,6 +99,8 @@ export class AuthService {
     sessionStorage.removeItem('currentUser');
 
   }
+
+ 
 
 
 }
