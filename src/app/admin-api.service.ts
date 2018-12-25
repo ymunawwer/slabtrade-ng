@@ -65,14 +65,12 @@ export class AdminApiService {
 
     );
   }
-  updatePort():Observable<any>{
+  updatePort(data):Observable<any>{
 
     let token = this.auth.getToken();
 
-    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
-      catchError(err=>this.handleError(err))
-
-    );
+    return this.http.post(ENV.admin +  '/port/updatePort',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
+   
 
 
 

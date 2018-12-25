@@ -342,31 +342,31 @@
                                             <div class="col-md-6">
                                                 <div class="form-group mb-3">
                                                     <label for="formGroupExampleInput">Port Name</label>
-                                                    <input type="text" class="form-control" placeholder="select port name">
+                                                    <input type="text" class="form-control" placeholder="select port name" [(ngModel)] = update_port_name>
                                                 </div>
-                                                <div class="form-group mb-3">
+                                                <!-- <div class="form-group mb-3">
                                                     <input type="text" class="form-control" placeholder="select port name">
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="input-group mb-3 ip-group">
                                                     <label for="formGroupExampleInput1">Cost</label>
-                                                    <input type="text" class="form-control" placeholder="select cost" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                                    <input type="text" class="form-control" placeholder="select cost" aria-label="Recipient's username" aria-describedby="basic-addon2" [(ngModel)] = update_port_price>
                                                     <div class="input-group-append">
                                                         <span class="input-group-text" id="basic-addon2">USD</span>
                                                     </div>
                                                 </div>
-                                                <div class="input-group mb-3 ip-group">
+                                                <!-- <div class="input-group mb-3 ip-group">
                                                     <input type="text" class="form-control" placeholder="select cost" aria-label="Recipient's username" aria-describedby="basic-addon2">
                                                     <div class="input-group-append">
                                                         <span class="input-group-text" id="basic-addon2">USD</span>
                                                     </div>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light btn-sm" data-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary btn-sm" (click)="step3()">Next</button>
+                                            <button type="button" class="btn btn-primary btn-sm" (click)="onUpdate()">Save Changes</button>
                                         </div>
                                     </div>
                                 </div>

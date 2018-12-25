@@ -19,6 +19,8 @@ export class ShippingDetailsComponent implements OnInit {
   tax_percentage:Number;
   new_port_cost:Number;
   new_port_name:String;
+  update_port_name:String;
+  update_port_price:Number;
   step1:boolean;
   step2:boolean;
   step3:boolean;
@@ -47,6 +49,7 @@ export class ShippingDetailsComponent implements OnInit {
     this.getPort();
     console.log(this.selectedport)
     feather.replace();
+    
   }
   getPort(){
     console.log(this.country)
@@ -133,6 +136,33 @@ export class ShippingDetailsComponent implements OnInit {
       alert("please try again");
       window.location.reload();
     })
+  }
+  onUpdate(){
+    
+   
+    let port = this.port_arr.filter((name)=>{
+      return name['port_name'] === this.selectedport
+    })
+  
+    let data = {
+      "port_id":port['port_id'],
+      'port_name':this.update_port_name,
+      'country':this.country,
+      'shipping_cost':this.shipping_cost,
+      'port_cost':this.update_port_price,
+      'tax_percentage':this.tax_percentage,
+      'facilities_cost':this.facility_cost
+    }
+
+    this.adminapi.updatePort(data).subscribe((res)=>{
+      alert("Port Updated Succesfully");
+      window.location.reload();
+
+    },(err)=>{
+      alert("please try again");
+      window.location.reload();
+    })
+    
   }
 
 }
