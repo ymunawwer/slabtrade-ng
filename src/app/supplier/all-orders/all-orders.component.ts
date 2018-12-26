@@ -22,6 +22,7 @@ export class AllOrdersComponent implements OnInit {
   isupload:boolean;
   files:any;
   bool:boolean;
+  payment_status:String;
   isOrderClicked:boolean;
 
   constructor(private node:NodeapiService,private route:Router,private auth:AuthService) { 
@@ -192,6 +193,7 @@ export class AllOrdersComponent implements OnInit {
 
 getWiredDoc(){
   this.node.downloadWiredDoc(this.order._id).subscribe((res)=>{
+    this.payment_status = res['status'];
     this.wired_doc_arr = res['data'];
     console.log(res)
   },(err)=>{
