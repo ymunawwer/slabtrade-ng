@@ -123,7 +123,15 @@ export class NodeapiService {
 
   }
 
+// removecartitem
+removeCartItem(bundle):Observable<any>{
+  let token = this.auth.getToken();
+ 
+  return this.http.get(ENV.customer + '/removecartitem?id='+this.auth.getUser()._id+'&bundle='+bundle,{headers:{'Auth':'Bearer ' + token}}).pipe(
+    catchError(err=>this.handleError(err))
 
+  );
+}
 
   getCart(page):Observable<any>{
     let token = this.auth.getToken();
@@ -173,7 +181,7 @@ export class NodeapiService {
 
   getPortDetailBycountry(country):Observable<any>{
     let token = this.auth.getToken();
-    return this.http.get(ENV.customer + '/getportbycountry?port_id='+country,{headers:{'Auth':'Bearer ' + token}})
+    return this.http.get(ENV.customer + '/getportbycountry?country='+country,{headers:{'Auth':'Bearer ' + token}})
 
 
   }

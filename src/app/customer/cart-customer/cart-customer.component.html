@@ -53,7 +53,7 @@
                             <td>{{item.Dimension[0].width}}X{{item.Dimension[0].height}}</td>
                             <td>{{item.quantity}}</td>
                             <td>${{(item.total===undefined?0:item.total)}}</td>
-                            <td class="text-center" (click)="remove(i)"><a class="remove">Remove</a></td>
+                            <td class="text-center" (click)="remove(item)"><a class="remove">Remove</a></td>
                         </tr></ng-template>
                        
                         <tr>

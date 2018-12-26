@@ -187,6 +187,15 @@ uploadWiredDoc(id,data):Observable<any>{
   return this.http.post(ENV.admin+'/order/uploadshippingdetail?id='+id,data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
 }
 
+statusPaymentUpdate(id,status,payment){
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.admin + '/order/paymentstatusupdate?id='+id+"&status="+status+"&payment="+payment,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+}
+
 
 
 // /order/uploadshippingdetail?id=

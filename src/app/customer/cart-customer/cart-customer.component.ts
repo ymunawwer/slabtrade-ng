@@ -172,10 +172,23 @@ confirmToCheckOut(){
   }
 
 
-  remove(i){
+  remove(item){
     
-    console.log(i,this.cart_item[i]);
-    delete this.cart_item[i];
+    console.log(item);
+    // delete this.cart_item[i];
+    this.nodeApi.removeCartItem(item['_id']).subscribe((res)=>{
+      console.log(res)
+      if(res['error_code'] ===200){
+      alert("Succesfully removed")
+      localStorage.setItem('cart',JSON.stringify(0));
+      window.location.reload();
+      this.getCartItem();
+      }else if(res['error_code'] ===500){
+        alert("Please try again later.")
+      }
+    },(err)=>{
+      alert("Please try again later.")
+    })
   }
 
 

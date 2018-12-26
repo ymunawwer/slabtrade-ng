@@ -261,25 +261,26 @@ export class HomeComponent implements OnInit {
       if(this.auth.isAuthenticated()){
    
       this.nodeapi.searchByColorWithPrice(event.target.value,0).subscribe((data)=>{
-        if(data!==null){
-          
+        if(typeof data['data'] !== 'undefined'){
+          console.log(data['data']);
           let id = data.data[0]['product_type']
           let local_data = {
           
             "data":[{
               "_id":id,
-              "docs":data.data
+              "docs":data['data']
             }]
           }
-        this.items = local_data.data[0];
+        this.items = local_data.data;
         
         
         }else{
+          this.items = []
           const element = document.querySelector("#top");
         }
       },(err)=>{
         this.nodeapi.searchByColor(event.target.value,0).subscribe((data)=>{
-          if(data!==null){
+          if(typeof data['data'] !== 'undefined'){
             let id = data.data[0]['product_type']
             let local_data = {
             
@@ -291,6 +292,7 @@ export class HomeComponent implements OnInit {
           this.items = local_data.data;
           
           }else{
+            this.items = []
             const element = document.querySelector("#top");
           }
         }
@@ -299,7 +301,7 @@ export class HomeComponent implements OnInit {
       })
     }else{
       this.nodeapi.searchByColor(event.target.value,0).subscribe((data)=>{
-        if(data!==null){
+        if(typeof data['data'] !== 'undefined'){
           let id = data.data[0]['product_type']
           let local_data = {
           
@@ -311,6 +313,7 @@ export class HomeComponent implements OnInit {
         this.items = local_data.data;
         
         }else{
+          this.items = []
           const element = document.querySelector("#top");
         }
       }
@@ -328,7 +331,8 @@ export class HomeComponent implements OnInit {
       if(this.auth.isAuthenticated()){
    
       this.nodeapi.searchByTypeWithPrice(event.target.value,0).subscribe((data)=>{
-        if(data!==null){
+        if(typeof data['data'] !== 'undefined'){
+          console.log(data['data'])
           let id = data.data[0]['product_type']
           let local_data = {
           
@@ -341,11 +345,13 @@ export class HomeComponent implements OnInit {
         
         
         }else{
+          // alert("no item to display");
+          this. items = []
           const element = document.querySelector("#top");
         }
       },(err)=>{
         this.nodeapi.searchByType(event.target.value,0).subscribe((data)=>{
-          if(data!==null){
+          if(typeof data['data'] !== 'undefined'){
             let id = data.data[0]['product_type']
             let local_data = {
             
@@ -357,6 +363,7 @@ export class HomeComponent implements OnInit {
           this.items = local_data.data;
           
           }else{
+            this.items = []
             const element = document.querySelector("#top");
           }
         }
@@ -365,7 +372,7 @@ export class HomeComponent implements OnInit {
       })
     }else{
       this.nodeapi.searchByType(event.target.value,0).subscribe((data)=>{
-        if(data!==null){
+        if(typeof data['data'] !== 'undefined'){
           console.log("data",data)
           let id = data.data[0]['product_type']
           let local_data = {
@@ -380,6 +387,7 @@ export class HomeComponent implements OnInit {
         console.log('item',local_data)
         
         }else{
+          this.items = []
           const element = document.querySelector("#top");
         }
       }
@@ -403,17 +411,15 @@ export class HomeComponent implements OnInit {
    var tax_amount;
     var price;
     var customer;
+    var cart_amount;
     customer = this.auth.getUser()['country'];
+    console.log(customer)
     await this.nodeapi.getPortDetailBycountry(customer).subscribe((result)=>{
-        this.tax = result['data']['tax_percentage'];
-        this.shipping_cost = result['data']['shipping_cost'];
+      console.log(result);
+        this.tax = result['data'][0]['tax_percentage'];
+        this.shipping_cost = result['data'][0]['shipping_cost'];
         // console.log('port',result['data'],tax,shipping_cost)
-        
-    },(err)=>{
-      alert("Fail to get port detail")
-      
-    })
-    console.log('port',this.tax,this.shipping_cost)
+        console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
     price = doc['price']*<number>this.number;
     
@@ -471,8 +477,8 @@ export class HomeComponent implements OnInit {
          
           }else if(res.message!=="Cart is Empty"){
             console.log("document",doc)
-            price = res.data[0].total+price;
-            tax_amount = price/(1+(this.tax/100));
+            cart_amount = res.data[0].total_amount+price;
+            tax_amount = cart_amount/(1+(this.tax/100));
             let total_quantity = res.data[0].total_quantity+this.number;
             let bundle={
               "supplier_id":doc.supplier_id,
@@ -494,9 +500,9 @@ export class HomeComponent implements OnInit {
 
             "total_quantity":total_quantity,
 
-            "total_amount":cart_total,
+            "total_amount":price,
 
-            "cart_total":cart_total+this.shipping_cost+tax_amount,
+            "cart_total":cart_amount+this.shipping_cost+tax_amount,
             
             "shipping_cost":this.shipping_cost,
 
@@ -508,7 +514,7 @@ export class HomeComponent implements OnInit {
               
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
                 
-                localStorage.removeItem('car')
+                localStorage.removeItem('cart')
                 localStorage.setItem('cart',total_quantity)
                 console.log(total_quantity)
                 this.route.navigate(['/customer/cart'])
@@ -523,6 +529,13 @@ export class HomeComponent implements OnInit {
     else if(number<1){
       alert("Slabs count can not be zero")
     }
+        
+    },(err)=>{
+      console.log(err);
+      alert("Fail to get port detail")
+      
+    })
+    
   }
   viewMore(type){
     

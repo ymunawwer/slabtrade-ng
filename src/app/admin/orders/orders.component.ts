@@ -10,6 +10,7 @@ declare var feather:any;
 })
 export class OrdersComponent implements OnInit {
   ishome:boolean;
+  payment;
   isorderstatus:boolean;
   ispaymentmode:boolean;
   issupplierdetail:boolean;
@@ -19,7 +20,7 @@ export class OrdersComponent implements OnInit {
   bundle_arr:any;
   file:any;
   doc_arr:any;
-  
+  paymentstatus;
   orders:any;
   order_status:any;
   constructor(private adminApi: AdminApiService,private node:NodeapiService,private router:Router) {
@@ -95,6 +96,8 @@ export class OrdersComponent implements OnInit {
     console.log(order)
     this.isOrderStatus();
     this.order_status = order['cancel_status'];
+    this.payment = order['patment'];
+    this.paymentstatus = order['payment_status']
     this.order = order;
     this.products = this.order['products'];
 
@@ -177,6 +180,20 @@ export class OrdersComponent implements OnInit {
   remove(index){
     this.file[index] = null;
     
+  }
+
+
+  updateStatus(){
+
+    this.adminApi.statusPaymentUpdate(this.order['_id'],this.paymentstatus,this.payment).subscribe((res)=>{
+      // console.log("success")
+      alert("Successfully Updated");
+      
+    },(err)=>{
+      alert('Upload Failed.Please try again.');
+    })
+  
+
   }
   
   

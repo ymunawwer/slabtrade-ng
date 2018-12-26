@@ -193,13 +193,13 @@ export class AllOrdersComponent implements OnInit {
 
 getWiredDoc(){
   this.node.downloadWiredDoc(this.order._id).subscribe((res)=>{
-    this.payment_status = res['status'];
-    this.wired_doc_arr = res['data'];
-    console.log(res)
+    this.payment_status = res['data']['payment_status'];
+    this.wired_doc_arr = res['data']['docs'];
+    
   },(err)=>{
     alert("Please try again later.")
   })
-  console.log(this.wired_doc_arr)
+  console.log(this.payment_status)
 }
 
 }

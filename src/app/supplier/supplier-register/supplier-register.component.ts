@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SupplierRegisterComponent implements OnInit {
 
-  constructor(private auth:AuthService,private route:Router) { }
+  constructor(private auth:AuthService,private router:Router) { }
 
   @ViewChild('f') formRef;
 
@@ -40,9 +40,9 @@ export class SupplierRegisterComponent implements OnInit {
     this.auth.doSupplierRegister(data).subscribe((res)=>{
       console.log(res)
       if(res['error_code']===200){
-        if(res['message']==='user register Succesfully'){
+        if(res['message']==='Supplier register Succesfully'){
           alert('Thank you for registering with us.');
-          this.route.navigate(['/']);
+          this.router.navigate(['/login']);
 
         }else{
           alert("Email or cell phone already register please try with different.")

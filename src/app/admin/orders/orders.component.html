@@ -108,21 +108,21 @@
                             <div class="order-details">
                                 <div class="form-group">
                                     <label for="FormContros">Payment Mode</label>
-                                    <select class="form-control" id="FormControls">
+                                    <select class="form-control" id="FormControls" [(ngModel)] = "payment">
                                         <option>Card</option>
                                         <option>Cash</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="FormContros">Payment Status</label>
-                                    <select class="form-control" id="FormControls">
+                                    <select class="form-control" id="FormControls" [(ngModel)] = "paymentstatus">
                                         <option>Pending</option>
                                         <option>Payment In Progress</option>
                                         <option>Paid</option>
                                     </select>
                                 </div>
                                 <div class="text-right">
-                                    <a href="#" class="btn btn-primary no-margin btn-sm">Update</a>
+                                    <a (click)="updateStatus()" class="btn btn-primary no-margin btn-sm">Update</a>
                                 </div>
                             </div>
                         </section>
