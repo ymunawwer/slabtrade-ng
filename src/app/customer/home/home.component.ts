@@ -324,6 +324,21 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  incCount() {
+
+    if(this.number <= 5 ) {
+    this.number += 1;
+    }
+ 
+  }
+ 
+  decCount() {
+ 
+    if(this.number >= 1) {
+      this.number -= 1;
+    }
+  }
+
   searchByName(event) {
 
     if(event.keyCode == 13) {
@@ -412,6 +427,8 @@ export class HomeComponent implements OnInit {
     var price;
     var customer;
     var cart_amount;
+    if(this.number!==0){
+    if(this.auth.isAuthenticated() ){
     customer = this.auth.getUser()['country'];
     console.log(customer)
     await this.nodeapi.getPortDetailBycountry(customer).subscribe((result)=>{
@@ -530,11 +547,16 @@ export class HomeComponent implements OnInit {
       alert("Slabs count can not be zero")
     }
         
-    },(err)=>{
+    
+  },(err)=>{
       console.log(err);
       alert("Fail to get port detail")
       
-    })
+    })}else {
+      alert("please login.")
+    }}else if(this.number===0){
+      alert("Please add item to the cart")
+    }
     
   }
   viewMore(type){
