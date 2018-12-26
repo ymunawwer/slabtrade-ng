@@ -16,14 +16,14 @@ declare var $ :any;
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
- 
+
   url = ENV.server;
   isitemclicked = false
   doc:any;
   items:any;
   shipping_cost:number;
   tax:number;
-  
+
   number = 0;
   trustedUrl;
   item_image:any;
@@ -48,10 +48,10 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
-    
+
     console.log('item',this.items)
     feather.replace();
-   
+
   }
 
   sanitizeUrl(url) {
@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
     // close as possible to the input data so
     // that it's easier to check if the value is safe.
     url = url.replace('home/gamasome/slabtrade/public/','');
-    
+
      return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
@@ -73,29 +73,29 @@ export class HomeComponent implements OnInit {
   async getHomePage(){
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
     this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
-      
+
       this.items = data.data
      var count =0;
      if(data['error_code']===200){
      await this.items.forEach(el=>{
-        
+
         el.docs.forEach((res)=>{
-          
+
           count=count+1;
        res.images.forEach((img)=>{
          this.image.push(img.path)
-         
-     
+
+
        })
            if(el.docs.length === count){
              let arr =[]
           for (let i = 0;i<3;i++){
-            
+
             let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-          
-              
+
+
               this.slider_image.push(this.image[rand])
-            
+
             }
          }
       })
@@ -103,33 +103,33 @@ export class HomeComponent implements OnInit {
 
     sessionStorage.removeItem('currentUser')
     this.nodeapi.fetchHomePage().subscribe((data)=>{
-      
+
       this.items = data.data
-      
+
 
       var count =0;
       this.items.forEach(el=>{
-         
+
          el.docs.forEach((res)=>{
-           
+
            count=count+1;
         res.images.forEach((img)=>{
           this.image.push(img.path)
-          
-          
-      
+
+
+
         })
-        
+
             if(el.docs.length === count){
 
               let arr =[]
            for (let i = 0;i<3;i++){
-             
+
              let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-           
-               
+
+
                this.slider_image.push(this.image[rand])
-             
+
              }
           }
        })
@@ -139,42 +139,42 @@ export class HomeComponent implements OnInit {
 
     })
 
-  
+
 
 
 
     }
- 
+
     },(err)=>{
       this.nodeapi.fetchHomePage().subscribe((data)=>{
-        
+
         this.items = data.data
 
-        
+
 
         var count =0;
         this.items.forEach(el=>{
-           
+
            el.data.forEach((res)=>{
-             
+
              count=count+1;
           res.images.forEach((img)=>{
             this.image.push(img.path)
-            
-            
-        
+
+
+
           })
-          
+
               if(el.docs.length === count){
 
                 let arr =[]
              for (let i = 0;i<3;i++){
-               
+
                let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-             
-                 
+
+
                  this.slider_image.push(this.image[rand])
-               
+
                }
             }
          })
@@ -186,33 +186,33 @@ export class HomeComponent implements OnInit {
     })
   }else{
     this.nodeapi.fetchHomePage().subscribe((data)=>{
-      
+
       this.items = data.data
-      
+
 
       var count =0;
       this.items.forEach(el=>{
-         
+
          el.docs.forEach((res)=>{
-           
+
            count=count+1;
         res.images.forEach((img)=>{
           this.image.push(img.path)
-          
-          
-      
+
+
+
         })
-        
+
             if(el.docs.length === count){
 
               let arr =[]
            for (let i = 0;i<3;i++){
-             
+
              let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-           
-               
+
+
                this.slider_image.push(this.image[rand])
-             
+
              }
           }
        })
@@ -232,25 +232,25 @@ export class HomeComponent implements OnInit {
     this.doc = doc;
     this.doc.images.forEach(element => {
       this.item_image.push(element.path)
-      
-      
+
+
     });
     this.isitemclicked = true
     this.issearched = false
     if(doc){
       this.nodeapi.getSimilarProduct(doc.supplier_id).subscribe((data)=>{
-        
+
         this.similarproduct = data['data'];
-        
+
         const element = document.querySelector("#top");
           if (element) { element.scrollIntoView(); }
- 
-       
+
+
       })
     }
-   
-    
-    
+
+
+
 
   }
 
@@ -259,21 +259,21 @@ export class HomeComponent implements OnInit {
     if(event.keyCode == 13) {
       this.issearched = true
       if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByColorWithPrice(event.target.value,0).subscribe((data)=>{
         if(data!==null){
-          
+
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data[0];
-        
-        
+
+
         }else{
           const element = document.querySelector("#top");
         }
@@ -282,14 +282,14 @@ export class HomeComponent implements OnInit {
           if(data!==null){
             let id = data.data[0]['product_type']
             let local_data = {
-            
+
               "data":[{
                 "_id":id,
                 "docs":data.data
               }]
             }
           this.items = local_data.data;
-          
+
           }else{
             const element = document.querySelector("#top");
           }
@@ -302,14 +302,14 @@ export class HomeComponent implements OnInit {
         if(data!==null){
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data;
-        
+
         }else{
           const element = document.querySelector("#top");
         }
@@ -326,20 +326,20 @@ export class HomeComponent implements OnInit {
     if(event.keyCode == 13) {
       this.issearched = true
       if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByTypeWithPrice(event.target.value,0).subscribe((data)=>{
         if(data!==null){
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data;
-        
-        
+
+
         }else{
           const element = document.querySelector("#top");
         }
@@ -348,14 +348,14 @@ export class HomeComponent implements OnInit {
           if(data!==null){
             let id = data.data[0]['product_type']
             let local_data = {
-            
+
               "data":[{
                 "_id":id,
                 "docs":data.data
               }]
             }
           this.items = local_data.data;
-          
+
           }else{
             const element = document.querySelector("#top");
           }
@@ -369,7 +369,7 @@ export class HomeComponent implements OnInit {
           console.log("data",data)
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
 
@@ -378,7 +378,7 @@ export class HomeComponent implements OnInit {
           }
         this.items = local_data.data;
         console.log('item',local_data)
-        
+
         }else{
           const element = document.querySelector("#top");
         }
@@ -388,7 +388,7 @@ export class HomeComponent implements OnInit {
     }
       // rest of your code
     }
-    
+
 
 
   }
@@ -408,27 +408,27 @@ export class HomeComponent implements OnInit {
         this.tax = result['data']['tax_percentage'];
         this.shipping_cost = result['data']['shipping_cost'];
         // console.log('port',result['data'],tax,shipping_cost)
-        
+
     },(err)=>{
       alert("Fail to get port detail")
-      
+
     })
     console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
     price = doc['price']*<number>this.number;
-    
-  
+
+
 
 
     if(doc && number>0){
       this.nodeapi.getCart('0').subscribe((res)=>{
-        
+
         if(res.error_code === 401){
           alert("please login")
           this.route.navigate(['/login'])
 
         }else if(res.error_code === 200){
-         
+
 
           if(res.message==="Cart is Empty"){
             tax_amount = price/(1+(this.tax/100));
@@ -443,7 +443,7 @@ export class HomeComponent implements OnInit {
             "thickness":doc.dimension[0].thickness,
             "quantity":this.number,
             "total":price,
-            
+
             "Dimension":[{
               "width":100,
               "height":200,
@@ -455,11 +455,11 @@ export class HomeComponent implements OnInit {
             "shipping_cost":this.shipping_cost,
             "tax":tax_amount}
 
-            
 
 
 
-        
+
+
           this.nodeapi.addToCart(data).subscribe((response)=>{
             // localStorage.removeItem('cart')
             localStorage.setItem('cart',JSON.stringify(this.number))
@@ -468,7 +468,7 @@ export class HomeComponent implements OnInit {
 
 
           })
-         
+
           }else if(res.message!=="Cart is Empty"){
             console.log("document",doc)
             price = res.data[0].total+price;
@@ -497,24 +497,24 @@ export class HomeComponent implements OnInit {
             "total_amount":cart_total,
 
             "cart_total":cart_total+this.shipping_cost+tax_amount,
-            
+
             "shipping_cost":this.shipping_cost,
 
             "tax":tax_amount
           }
-      
-            
+
+
               // res.data[0].bundle.push(data_updated)
-              
+
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
-                
+
                 localStorage.removeItem('car')
                 localStorage.setItem('cart',total_quantity)
                 console.log(total_quantity)
                 this.route.navigate(['/customer/cart'])
               })
-             
-            
+
+
           }
 
         }
@@ -525,7 +525,7 @@ export class HomeComponent implements OnInit {
     }
   }
   viewMore(type){
-    
+
     this.nodeapi.searchByType(type,0).subscribe((res)=>{
       console.log(res)
       let data = []
@@ -533,7 +533,7 @@ export class HomeComponent implements OnInit {
       console.log("id",id)
       if(res.data!==null){
         let data = {
-          
+
           "data":[{
             "_id":id,
             "docs":res.data
@@ -542,11 +542,26 @@ export class HomeComponent implements OnInit {
         this.items = data['data']
         console.log(this.items)
       }
-      
+
     })
   }
-  
 
+
+  incCount() {
+
+    if(this.number <= 5 ) {
+    this.number += 1;
+    }
+
+  }
+
+  decCount() {
+
+    if(this.number >= 1) {
+      this.number -= 1;
+    }
+
+  }
 
 
 }

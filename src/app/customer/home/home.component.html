@@ -1,10 +1,20 @@
 <div id="page-container">
-    
+
+  <style>
+
+    input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+    </style>
+
     <div >
        <app-navbar></app-navbar>
 
-      <section class="img-slider" *ngIf = "!isitemclicked"> 
-   
+      <section class="img-slider" *ngIf = "!isitemclicked">
+
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -35,10 +45,10 @@
             <span class="sr-only">Next</span>
           </a>
         </div>
-    
+
     </section>
-    
-    
+
+
           <section class="card-overlay">
               <div class="container">
                   <div class="row">
@@ -96,9 +106,9 @@
                               </div>
                           </div>
                       </div>
-    
+
                       <div class="col-md-9 right-card">
-                        <div [hidden]="isitemclicked"> 
+                        <div [hidden]="isitemclicked">
                         <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
                           <div class="outer-bar">
                             <div class="row link-button">
@@ -109,8 +119,8 @@
                            </div>
                            <div class="row">
                            <ng-template ngFor let-doc [ngForOf]= "item.docs" let-i="index" >
-                           
-                              
+
+
                                   <div class="col-md-4">
                                       <div class="card-img-header">
                                           <div class="bg-img">
@@ -121,27 +131,27 @@
                                     <h4>{{doc.product_name}}</h4>
                                     <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
                                     <span class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
-                                   
+
                                        <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
                                     </a>
                                           </div>
                                       </div>
                                   </div></ng-template>
                                 </div>
-                                
-    
+
+
                               </div>
-                         
+
                         </ng-template>
-                        
-                        
+
+
                         </div>
-    
+
                         <div *ngIf="false">
                             <div class="row">
-                               
+
                             <ng-template ngFor let-docsearch [ngForOf]= "items" let-i="index" >
-                                   
+
                                 <div class="col-md-4" >
                                     <div class="card-img-header">
                                         <div class="bg-img">
@@ -151,32 +161,32 @@
                                   <h4>{{docsearch.product_name}}</h4>
                                   <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
                                   <span class="price">{{docsearch.price===undefined?'':'$'+docsearch.price}}</span>
-                                
+
                                      <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(docsearch)'>View Details</button>
                                   </a>
                                         </div>
                                     </div>
                                 </div>
-                                           
-                             
-                              </ng-template> 
+
+
+                              </ng-template>
                         </div>
                           </div>
-                      
-                      
-                      
+
+
+
                       </div></div>
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
                         <!-- search result -->
-                    
-       </div>                
+
+       </div>
           </section>
-         
+
           <script type="text/javascript">
           feather.replace()
           </script>
@@ -184,25 +194,25 @@
           <script type="text/javascript">
           $('.carousel').carousel()
           </script>
-    
-    
-    
+
+
+
     <div *ngIf="isitemclicked" #top id = "top">
-    
+
         <div class="zoom-carousel">
             <div class="container">
                 <div class="carousel-bg-white">
                     <div class="row">
                         <div class="col-md-6">
 
-                                <img class="xzoom" src="http://localhost:3000/upload/products/image-1545118555926-1.jpg" xoriginal="http://localhost:3000/upload/products/image-1545118555926-1.jpg" />
+                                <img class="xzoom" src="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg" xoriginal="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg" />
 
                                 <div class="xzoom-thumbs">
                                         <a [href]="sanitizeUrl(item_image[0])">
-                                                <img class="xzoom-gallery" width="80" src="http://localhost:3000/upload/products/image-1545118555926-1.jpg"  xpreview="http://localhost:3000/upload/products/image-1545118555926-1.jpg">
+                                                <img class="xzoom-gallery" width="80" src="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg"  xpreview="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg">
                                                   </a>
                                         <ng-template ngFor let-item_image [ngForOf]= "item_image" let-i="index" >
-                                  
+
                                   <a [href]="sanitizeUrl(item_image)">
                                         <img class="xzoom-gallery" width="80" [src]="sanitizeUrl(item_image)">
                                       </a></ng-template>
@@ -221,7 +231,7 @@
                             <!-- <div class="exzoom" id="exzoom"> -->
                                 <!-- Images -->
 
-                                
+
 
                                 <!-- <div class="exzoom_img_box">
                                     <ul class='exzoom_img_ul'>
@@ -300,7 +310,25 @@
                                     <div class="col-md-8 form-box">
                                         <div class="form-group">
                                             <label for="exampleFormControlSelect1">Slabs</label>
-                                            <input class="form-control" type="number" value="5" min="0" max="6" step="1" [(ngModel)] = "number">
+                                            <!-- <input class="form-control" type="number" value="5" min="0" max="6" step="1" [(ngModel)] = "number"> -->
+
+
+                                            <div class="input-group input-group-spinner">
+                                              <div class="input-group-prepend">
+                                                <button (click)="decCount()" style="min-width: 2.5em" class="btn btn-decrement btn-outline-secondary" type="button">
+                                                  <strong>-</strong>
+                                                </button>
+                                              </div>
+                                              <input value="5" min="0" max="6" type="number" style="text-align: center; width: 180px" class="input" [(ngModel)] = "number">
+                                              <div class="input-group-append">
+                                                <button (click)="incCount()" style="min-width: 2.5em" class="btn btn-increment btn-outline-secondary" type="button">
+                                                  <strong>+</strong>
+                                                </button>
+                                              </div>
+                                            </div>
+
+
+
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -319,7 +347,7 @@
                                                 <span class="fill red" [hidden] = "number<5"></span>
                                                 <span class="fill gray" [hidden] = "number>=6"></span>
                                                 <span class="fill red" [hidden] = "number<6"></span>
-                                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -329,8 +357,8 @@
                         </div>
                     </div>
                 </div>
-        
-    
+
+
                 <div class="outer-bar">
                     <div class="row link-button">
                         <div class="col-md-12">
@@ -340,7 +368,7 @@
                     </div>
                  <div class="row">
                             <ng-template ngFor let-doc1 [ngForOf]= "similarproduct" let-i="index" >
-                                
+
                                     <div class="col-md-3">
                                         <div class="card-img-header">
                                             <div class="bg-img">
@@ -348,26 +376,26 @@
                                                                 <div class="card-img"[style.background-image] = "getBackground(doc1.images[0].path)">
                                                                 </div>
                                                                 <h4>{{doc1.product_name}}</h4>
-    
-    
+
+
                                                                 <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
-                                            
-                                            
+
+
                                                                <span class="price">{{doc1.price===undefined?'':'$'+doc1.price}}</span>
-                                                           
+
                                                                <button  type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc1)'>View Details</button>
                                                             </a>
                                             </div>
                                         </div>
                                     </div>
                                 </ng-template>
-                        
-                      
-                      
+
+
+
                     </div></div>
             </div>
         </div>
-        
+
         <!-- bootstrap.js -->
         <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -389,32 +417,24 @@
         $('.carousel').carousel()
         </script>
         <!-- zoom-carousel -->
-      
-  <script type="text/javascript">
-    $(document).ready(function(){
-    //   $("#exzoom").exzoom();
-    $(".xzoom, .xzoom-gallery").xzoom({tint: '#333', Xoffset: 15}); 
-    });
-   
-    </script>
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     </div>
-    
-    
-        
-    
-    
-    
-    
+
+
+
+
+
+
+
     <!-- footer -->
-    
-    
+
+
     <div class="footer">
         <div class="container">
             <div class="row row-col">
@@ -457,5 +477,4 @@
             </div>
         </div>
     </div>
-    
-                
+

@@ -442,7 +442,8 @@ img {
 }
 
 .input-group-text {
-    font-size: 0.6em!important;
+    /* font-size: 0.6em!important; */
+    font-size: 0.53em!important;
     height: 3.3em;
     font-weight: bold;
     border-radius: 0 !important;

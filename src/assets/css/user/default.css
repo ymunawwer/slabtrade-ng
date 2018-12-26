@@ -45,7 +45,7 @@ body {
 }
 
 .badge {
-    position: absolute;
+    /* position: absolute; */
     right: 52em;
     border-radius: 50%;
     background-color: rgba(172, 28, 135, 0.9);
