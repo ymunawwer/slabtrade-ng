@@ -31,14 +31,14 @@ export class CreateBundleComponent implements OnInit {
     'dimension':[{
       'width':0,
       'height':0,
-      'thickness':0
+      'thickness':1
       
 
     }],
     
       'width':0,
       'height':0,
-      'thickness':0,
+      'thickness':1,
       'unit':'',
 
   
@@ -278,8 +278,15 @@ new_color = {
         }
       }
     })
+    let area = 0
     
     this.dimension.push(obj);
+    this.dimension.forEach((el)=>{
+      area = area+(el['width']*el['height'])
+      console.log(area)
+    })
+    this.bundle.net_area = area;
+    this.bundle.net_weight = (this.bundle.net_area*this.bundle.dimension[0].thickness) / 166;
   }
   // console.log(this.dimension)
   this.bundle.dimension=this.dimension;
