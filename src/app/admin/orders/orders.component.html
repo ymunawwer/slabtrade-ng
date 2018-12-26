@@ -132,26 +132,26 @@
                                 <div class="document-box">
                                     <div class="row document-list">
                                         <div class="col-md-6">
-                                            <h4>Document Name 1</h4>
+                                                <input type="file" name="image[0]" id="other2_img_upload_btn" class="upload" (change)="allFilesToUpload($event)" />
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <a href="#" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-secondary">Cancel</a>
+                                            <a  class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                     <div class="row document-list">
                                         <div class="col-md-6">
-                                            <h4>Document Name 2</h4>
+                                                <input type="file"  name="image[0]" id="other2_img_upload_btn" class="upload" (change)="allFilesToUpload($event)" />
                                         </div>
                                         <div class="col-md-6 text-right">
                                             <a href="#" class="btn btn-primary">Edit</a>
-                                            <a href="#" class="btn btn-secondary">Cancel</a>
+                                            <a  class="btn btn-secondary">Cancel</a>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row upload-padding">
                                         <div class="col-md-12 text-right">
-                                            <a href="#" class="btn btn-primary no-margin">Upload New</a>
+                                            <a (click) = "wiredDocUpload()" class="btn btn-primary no-margin">Upload New</a>
                                         </div>
                                 </div>
                             </div>
@@ -182,33 +182,19 @@
                             <div class="supplier-doc">
                                 <h4 class="sub-title">Document Verification</h4>
                                 <div class="document-box">
+                                    
+                                    <ng-template ngFor let-doc [ngForOf]= "doc_arr" let-i="index"> 
                                     <div class="row document-list">
                                         <div class="col-md-6">
-                                            <h4>Document Name 1</h4>
+                                            <h4>Document Name {{i+1}}</h4>
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                                            <a href="#" class="btn btn-secondary btn-sm">Download</a>
+                                            <a href={{doc}} class="btn btn-primary btn-sm">View</a>
+                                            <a href={{doc}} class="btn btn-secondary btn-sm">Download</a>
                                         </div>
-                                    </div>
-                                    <div class="row document-list">
-                                        <div class="col-md-6">
-                                            <h4>Document Name 2</h4>
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                                            <a href="#" class="btn btn-secondary btn-sm">Download</a>
-                                        </div>
-                                    </div>
-                                    <div class="row document-list">
-                                        <div class="col-md-6">
-                                            <h4>Document Name 3</h4>
-                                        </div>
-                                        <div class="col-md-6 text-right">
-                                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                                            <a href="#" class="btn btn-secondary btn-sm">Download</a>
-                                        </div>
-                                    </div>
+                                    </div></ng-template>
+                                
+                                  
                                 </div>
                             </div>
                         </section>

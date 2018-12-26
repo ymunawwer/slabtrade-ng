@@ -13,6 +13,7 @@ declare var feather:any;
 export class AllOrdersComponent implements OnInit {
   orders:any;
   name:any;
+  wired_doc_arr:any;
   order:any;
   isorderlist:boolean;
   ispaymentdetails:boolean;
@@ -30,6 +31,7 @@ export class AllOrdersComponent implements OnInit {
     this.isupload = false
     this.isorderlist =true
     this.name =[]
+    this.wired_doc_arr = []
     this.order = []
     this.files = []
     this.bool = true
@@ -98,6 +100,7 @@ export class AllOrdersComponent implements OnInit {
     this.ispurchaseorder=false
     this.isupload = false
     this.isorderlist =false
+    this.getWiredDoc();
     
   }
 
@@ -184,6 +187,17 @@ export class AllOrdersComponent implements OnInit {
   }else{
     alert("Please select the shipment document.before uploading.")
   }
+}
+
+
+getWiredDoc(){
+  this.node.downloadWiredDoc(this.order._id).subscribe((res)=>{
+    this.wired_doc_arr = res['data'];
+    console.log(res)
+  },(err)=>{
+    alert("Please try again later.")
+  })
+  console.log(this.wired_doc_arr)
 }
 
 }

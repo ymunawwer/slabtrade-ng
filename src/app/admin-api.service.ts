@@ -167,6 +167,29 @@ onTypeUpdate(email,type){
   );
 
 }
+// /order/shippingdownload?id=
+getShippingDoc(id){
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.admin + '/order/shippingdownload?id='+id,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+}
+
+uploadWiredDoc(id,data):Observable<any>{
+  let token = this.auth.getToken();
+  const headers = new HttpHeaders();
+     
+     
+        headers.append('Auth','Bearer ' + token);
+  return this.http.post(ENV.admin+'/order/uploadshippingdetail?id='+id,data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
+}
+
+
+
+// /order/uploadshippingdetail?id=
 
 
 

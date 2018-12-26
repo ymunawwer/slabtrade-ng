@@ -265,6 +265,18 @@ downloadFile(): Observable<Blob> {
      
 }
 
+downloadWiredDoc(id): Observable<any> {
+  let token = this.auth.getToken();
+  let headers = new Headers();
+  // headers.append('responseType','ResponseContentType'+'.Blob')
+  headers.append('Auth','Bearer ' + token)
+  let options = new RequestOptions({headers: headers});
+  
+  return this.http.get(ENV.supplier+'/downloadwireddoc?id='+id, {headers:{'Auth':'Bearer ' + token}})
+      
+     
+}
+
 createBundle(data):Observable<any>{
   let token = this.auth.getToken();
   const headers = new HttpHeaders();
@@ -310,6 +322,8 @@ updateProduct(data):Observable<any>{
   return this.http.post(ENV.supplier+'/update',data,{headers:{'Auth':'Bearer ' + token}})
 
 }
+
+
 
 
 

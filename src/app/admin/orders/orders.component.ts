@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminApiService } from '../../admin-api.service';
 import {NodeapiService} from '../../nodeapi.service'
+import { Router } from '@angular/router';
 declare var feather:any;
 @Component({
   selector: 'app-orders',
@@ -16,12 +17,15 @@ export class OrdersComponent implements OnInit {
   order:any;
   products:any;
   bundle_arr:any;
+  file:any;
+  doc_arr:any;
   
   orders:any;
   order_status:any;
-  constructor(private adminApi: AdminApiService,private node:NodeapiService) {
+  constructor(private adminApi: AdminApiService,private node:NodeapiService,private router:Router) {
     this.orders =[]
     this.getOrder();
+    this.file = []
     this.bundle_arr = [];
    }
 
@@ -60,6 +64,11 @@ export class OrdersComponent implements OnInit {
     this.ispaymentmode=false;
     this.issupplierdetail=true;
     this.isCustomer=false;
+    this.adminApi.getShippingDoc(this.order['_id']).subscribe((res)=>{
+      this.doc_arr = res['data'];
+      console.log(this.doc_arr)
+
+    })
   }
 
   is_Customer(){
@@ -109,6 +118,8 @@ export class OrdersComponent implements OnInit {
   }
 
   oderDetail(){
+   
+    // this.doc_arr = 
     for(let product of this.products){
       console.log(product['bundle_id'])
       this.adminApi.getProductDetail(product['bundle_id']).subscribe((res)=>{
@@ -127,5 +138,48 @@ export class OrdersComponent implements OnInit {
       alert("Please try again")
     })
   }
+
+
+  wiredDocUpload(){
+    
+      
+      const formData:any = new FormData();
+      const file: Array<File> = this.file;
+    
+  
+      // formData.append("bundle_data",this.bundle)
+      for(let i =0; i < file.length; i++){
+        
+        formData.append("wired_file", file[i][0], file[i][0]['name']);
+    }
+      
+      // console.log("bundle",this.bundle)
+      this.adminApi.uploadWiredDoc(this.order['_id'],formData).subscribe((res)=>{
+        // console.log("success")
+        alert("Successfully Uploaded");
+        
+      },(err)=>{
+        alert('Upload Failed.Please try again.');
+      })
+    }
+
+
+  allFilesToUpload(event){
+    
+      
+    // document.getElementById('inputGroupFile07_label').innerText = event.target.files[0]['name'];
+    
+    this.file.push(<File>event.target.files)
+    
+
+  }
+
+  remove(index){
+    this.file[index] = null;
+    
+  }
+  
+  
+  
 
 }
