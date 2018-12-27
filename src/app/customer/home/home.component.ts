@@ -455,7 +455,7 @@ export class HomeComponent implements OnInit {
   }
 
   async toCart(doc,number){
-    // console.log(doc,number);
+    console.log('dimension',doc['dimension'][0]['width'],number);
     let net_area = 0;
     // this.tax=1.1
     // this.shipping_cost = 1;
@@ -507,8 +507,8 @@ export class HomeComponent implements OnInit {
             "total":price,
 
             "Dimension":[{
-              "width":100,
-              "height":200,
+              "width":doc['dimension'][0]['width'],
+              "height":doc['dimension'][0]['height'],
               "unit":"inch"
             }]}],
             "total_amount":price,
@@ -546,8 +546,8 @@ export class HomeComponent implements OnInit {
               "quantity":number,
               "total":price,
               "Dimension":[{
-                "width":100,
-                "height":200,
+                "width":doc['dimension'][0]['width'],
+                "height":doc['dimension'][0]['height'],
                 "unit":"inch"
               }]}
 

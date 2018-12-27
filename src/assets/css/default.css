@@ -2029,4 +2029,5 @@ img.xzoom{
   position: absolute;
   right: 2em;
   bottom: -4em;
+  z-index: 99;
 }

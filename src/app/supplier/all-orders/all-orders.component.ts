@@ -115,13 +115,15 @@ export class AllOrdersComponent implements OnInit {
 
 
 
-  orderDetail(doc){
+  orderDetail1(doc){
     this.isorderdetail=true;
     this.ispaymentdetails=false
     this.ispurchaseorder=false
     this.isupload = false
     this.isorderlist =false
     this.order = doc;
+    console.log(doc)
+    console.log(this.orders)
     this.isOrderClicked = true;
 
 
