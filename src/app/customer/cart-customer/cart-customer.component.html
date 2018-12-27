@@ -48,7 +48,7 @@
                             <ng-template ngFor let-item [ngForOf]= "cart_item" let-i="index">
                         <tr>
                             <td>{{item.bundle_name}}</td>
-                            <td>{{item.net_area}}</td>
+                            <td>{{item.Dimension[0].width*item.Dimension[0].height}}</td>
                             <td>{{item.thickness}}</td>
                             <td>{{item.Dimension[0].width}}X{{item.Dimension[0].height}}</td>
                             <td>{{item.quantity}}</td>
@@ -201,7 +201,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <input class="form-control" type="text" placeholder="Country" name = "address1_country" required minlength="3" #country="ngModel" [(ngModel)]="user.address1_country">
+                                                        <input class="form-control" type="text" placeholder="Country" name = "address1_country" required minlength="3" #country="ngModel" [(ngModel)]="user.address1_country" (keyup)= "getPort()">
                                                         <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger">
                                                                 <div  *ngIf="country.errors && country.errors.minlength">
                                                                     Atleast 3 Digit.
@@ -271,10 +271,9 @@
                                                     <div class="form-group">
                                                         <select class="form-control" name = "port" ngModel >
                                                             <option selected>Port</option>
-                                                            <option>22</option>
-                                                            <option>33</option>
-                                                            <option>43</option>
-                                                            <option>55</option>
+                                                            <ng-template ngFor let-port [ngForOf]= "port_list" let-i="index">
+                                                            <option>{{port['port_name']}}</option>
+                                                        </ng-template>
                                                         </select>
                                                     </div>
                                                 </div>

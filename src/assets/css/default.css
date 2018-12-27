@@ -12,6 +12,16 @@
     src: url("//sf.abarba.me/SF-UI-Display-Bold.otf");
 }
 
+.show-all-btn{
+    margin-right: 1em;
+}
+.back-button{
+    float: right;
+    font-size: 0.58em;
+    width: 11em;
+    margin-top: 5em;
+}
+
 /** Heavy */
 @font-face {
     font-family: "SF Display";

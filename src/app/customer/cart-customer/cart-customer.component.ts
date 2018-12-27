@@ -6,6 +6,7 @@ import { ViewChild } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 
+
 declare var feather:any;
 @Component({
   selector: 'app-cart-customer',
@@ -19,6 +20,7 @@ export class CartCustomerComponent implements OnInit {
   shipping:number;
   shipping_detail:any;
   total:number;
+  port_list;
   total_item:number;
   is_check_out:boolean;
   iscartempty:boolean;
@@ -26,7 +28,7 @@ export class CartCustomerComponent implements OnInit {
   unload:boolean;
   user:any;
   port:any;
-  constructor(private nodeApi:NodeapiService,private location:PlatformLocation,private auth:AuthService,private router:Router) {
+  constructor(private nodeapi:NodeapiService,private nodeApi:NodeapiService,private location:PlatformLocation,private auth:AuthService,private router:Router) {
     this.unload= true;
     this.port = "Chennai";
     this.cart_item = []
@@ -48,18 +50,27 @@ export class CartCustomerComponent implements OnInit {
       "address2_zip":this.auth.getUser().mailing_zip
     
     };
-
+    this.getPort();
     this.location.onPopState(() => {
       this.is_check_out = false
       
 
   });
+
+  
    }
 
   ngOnInit() {
     feather.replace();
   }
-
+  async getPort(){
+   
+    await this.nodeapi.getPortDetailBycountry(this.user.address1_country).subscribe((result)=>{
+      console.log(result);
+      this.port_list = result['data']
+    })
+    console.log(this.port_list);
+  }
   
 
   getCartItem(){
@@ -130,6 +141,7 @@ confirmToCheckOut(){
       }else if(result['message']!=='Container is not full'){
         // localStorage.setItem('cart',JSON.stringify(0))
         alert("Order is succefully placed");
+        localStorage.setItem('cart',JSON.stringify(0));
         this.router.navigate(['/']);
 
 
@@ -173,7 +185,20 @@ confirmToCheckOut(){
 
 
   remove(item){
-    
+
+    // this.tax = res['data'][0]['tax'];
+    // this.shipping = res['data'][0]['shipping_cost'];
+    // this.total = res.data[0]['cart_total'];
+    // this.cart_item = res.data[0].bundle;
+    // this.total_item = res.data[0].total_quantity;
+
+
+    // let data = {
+    //   "cart_total":,
+    //   "tax":,
+    //   "total_amount":this.total - item['price'],
+    //   "total_quantity":this.total_item - 1
+    // }
     console.log(item);
     // delete this.cart_item[i];
     this.nodeApi.removeCartItem(item['_id']).subscribe((res)=>{

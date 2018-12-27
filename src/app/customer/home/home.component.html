@@ -61,22 +61,19 @@ input[type=number]::-webkit-outer-spin-button {
                                           <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
                                       </div>
                                   </div>
-                                  <label class="box">One
-                                      <input type="checkbox" checked="checked">
+                                  <label class="box" >Black
+                                      <input type="radio" name = "color" value="000000" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
                                       <span class="checkmark"></span>
                                   </label>
-                                  <label class="box">Two
-                                      <input type="checkbox">
+                                  <label class="box" >Blue
+                                      <input type="radio" name = "color" value="0000ff" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
                                       <span class="checkmark"></span>
                                   </label>
-                                  <label class="box">Three
-                                      <input type="checkbox">
+                                  <label class="box" >Grey
+                                      <input type="radio" name = "color" value="808080" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
                                       <span class="checkmark"></span>
                                   </label>
-                                  <label class="box">Four
-                                      <input type="checkbox">
-                                      <span class="checkmark"></span>
-                                  </label>
+                              
                               </div>
                               <div class="inner-bar">
                                   <div class="side-bar">
@@ -86,21 +83,21 @@ input[type=number]::-webkit-outer-spin-button {
                                               <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
                                           </div>
                                       </div>
-                                      <label class="box">One
-                                          <input type="checkbox" checked="checked">
+                                      <label class="box" >Grannite
+                                          <input type="radio" name = "type" value="granite" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
                                           <span class="checkmark"></span>
                                       </label>
-                                      <label class="box">Two
-                                          <input type="checkbox">
+                                      <label class="box" >Marble
+                                          <input type="radio" value="marble" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
                                           <span class="checkmark"></span>
                                       </label>
-                                      <label class="box">Three
-                                          <input type="checkbox">
+                                      <label class="box" >Quartzite
+                                          <input type="radio" value="quartzite" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
                                           <span class="checkmark"></span>
                                       </label>
-                                      <label class="box">Four
-                                          <input type="checkbox">
-                                          <span class="checkmark"></span>
+                                      <label class="box" >Quartz
+                                          <input type="radio" value="quartz" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
+                                          <span class="checkmark" ></span>
                                       </label>
                                   </div>
                               </div>
@@ -109,12 +106,16 @@ input[type=number]::-webkit-outer-spin-button {
 
                       <div class="col-md-9 right-card">
                         <div [hidden]="isitemclicked">
+                                <a (click)="showAllItem()" class="btn btn-secondary ml-auto back-button" *ngIf = "isnull && issearched">First Page </a>
                         <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
                           <div class="outer-bar">
                             <div class="row link-button">
                               <div class="col-md-12">
                                   <h2>{{item._id}}</h2>
-                                 <a (click)="viewMore(item._id)" class="btn btn-secondary ml-auto">View More</a>
+                                 <a (click)="viewMore(item._id)" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
+                                 <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
+                                 <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
+                                 
                              </div>
                            </div>
                            <div class="row">
@@ -276,7 +277,7 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option col-md-8">Price</td>
                                             <td class="table-option1 col-md-4">
                                                 <ul>
-                                                    <li class="item">{{doc.price}} </li>
+                                                    <li class="item">${{doc.price}} </li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -292,7 +293,7 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option col-md-8">Net Weight :</td>
                                             <td class="table-option1 col-md-4">
                                                 <ul>
-                                                    <li class="item">{{doc.net_weight}}kg</li>
+                                                    <li class="item">{{doc.net_weight}}lbs</li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -300,7 +301,7 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option col-md-8">Gross Weight :</td>
                                             <td class="table-option1 col-md-4">
                                                 <ul>
-                                                    <li class="item">400kg</li>
+                                                    <li class="item">400lbs</li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -319,7 +320,7 @@ input[type=number]::-webkit-outer-spin-button {
                                                   <strong>-</strong>
                                                 </button>
                                               </div>
-                                              <input value="5" min="0" max="6" type="number" style="text-align: center; width: 180px" class="input" [(ngModel)] = "number">
+                                              <input value="5" [min]="number" max="6" type="number" style="text-align: center; width: 180px" class="input" [(ngModel)] = "number">
                                               <div class="input-group-append">
                                                 <button (click)="incCount()" style="min-width: 2.5em" class="btn btn-increment btn-outline-secondary" type="button">
                                                   <strong>+</strong>

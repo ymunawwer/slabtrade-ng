@@ -331,8 +331,17 @@ updateProduct(data):Observable<any>{
 
 }
 
+//recalculate
+cartRecalculate(data):Observable<any>{
+  let token = this.auth.getToken();
+  const headers = new HttpHeaders();
+  headers.append('Auth','Bearer'+token);
+  
 
+  
+  return this.http.post(ENV.customer+'/recalculate',data,{headers:{'Auth':'Bearer ' + token}})
 
+}
 
 
 
