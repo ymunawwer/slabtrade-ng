@@ -1,5 +1,5 @@
 <div id="page-container">
-    
+
     <div class="page-wrapper">
       <app-navbar></app-navbar>
 
@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-md-8">
                         <div class="row">
-                            <div class="col-md-12 form-box">
+                            <div class="col-md-12">
                                 <h5 class="mb-3"><strong>Instruction</strong></h5>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
@@ -55,7 +55,7 @@
                             <td>${{(item.total===undefined?0:item.total)}}</td>
                             <td class="text-center" (click)="remove(item)"><a class="remove">Remove</a></td>
                         </tr></ng-template>
-                       
+
                         <tr>
                             <td colspan="4">Tax</td>
                             <td></td>
@@ -99,8 +99,8 @@
 
 
 
-                    
-                        
+
+
                         <div class="billing-form">
                             <div class="container">
                                 <div class="billing-bar">
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                     <div class="row billing-box">
-                                        <div class="col-md-12 col-sm-12 col-xs-12 right form-box">
+                                        <div class="col-md-12 col-sm-12 col-xs-12 right">
                                         <form #f="ngForm" (ngSubmit)="shippingDetail(f)">    <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-group">
@@ -120,7 +120,7 @@
                                                                 <div  *ngIf="first.errors && first.errors.minlength">
                                                                     Atleast 4 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="first.errors.required">
                                               First name is required.
                                             </div>
@@ -133,7 +133,7 @@
                                                                 <div  *ngIf="last.errors && last.errors.minlength">
                                                                     Atleast 4 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="last.errors.required">
                                              Last name is required.
                                             </div>
@@ -147,7 +147,7 @@
                                                                 <div  *ngIf="contact.errors && contact.errors.minlength">
                                                                     Atleast 10 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="contact.errors.required">
                                             contact is required.
                                             </div>
@@ -159,12 +159,12 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <input class="form-control" type="text" placeholder="Street" required #addr1="ngModel" name = "address1_street" [(ngModel)]="user.address1_street"> 
+                                                        <input class="form-control" type="text" placeholder="Street" required #addr1="ngModel" name = "address1_street" [(ngModel)]="user.address1_street">
                                                         <div *ngIf="addr1.invalid && (addr1.dirty || addr1.touched)" class="alert alert-danger">
                                                                 <div  *ngIf="addr1.errors && addr1.errors.minlength">
                                                                     Atleast 10 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="addr1.errors.required">
                                             Address is required.
                                             </div>
@@ -178,7 +178,7 @@
                                                                 <div  *ngIf="city.errors && city.errors.minlength">
                                                                     Atleast 3 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="city.errors.required">
                                             City is required.
                                             </div>
@@ -192,7 +192,7 @@
                                                                 <div  *ngIf="state1.errors && state1.errors.minlength">
                                                                     Atleast 3 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="state1.errors.required">
                                             State is required.
                                             </div>
@@ -206,7 +206,7 @@
                                                                 <div  *ngIf="country.errors && country.errors.minlength">
                                                                     Atleast 3 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="country.errors.required">
                                             Country is required.
                                             </div>
@@ -220,7 +220,7 @@
                                                                 <div  *ngIf="zip.errors && zip.errors.minlength">
                                                                     Atleast 6 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="zip.errors.required">
                                             Zip is required.
                                             </div>
@@ -257,7 +257,7 @@
                                                                 <div  *ngIf="zip2.errors && zip2.errors.minlength">
                                                                     Atleast 10 Digit.
                                                                 </div>
-                                          
+
                                             <div *ngIf="zip2.errors.required">
                                             contact is required.
                                             </div>
@@ -269,10 +269,9 @@
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <select class="form-control" name = "port" ngModel >
-                                                            <option selected>Port</option>
+                                                        <select class="form-control" name = "port" [(ngModel)]="port">
                                                             <ng-template ngFor let-port [ngForOf]= "port_list" let-i="index">
-                                                            <option>{{port['port_name']}}</option>
+                                                            <option value="{{ port['port_name'] }}">{{port['port_name']}}</option>
                                                         </ng-template>
                                                         </select>
                                                     </div>
@@ -282,11 +281,11 @@
                                                 </div>
                                                 <div class="col-md-4 form-check-inline">
                                                     <label class="radio-button">Yes
-                                                        <input type="radio" name="radio" ngModel>
+                                                        <input type="radio" name="radio" value='yes' [(ngModel)]="unloadRadio">
                                                         <span class="checkmark"></span>
                                                     </label>
                                                     <label class="radio-button">No
-                                                        <input type="radio" name="radio" ngModel>
+                                                        <input type="radio" name="radio" value='no' [(ngModel)]="unloadRadio">
                                                         <span class="checkmark"></span>
                                                     </label>
                                                 </div>
@@ -302,41 +301,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="footer">
-                            <div class="container">
-                                <div class="row row-col">
-                                    <div class="col-md-4">
-                                        <h1 class="footer-title">Slab Tab</h1>
-                                        <p>Reference site about Lorem Ipsum, giving information on its origins.</p>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5>Company</h5>
-                                        <ul class="company-links">
-                                            <li><a class="about-company" href="#">Help</a></li>
-                                            <li><a class="about-company" href="#">Careers</a></li>
-                                            <li><a class="about-company" href="#">News</a></li>
-                                            <li><a class="about-company" href="#">Insurance</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <h5>About</h5>
-                                        <ul class="company-links">
-                                            <li><a class="about-company" href="#">Help</a></li>
-                                            <li><a class="about-company" href="#">Careers</a></li>
-                                            <li><a class="about-company" href="#">News</a></li>
-                                            <li><a class="about-company" href="#">Insurance</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 text-center">
-                                        <p class="company-links">&copy 2018 Slab Tab</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <!-- bootstrap.js -->
-                      
+
                         <script type="text/javascript">
                         feather.replace()
                         </script>
@@ -352,8 +319,8 @@
                             });
                         });
                         </script>
-                  
-                    
+
+
 
 
 
@@ -365,7 +332,7 @@
         <div class="container">
             <div class="row row-col">
                 <div class="col-md-4">
-                    <h1 class="footer-title">Slab Tab</h1>
+                    <h1 class="footer-title">Slab Trade</h1>
                     <p>Reference site about Lorem Ipsum, giving information on its origins.</p>
                 </div>
                 <div class="col-md-4">
@@ -389,12 +356,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <p class="company-links">&copy 2018 Slab Tab</p>
+                    <p class="company-links">&copy 2018 Slab Trade</p>
                 </div>
             </div>
         </div>
         </div>
-     
+
         <script type="text/javascript">
         feather.replace()
         </script>

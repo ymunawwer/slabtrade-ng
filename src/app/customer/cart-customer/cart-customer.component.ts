@@ -28,9 +28,9 @@ export class CartCustomerComponent implements OnInit {
   unload:boolean;
   user:any;
   port:any;
+  unloadRadio: any = 'yes';
   constructor(private nodeapi:NodeapiService,private nodeApi:NodeapiService,private location:PlatformLocation,private auth:AuthService,private router:Router) {
     this.unload= true;
-    this.port = "Chennai";
     this.cart_item = []
     this.getCartItem();
     this.is_check_out = false;
@@ -48,30 +48,31 @@ export class CartCustomerComponent implements OnInit {
       "address2_state":this.auth.getUser().mailing_state,
       "address2_country":this.auth.getUser().mailing_country,
       "address2_zip":this.auth.getUser().mailing_zip
-    
+
     };
     this.getPort();
     this.location.onPopState(() => {
       this.is_check_out = false
-      
+
 
   });
 
-  
+
    }
 
   ngOnInit() {
     feather.replace();
   }
   async getPort(){
-   
+
     await this.nodeapi.getPortDetailBycountry(this.user.address1_country).subscribe((result)=>{
       console.log(result);
-      this.port_list = result['data']
+      this.port_list = result['data'];
+      this.port = this.port_list[0]['port_name'];
     })
     console.log(this.port_list);
   }
-  
+
 
   getCartItem(){
     this.nodeApi.getCart("0").subscribe((res)=>{
@@ -84,7 +85,7 @@ export class CartCustomerComponent implements OnInit {
           this.total = res.data[0]['cart_total'];
           this.cart_item = res.data[0].bundle;
           this.total_item = res.data[0].total_quantity;
-          
+
           this.iscartempty = false;
           console.log(this.cart_item);
 
@@ -93,12 +94,12 @@ export class CartCustomerComponent implements OnInit {
           alert("cart is empty")
 
         }
-       
+
 
       }else{
         alert("Please try again");
       }
-     
+
     })
 
   }
@@ -109,14 +110,14 @@ confirmToCheckOut(){
 }
 
   shippingDetail(form:NgForm){
-   
+
     // this.user.port = form.value.port;
     // this.user.un_load_facility = form.value.radio;
-   
+
     // this.nodeApi.getPortDetail(this.user.port).subscribe((result)=>{
     //   this.port = result;
     // })
-    
+
     console.log(this.user);
     let shipping_addr = {
       'street':this.user.address2_street,
@@ -126,8 +127,8 @@ confirmToCheckOut(){
       'zip':this.user.address2_zip
 
     }
-    
-    
+
+
     this.onCheckout("cash",this.tax,this.shipping,this.total,shipping_addr,this.port,this.unload);
   }
 
@@ -147,7 +148,7 @@ confirmToCheckOut(){
 
 
       }
-      
+
       // this.router.navigate([''])
 
     },(err)=>{
@@ -177,8 +178,8 @@ confirmToCheckOut(){
       }else{
         alert("Please try again")
       }
-      
-     
+
+
 
 
     })
@@ -194,14 +195,14 @@ confirmToCheckOut(){
     // this.total_item = res.data[0].total_quantity;
 
 
-    
+
     console.log(item);
     // delete this.cart_item[i];
     this.nodeApi.removeCartItem(item['_id']).subscribe((res)=>{
       console.log(res)
       console.log("total",this.total)
       console.log("tax",this.port_list[0]['tax_percentage'])
-      
+
 
 
       if(res['error_code'] ===200){
@@ -225,17 +226,17 @@ confirmToCheckOut(){
             "total_quantity":this.total_item - item['quantity']
           }
         }
-        
+
         this.nodeapi.cartRecalculate(data).subscribe((res)=>{
           alert("Succesfully removed")
           localStorage.setItem("cart",JSON.stringify(this.total_item - item['quantity']));
           window.location.reload();
           this.getCartItem();
-          
+
         })
 
-        
-     
+
+
       }else if(res['error_code'] ===500){
         alert("Please try again later.")
       }
@@ -245,7 +246,7 @@ confirmToCheckOut(){
   }
 
 
-  
+
 
 
 }

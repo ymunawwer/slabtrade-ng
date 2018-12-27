@@ -15,26 +15,26 @@ export class NavbarComponent implements OnInit {
   is_authenticated =false;
   user_detail;
   constructor(private router:Router) {
-    
+
     this.user_detail=JSON.parse(sessionStorage.getItem('currentUser'));
     if(this.user_detail!==null){
     console.log('user_detail',this.user_detail['user_detail'])
-    this.first_name = this.user_detail['user_detail']['user_detail']['alias'];
-    
+    this.first_name = this.user_detail['user_detail']['user_detail']['first_name'];
+
     this.session = localStorage.getItem('cart');
     if(this.session!==undefined){
       if(this.session!==null){
          if(this.user_detail['token']!==null){
            this.is_authenticated = true;
          }
-        
+
           this.session = JSON.parse(this.session);
           this.cart_count = this.session;
 
 
 
       // console.log("seesion",this.session['user_detail']['total_quantity'])
- 
+
       // this.cart_count = JSON.parse(localStorage.getItem('cartCount'));
       // this.flag = 1
     }
@@ -51,8 +51,8 @@ export class NavbarComponent implements OnInit {
   onLogout(){
     sessionStorage.removeItem("currentUser");
     window.location.reload();
-   
-    
+
+
 
   }
 

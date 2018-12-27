@@ -1,6 +1,6 @@
 <nav class="top-nav navbar navbar-expand-lg sticky-top">
         <div class="container">
-            <a class="navbar-brand" href="#">SLAB TAB</a>
+            <a class="navbar-brand" href="#">SLAB TRADE</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -30,12 +30,12 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="is_authenticated">
-          <img src="img/dog.jpg"><h2>{{first_name}}</h2>
+          <img src="../../../assets/img/avatar.png"><h2 style="color: white">{{first_name}}</h2>
         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Settings</a>
                             <a class="dropdown-item" (click)="onLogout()" *ngIf="is_authenticated">Log Out</a>
-                           
+
                         </div>
                     </li>
                     <li class="nav-item">

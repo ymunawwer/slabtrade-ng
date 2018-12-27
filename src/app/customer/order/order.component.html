@@ -1,15 +1,15 @@
 <div id="page-container">
-  
-  <div class="page-wrapper">
+
+  <div>
     <app-navbar></app-navbar>
     <div class="page-wrapper" *ngIf="!isfirst">
         <section class="sub-menu">
             <ul>
                 <li>
-                    <a class="active" (click)="stepSecond()">Order Status</a>
+                    <a [ngClass]="issecond ? 'active' : ''" (click)="stepSecond()">Order Status</a>
                 </li>
                 <li>
-                    <a (click)="stepThird()">Shipping Details</a>
+                    <a [ngClass]="isthird ? 'active' : ''" (click)="stepThird()">Shipping Details</a>
                 </li>
             </ul>
         </section>
@@ -56,7 +56,7 @@
   </div>
   <div class="container" *ngIf="issecond" >
 
-      
+
           <section class="shipping-process">
               <div class="timeline-shipping">
                   <div class="timeline">
@@ -135,7 +135,7 @@
                   </div>
               </div>
           </section>
-      
+
 
 
 
@@ -151,7 +151,7 @@
               <div class="row">
                   <div class="col-md-6">
                       <h4>My Shipping Address</h4>
-                      <p>{{street}} 
+                      <p>{{street}}
                           {{city}} {{state}}
                           {{country}} {{zip}}</p>
                   </div>
@@ -170,7 +170,7 @@
           <div class="supplier-doc">
               <h4 class="sub-title">Shipping Document</h4>
               <div class="documet-box">
-                    <ng-template ngFor let-doc [ngForOf]= "doc_arr" let-i="index"> 
+                    <ng-template ngFor let-doc [ngForOf]= "doc_arr" let-i="index">
                             <div class="row document-list">
                                 <div class="col-md-6">
                                     <h4>Document Name {{i+1}}</h4>
