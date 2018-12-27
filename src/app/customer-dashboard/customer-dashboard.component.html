@@ -1,5 +1,5 @@
 <head>
-    <title>Slab Tab</title>
+    <title>Slab Trade</title>
     <!-- bootstrap.css -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <!-- font-awesome -->
@@ -12,7 +12,7 @@
 
 <nav class="top-nav navbar navbar-expand-md navbar-light sticky-top">
     <div class="container">
-        <a class="navbar-brand" href="#">SLAB TAB</a>
+        <a class="navbar-brand" href="#">SLAB TRADE</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -36,8 +36,8 @@
             </ul>
         </div></div>
 </nav>
-<section class="img-slider" *ngIf = "!isitemclicked"> 
-   
+<section class="img-slider" *ngIf = "!isitemclicked">
+
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
             <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -130,7 +130,7 @@
                   </div>
 
                   <div class="col-md-9 right-card">
-                    <div [hidden]="isitemclicked || issearched"> 
+                    <div [hidden]="isitemclicked || issearched">
                     <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
                       <div class="outer-bar">
                         <div class="row link-button">
@@ -141,8 +141,8 @@
                        </div>
                        <div class="row">
                        <ng-template ngFor let-doc [ngForOf]= "item.docs" let-i="index" >
-                       
-                          
+
+
                               <div class="col-md-4">
                                   <div class="card-img-header">
                                       <div class="bg-img">
@@ -152,20 +152,20 @@
                                 <h4>{{doc.product_name}}</h4>
                                 <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
                                 <span class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
-                               
+
                                    <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
                                 </a>
                                       </div>
                                   </div>
                               </div></ng-template>
                             </div>
-                            
+
 
                           </div>
-                     
+
                     </ng-template>
-                    
-                    
+
+
                     </div>
 
                     <div *ngIf="issearched">
@@ -180,20 +180,20 @@
                               <h4>{{docsearch.product_name}}</h4>
                               <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
                               <span class="price">{{docsearch.price===undefined?'':'$'+docsearch.price}}</span>
-                             
+
                                  <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(docsearch)'>View Details</button>
                               </a>
                                     </div>
                                 </div>
                             </div>
-                                       
-                         
-                          </ng-template> 
+
+
+                          </ng-template>
                     </div>
                       </div>
-                  
-                  
-                  
+
+
+
                   </div></div>
 
 
@@ -202,10 +202,10 @@
 
 
                     <!-- search result -->
-                
-   </div>                
+
+   </div>
       </section>
-     
+
       <script type="text/javascript">
       feather.replace()
       </script>
@@ -321,7 +321,7 @@
                                             <span class="fill red" [hidden] = "number<5"></span>
                                             <span class="fill gray" [hidden] = "number>=6"></span>
                                             <span class="fill red" [hidden] = "number<6"></span>
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -331,7 +331,7 @@
                     </div>
                 </div>
             </div>
-    
+
 
             <div class="outer-bar">
                 <div class="row link-button">
@@ -351,19 +351,19 @@
                                                 <h4>{{doc1.product_name}}</h4>
                                                 <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
                                                 <span class="price">{{doc1.price===undefined?'':'$'+doc.price}}</span>
-                                           
+
                                                <button  type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc1)'>View Details</button>
                                             </a>
                             </div>
                         </div>
                     </div></ng-template>
-                    
-                  
-                  
+
+
+
                 </div></div>
         </div>
     </div>
-    
+
     <!-- bootstrap.js -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -403,7 +403,7 @@
 
 
 
-    
+
 
 
 
@@ -415,7 +415,7 @@
     <div class="container">
         <div class="row row-col">
             <div class="col-md-3">
-                <h1 class="footer-title">Slab Tab</h1>
+                <h1 class="footer-title">Slab Trade</h1>
                 <p>Lorem Ipsum, giving information on its origins, Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins.</p>
             </div>
             <div class="col-md-3">
@@ -448,13 +448,13 @@
         </div>
         <div class="row">
           <div class="col-md-12 text-center">
-            <p class="company-links">&copy 2018 Slab Tab</p>
+            <p class="company-links">&copy 2018 Slab Trade</p>
           </div>
         </div>
     </div>
 </div>
 
-                
+
 
 
 

@@ -211,12 +211,16 @@ input[type=number]::-webkit-outer-spin-button {
                                 <div class="exzoom_img_box">
                                   <ul class='exzoom_img_ul'>
 
-                                      <ng-template ngFor let-item_image [ngForOf]= "item_image" let-i="index" >
+                                    <li *ngFor="let item of item_image" [(ngModel)]="item_image">
+                                      <img [src]="sanitizeUrl(item)">
+                                    </li>
+
+                                      <!-- <ng-template ngFor let-item_image [ngForOf]= "item_image" let-i="index" >
 
                                           <li>
                                                 <img [src]="sanitizeUrl(item_image)">
                                           </li>
-                                      </ng-template>
+                                      </ng-template> -->
 
                                   </ul>
                                 </div>
@@ -466,7 +470,7 @@ input[type=number]::-webkit-outer-spin-button {
         <div class="container">
             <div class="row row-col">
                 <div class="col-md-3">
-                    <h1 class="footer-title">Slab Tab</h1>
+                    <h1 class="footer-title">Slab Trade</h1>
                     <p>Lorem Ipsum, giving information on its origins, Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins.</p>
                 </div>
                 <div class="col-md-3">
@@ -499,7 +503,7 @@ input[type=number]::-webkit-outer-spin-button {
             </div>
             <div class="row">
               <div class="col-md-12 text-center">
-                <p class="company-links">&copy 2018 Slab Tab</p>
+                <p class="company-links">&copy 2018 Slab Trad</p>
               </div>
             </div>
         </div>

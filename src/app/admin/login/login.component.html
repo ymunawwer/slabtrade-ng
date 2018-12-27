@@ -3,7 +3,7 @@
 <div class="login-container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-          <a class="navbar-brand" href="#">Slab Tab</a>
+          <a class="navbar-brand" href="#">Slab Trade</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -18,14 +18,14 @@
   </nav>
   <div class="login-page">
       <div class="register-card row">
-          <div class="col-md-5 col-sm-6 col-xs-12 left form-box">
+          <div class="col-md-5 col-sm-6 col-xs-12 left">
               <h6 class=""><strong>Login</strong></h6>
               <p>Please enter your e-mail address and password, then click "Login". You should have cookies enabled in your browser for successfull login.</p>
               <br>
               <p>Don't have an account?</p>
               <a href="/register" class="btn btn-light no-margin">Create New Account</a>
           </div>
-          <div class="col-md-7 col-sm-6 col-xs-12 right form-box">
+          <div class="col-md-7 col-sm-6 col-xs-12 right">
               <br><br>
               <form #f="ngForm" (ngSubmit)="onSubmit(f)">
               <div class="form-group">
@@ -42,7 +42,7 @@
               <div class="form-group">
                   <input class="form-control" type="password" placeholder="Password" ngModel name='password' required #pass = "ngModel" minlength="6">
                   <div *ngIf="pass.invalid && (pass.dirty || pass.touched)" class="alert alert-danger" >
-                     
+
                       <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                           Email is invalid
                       </div> -->
@@ -53,8 +53,8 @@
   <div *ngIf="pass.errors.minlength">
       password should not be less than 6 character.
     </div>
-   
-    
+
+
      </div> <div [hidden]="err" class="alert alert-danger" >
         Invalid credentials.Please try again later.
       </div>

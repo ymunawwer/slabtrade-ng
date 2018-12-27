@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
-    <title>Slab Tab</title>
+    <title>Slab Trade</title>
     <meta name="author" content="Ram Nethaji">
     <meta name="description" content="Responsive Mobile App Design">
     <meta name="keywords" content="responsive app, mobile app, inspiration, creative, multipage, ramnethaji">
@@ -38,7 +38,7 @@
 <body class="login-container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="#">Slab Tab</a>
+            <a class="navbar-brand" href="#">Slab Trade</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -59,7 +59,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12 right form-box">
                 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
                 <div class="row">
-                  
+
                     <div class="col-md-4">
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="First Name" name = "first_name" required minlength="6" #first="ngModel" ngModel>
@@ -79,7 +79,7 @@
                             <input class="form-control" type="text" placeholder="Last Name" required minlength="6" #last="ngModel" name = "last_name" ngModel>
                             <div *ngIf="last.invalid && (last.dirty || last.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="last.errors.required">
                            Last Name is required.
                           </div>
@@ -98,7 +98,7 @@
                             <input class="form-control" type="text" placeholder="Home Phone" required minlength="10" #home="ngModel" name="home_phone" ngModel>
                             <div *ngIf="home.invalid && (home.dirty || home.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="home.errors.required">
                            Last Name is required.
                           </div>
@@ -117,7 +117,7 @@
                             <input class="form-control" type="text" placeholder="Cell Phone" required minlength="10" #cell="ngModel" name = "cell_phone" ngModel>
                             <div *ngIf="cell.invalid && (cell.dirty || cell.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="cell.errors.required">
                            Cell phone is required.
                           </div>
@@ -132,7 +132,7 @@
                             <input class="form-control" type="email" placeholder="Email" name = "email" required minlength="5" #email="ngModel" ngModel>
                             <div *ngIf="email.invalid && (email.dirty || email.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="email.errors.required">
                            Email is required.
                           </div>
@@ -150,7 +150,7 @@
                             <input class="form-control" type="text" placeholder="Street" name = "address" required minlength="7" #street="ngModel" ngModel>
                             <div *ngIf="street.invalid && (street.dirty || street.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="street.errors.required">
                            Street is required.
                           </div>
@@ -165,7 +165,7 @@
                             <input class="form-control" type="text" placeholder="City" name = "city" required minlength="3" #city="ngModel" ngModel>
                             <div *ngIf="city.invalid && (city.dirty || city.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="city.errors.required">
                            City is required.
                           </div>
@@ -449,7 +449,7 @@
                                     <div *ngIf="country.errors.required">
                                             Country is required.
                                            </div>
-                                           
+
 
 
                             </div>
@@ -460,7 +460,7 @@
                             <input class="form-control" type="text" placeholder="Zip" name = "zip" ngModel required minlength="6" #zip="ngModel">
                             <div *ngIf="zip.invalid && (zip.dirty || zip.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="zip.errors.required">
                            Zip is required.
                           </div>
@@ -478,7 +478,7 @@
                             <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="7" #mailing_street="ngModel">
                             <div *ngIf="mailing_street.invalid && (mailing_street.dirty || mailing_street.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="mailing_street.errors.required">
                            Street is required.
                           </div>
@@ -493,7 +493,7 @@
                             <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
                             <div *ngIf="mailing_city.invalid && (mailing_city.dirty || mailing_city.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="mailing_city.errors.required">
                            City is required.
                           </div>
@@ -508,7 +508,7 @@
                             <input class="form-control" type="text" placeholder="State" name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel">
                             <div *ngIf="mailing_state.invalid && (mailing_state.dirty || mailing_state.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="mailing_state.errors.required">
                            State is required.
                           </div>
@@ -774,11 +774,11 @@
                             </select>
                             <div *ngIf="mailing_country.invalid && (mailing_country.dirty || mailing_country.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="mailing_country.errors.required">
                            Country is required.
                           </div>
-                         
+
                         </div>
                         </div>
                     </div>
@@ -787,7 +787,7 @@
                             <input class="form-control" type="text" placeholder="Zip" name="mailing_zip" ngModel required minlength="6" #mailing_zip="ngModel">
                             <div *ngIf="mailing_zip.invalid && (mailing_zip.dirty || mailing_zip.touched)"
                             class="alert alert-danger">
-                        
+
                           <div *ngIf="mailing_zip.errors.required">
                            Zip is required.
                           </div>
@@ -803,12 +803,12 @@
                             <button type="submit" class="btn btn-primary btn-block" [disabled]="!f.valid">I Agree and Register</button>
                         </div>
                     </div>
-                   
+
                 </div> </form>
-                
+
                 <p class="note"><a href="login.html">Already have an account?</a></p>
             </div>
-            
+
         </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

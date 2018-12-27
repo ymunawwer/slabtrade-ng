@@ -308,7 +308,7 @@ img {
 }
 
 .nav-link img {
-    width: 40px;
+    width: 32px;
     border-radius: 50%;
     float: left;
 }
@@ -897,8 +897,8 @@ img {
 
 
 .sub-menu {
-    top: 75px;
-    left: 70px;
+    top: 54px;
+    left: -7px;
     position: fixed;
     border-top: 1px solid #eff3f6;
     border-bottom: 1px solid #e4e4e4;

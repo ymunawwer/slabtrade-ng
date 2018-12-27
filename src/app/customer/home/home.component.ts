@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   searchcolor;
   trustedUrl;
   isnull;
-  item_image:any;
+  item_image = [];
   searchtype;
   similarproduct:any;
   image:any;
@@ -264,7 +264,7 @@ export class HomeComponent implements OnInit {
   }
   this.viewItemClickCount++;
 
-
+console.log('images', this.item_image);
 
   }
 
