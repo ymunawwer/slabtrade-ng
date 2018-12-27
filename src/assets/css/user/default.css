@@ -44,7 +44,7 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-.badge {
+.nav-link .badge {
     /* position: absolute; */
     right: 52em;
     border-radius: 50%;

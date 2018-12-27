@@ -680,7 +680,7 @@ img {
 }
 
 .dropdown-toggle::after {
-    margin-top: 18px;
+    /* margin-top: 18px; */
 }
 
 .prev-img-blk {
@@ -1986,4 +1986,47 @@ background-color: red;
     font-size: 0.68em;
     border-top-right-radius: 3px!important;
     border-bottom-right-radius: 3px!important;
+}
+img.xzoom{
+  width:100% !important;
+}
+
+.login-container .left .btn{
+  font-size: 1em;
+}
+
+.login-container .left::before{
+  content: none;
+}
+
+.btn-primary.disabled, .btn-primary:disabled{
+  background-color: #0a3163;
+    border-color: #0a3163;
+
+}
+
+.btn-toolbar.sw-toolbar.sw-toolbar-bottom .sw-btn-group{
+  display: block;
+  width: 100%;
+}
+
+.btn-toolbar.sw-toolbar.sw-toolbar-bottom .sw-btn-prev{
+  float: left;
+  margin-left: 1em;
+}
+
+.btn-toolbar.sw-toolbar.sw-toolbar-bottom .sw-btn-next{
+  float: right;
+  margin-right: 1em;
+}
+
+.btn-toolbar.sw-toolbar.sw-toolbar-bottom .sw-btn-next.disabled{
+  display: none;
+}
+
+.create-bdl-btn{
+  float: right;
+  position: absolute;
+  right: 2em;
+  bottom: -4em;
 }

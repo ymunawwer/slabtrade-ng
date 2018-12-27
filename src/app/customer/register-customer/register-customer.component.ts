@@ -4,6 +4,8 @@ import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+declare var $: any;
+
 @Component({
   selector: 'app-register-customer',
   templateUrl: './register-customer.component.html',
@@ -22,9 +24,11 @@ export class RegisterCustomerComponent implements OnInit {
   ngAfterViewInit(){
     this.formRef.valueChanges.subscribe(data =>{
       console.log('Form changes', data);
-      
 
-    })
+    });
+    $('.country').select2({
+      placeholder: 'Select Country'
+  });
   }
 
 
@@ -32,7 +36,7 @@ export class RegisterCustomerComponent implements OnInit {
   onSubmit(form:NgForm){
     var d = new Date();
     var n = d.getMonth();
-    
+
     // console.log(form)
     let alias = 'CUS'+'-'+n+'-'+d.getTime();
     console.log(alias)
@@ -51,12 +55,12 @@ export class RegisterCustomerComponent implements OnInit {
           alert("Please try with different email or try after some time.")
 
         }
-        
 
 
-      
-      
-      
+
+
+
+
     },(err)=>{
       alert("Please try with different email or try after some time.")
     })
