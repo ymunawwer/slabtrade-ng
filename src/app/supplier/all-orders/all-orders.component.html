@@ -5,7 +5,9 @@
 
 <div class="page-inner sub-menu-inner">
         <div *ngIf="isOrderClicked">
-   <section class="sub-menu">
+   <section style="
+   top: 75px;
+   left: 70px;" class="sub-menu">
         <ul>
             <li>
                 <a [ngClass]="{'active': isorderdetail === true }" (click)="orderDetailTab()">Order Details</a>
@@ -78,8 +80,8 @@
                                     <ng-template ngFor let-item [ngForOf]= "order.products" let-i="index" >
                                     <tr>
                                         <td>{{item.bundle_id}}</td>
-                                        <td>{{item.dimension[0].width*item.dimension[0].height}}sqft</td>
-                                        <td>{{item.dimension[0].thickness}}mm</td>
+                                        <td>{{item.dimension[0].width*item.dimension[0].height}}</td>
+                                        <td>{{item.dimension[0].thickness}}</td>
                                         <td>{{item.dimension[0].width}}X{{item.dimension[0].height}}</td>
                                         <td>{{item.quantity}}</td>
                                         <td>{{order.total}}</td>
