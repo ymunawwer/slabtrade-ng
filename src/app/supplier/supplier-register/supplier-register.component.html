@@ -57,24 +57,24 @@
             <div class="col-md-12 col-sm-12 col-xs-12 right form-box">
 <form #f="ngForm" (ngSubmit)="onSubmit(f)">
     <div class="row">
-      
+
         <div class="col-md-4">
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="First Name" name = "first_name" ngModel required minlength="6" #first="ngModel">
                 <div *ngIf="first.invalid && (first.dirty || first.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="first.errors.required">
       First Name is required.
     </div>
     <div *ngIf="first.errors.minlength">
         First Name should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -82,19 +82,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Last Name" name = "last_name" ngModel required minlength="6" #last="ngModel" >
                 <div *ngIf="last.invalid && (last.dirty || last.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="last.errors.required">
       Last Name is required.
     </div>
     <div *ngIf="last.errors.minlength">
         Last Name should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -107,45 +107,45 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Home Phone" name="home_phone" required minlength="6" #home_phone="ngModel" ngModel>
                 <div *ngIf="home_phone.invalid && (home_phone.dirty || home_phone.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="home_phone.errors.required">
       Home Phone is required.
     </div>
     <div *ngIf="home_phone.errors.minlength">
         Home Phone should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Work Phone" name = "work_phone"  ngModel>
-                
+
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Cell Phone" name = "cell_phone" required minlength="6" #cell_phone="ngModel" ngModel>
                 <div *ngIf="cell_phone.invalid && (cell_phone.dirty || cell_phone.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="cell_phone.errors.required">
       Cell phone is required.
     </div>
     <div *ngIf="cell_phone.errors.minlength">
         Cell phone should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -153,19 +153,19 @@
             <div class="form-group">
                 <input class="form-control" type="email" placeholder="Email" name = "email" required minlength="6" #email="ngModel" ngModel>
                 <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="email.errors.required">
       Email is required.
     </div>
     <div *ngIf="email.errors.minlength">
         Email should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -176,19 +176,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Street" name = "address" required minlength="6" #address="ngModel" ngModel>
                 <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="address.errors.required">
       Address is required.
     </div>
     <div *ngIf="address.errors.minlength">
         Address should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -196,19 +196,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="City" name = "city" required minlength="6" #city="ngModel" ngModel>
                 <div *ngIf="city.invalid && (city.dirty || city.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="city.errors.required">
       City is required.
     </div>
     <div *ngIf="city.errors.minlength">
         City should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -217,7 +217,7 @@
                 <input class="form-control" type="text" placeholder="State" name = "state" required minlength="6" #state="ngModel" ngModel>
             </div>
             <div *ngIf="state.invalid && (state.dirty || state.touched)" class="alert alert-danger" >
-                     
+
                     <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                         Email is invalid
                     </div> -->
@@ -228,8 +228,8 @@
 <div *ngIf="state.errors.minlength">
     state should not be less than 6 character.
   </div>
- 
-  
+
+
    </div>
         </div>
         <div class="col-md-4">
@@ -488,17 +488,17 @@
                     <option value="ZW">Zimbabwe</option>
                 </select>
                 <div *ngIf="country.invalid && (country.dirty || country.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="country.errors.required">
       Country is required.
     </div>
-  
-     
-      
+
+
+
        </div>
             </div>
         </div>
@@ -506,19 +506,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Zip" name = "zip" ngModel required minlength="6" #zip="ngModel">
                 <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="zip.errors.required">
       Zip is required.
     </div>
     <div *ngIf="zip.errors.minlength">
         Zip should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -529,19 +529,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="6" #mailing_address="ngModel">
                 <div *ngIf="mailing_address.invalid && (mailing_address.dirty || mailing_address.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="mailing_address.errors.required">
       Address is required.
     </div>
     <div *ngIf="mailing_address.errors.minlength">
         Address should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -549,19 +549,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="6" #mailing_city="ngModel">
                 <div *ngIf="mailing_city.invalid && (mailing_city.dirty || mailing_city.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="mailing_city.errors.required">
       city is required.
     </div>
     <div *ngIf="mailing_city.errors.minlength">
         city should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -569,19 +569,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="State" name = "mailing_state" ngModel required minlength="6" #mailing_state="ngModel">
                 <div *ngIf="mailing_state.invalid && (mailing_state.dirty || mailing_state.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="mailing_state.errors.required">
       state is required.
     </div>
     <div *ngIf="mailing_state.errors.minlength">
         state should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -840,17 +840,17 @@
                     <option value="ZW">Zimbabwe</option>
                 </select>
                 <div *ngIf="mailing_country.invalid && (mailing_country.dirty || mailing_country.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="mailing_country.errors.required">
       Country is required.
     </div>
-   
-     
-      
+
+
+
        </div>
             </div>
         </div>
@@ -858,19 +858,19 @@
             <div class="form-group">
                 <input class="form-control" type="text" placeholder="Zip" name="mailing_zip" ngModel required minlength="6" #mailing_zip="ngModel">
                 <div *ngIf="mailing_zip.invalid && (mailing_zip.dirty || mailing_zip.touched)" class="alert alert-danger" >
-                     
+
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
                             Email is invalid
                         </div> -->
-  
+
     <div *ngIf="mailing_zip.errors.required">
             Zip is required.
     </div>
     <div *ngIf="mailing_zip.errors.minlength">
         Zip should not be less than 6 character.
       </div>
-     
-      
+
+
        </div>
             </div>
         </div>
@@ -880,7 +880,7 @@
                 <button type="submit" class="btn btn-primary btn-block" [disabled]="!f.valid">I Agree and Register</button>
             </div>
         </div>
-       
+
     </div> </form>
     <p class="note"><a href="login.html">Already have an account?</a></p>
   </div>

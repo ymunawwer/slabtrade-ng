@@ -16,8 +16,9 @@ declare var $ :any;
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
- 
+
   url = ENV.server;
+  viewItemClickCount = 0;
   isitemclicked = false
   doc:any;
   port_list:any;
@@ -54,11 +55,11 @@ export class HomeComponent implements OnInit {
    }
 
   ngOnInit() {
-    
-    
+
+
     console.log('item',this.items)
     feather.replace();
-   
+
   }
 
   sanitizeUrl(url) {
@@ -67,7 +68,7 @@ export class HomeComponent implements OnInit {
     // close as possible to the input data so
     // that it's easier to check if the value is safe.
     url = url.replace('home/gamasome/slabtrade/public/','');
-    
+
      return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
@@ -80,29 +81,29 @@ export class HomeComponent implements OnInit {
   async getHomePage(){
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
     this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
-      
+
       this.items = data.data
      var count =0;
      if(data['error_code']===200){
      await this.items.forEach(el=>{
-        
+
         el.docs.forEach((res)=>{
-          
+
           count=count+1;
        res.images.forEach((img)=>{
          this.image.push(img.path)
-         
-     
+
+
        })
            if(el.docs.length === count){
              let arr =[]
           for (let i = 0;i<3;i++){
-            
+
             let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-          
-              
+
+
               this.slider_image.push(this.image[rand])
-            
+
             }
          }
       })
@@ -110,33 +111,33 @@ export class HomeComponent implements OnInit {
 
     sessionStorage.removeItem('currentUser')
     this.nodeapi.fetchHomePage().subscribe((data)=>{
-      
+
       this.items = data.data
-      
+
 
       var count =0;
       this.items.forEach(el=>{
-         
+
          el.docs.forEach((res)=>{
-           
+
            count=count+1;
         res.images.forEach((img)=>{
           this.image.push(img.path)
-          
-          
-      
+
+
+
         })
-        
+
             if(el.docs.length === count){
 
               let arr =[]
            for (let i = 0;i<3;i++){
-             
+
              let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-           
-               
+
+
                this.slider_image.push(this.image[rand])
-             
+
              }
           }
        })
@@ -146,42 +147,42 @@ export class HomeComponent implements OnInit {
 
     })
 
-  
+
 
 
 
     }
- 
+
     },(err)=>{
       this.nodeapi.fetchHomePage().subscribe((data)=>{
-        
+
         this.items = data.data
 
-        
+
 
         var count =0;
         this.items.forEach(el=>{
-           
+
            el.data.forEach((res)=>{
-             
+
              count=count+1;
           res.images.forEach((img)=>{
             this.image.push(img.path)
-            
-            
-        
+
+
+
           })
-          
+
               if(el.docs.length === count){
 
                 let arr =[]
              for (let i = 0;i<3;i++){
-               
+
                let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-             
-                 
+
+
                  this.slider_image.push(this.image[rand])
-               
+
                }
             }
          })
@@ -193,33 +194,33 @@ export class HomeComponent implements OnInit {
     })
   }else{
     this.nodeapi.fetchHomePage().subscribe((data)=>{
-      
+
       this.items = data.data
-      
+
 
       var count =0;
       this.items.forEach(el=>{
-         
+
          el.docs.forEach((res)=>{
-           
+
            count=count+1;
         res.images.forEach((img)=>{
           this.image.push(img.path)
-          
-          
-      
+
+
+
         })
-        
+
             if(el.docs.length === count){
 
               let arr =[]
            for (let i = 0;i<3;i++){
-             
+
              let rand = Math.floor(Math.random() * Math.floor((this.image.length - 1)));
-           
-               
+
+
                this.slider_image.push(this.image[rand])
-             
+
              }
           }
        })
@@ -239,25 +240,31 @@ export class HomeComponent implements OnInit {
     this.doc = doc;
     this.doc.images.forEach(element => {
       this.item_image.push(element.path)
-      
-      
+
+
     });
     this.isitemclicked = true
     this.issearched = false
     if(doc){
       this.nodeapi.getSimilarProduct(doc.supplier_id).subscribe((data)=>{
-        
+
         this.similarproduct = data['data'];
-        
+
         const element = document.querySelector("#top");
           if (element) { element.scrollIntoView(); }
- 
-       
+
+
       })
     }
-   
-    
-    
+
+    if(this.viewItemClickCount === 0) {
+    setTimeout(function() {
+      $('#exzoom').exzoom({});
+    }, 100);
+  }
+  this.viewItemClickCount++;
+
+
 
   }
 
@@ -265,24 +272,24 @@ export class HomeComponent implements OnInit {
   searchByColor(event) {
     if(event.keyCode == 13) {
       this.issearched = true
-      
+
       if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByColorWithPrice(event.target.value,0).subscribe((data)=>{
         if(data !==null && typeof data['data'] !== 'undefined'){
           this.isnull = false;
           console.log(data['data']);
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data['data']
             }]
           }
         this.items = local_data.data;
-        
-        
+
+
         }else{
           this.items = []
           this.isnull = true;
@@ -294,14 +301,14 @@ export class HomeComponent implements OnInit {
             this.isnull = false;
             let id = data.data[0]['product_type']
             let local_data = {
-            
+
               "data":[{
                 "_id":id,
                 "docs":data.data
               }]
             }
           this.items = local_data.data;
-          
+
           }else{
             this.items = []
             this.isnull = true;
@@ -317,14 +324,14 @@ export class HomeComponent implements OnInit {
           this.isnull = false;
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data;
-        
+
         }else{
           this.items = []
           this.isnull = true;
@@ -345,19 +352,19 @@ export class HomeComponent implements OnInit {
     }else if(this.number === 6 ) {
       container_count +=1;
       this.number = 1;
-     
-     
+
+
     }
     if(this.number%6!==0){
       console.log((container_count-1)*6 + this.number)
     }else if(this.number%6===0){
       console.log((container_count-1)*6 + this.number)
     }
- 
+
   }
- 
+
   decCount() {
- 
+
     if(this.number >= 1 && this.number>JSON.parse(localStorage.getItem('cart'))) {
       this.number -= 1;
     }
@@ -367,24 +374,24 @@ export class HomeComponent implements OnInit {
 
     if(event.keyCode == 13) {
       this.issearched = true
-      
+
       if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByTypeWithPrice(event.target.value,0).subscribe((data)=>{
         if(data !==null &&  typeof data['data'] !== 'undefined'){
           this.isnull = false;
           console.log(data['data'])
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data;
-        
-        
+
+
         }else{
           // alert("no item to display");
           this. items = []
@@ -397,14 +404,14 @@ export class HomeComponent implements OnInit {
             this.isnull = false;
             let id = data.data[0]['product_type']
             let local_data = {
-            
+
               "data":[{
                 "_id":id,
                 "docs":data.data
               }]
             }
           this.items = local_data.data;
-          
+
           }else{
             this.items = []
             this.isnull = true;
@@ -421,7 +428,7 @@ export class HomeComponent implements OnInit {
           console.log("data",data)
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
 
@@ -430,7 +437,7 @@ export class HomeComponent implements OnInit {
           }
         this.items = local_data.data;
         console.log('item',local_data)
-        
+
         }else{
           this.items = []
           this.isnull = true;
@@ -442,7 +449,7 @@ export class HomeComponent implements OnInit {
     }
       // rest of your code
     }
-    
+
 
 
   }
@@ -471,19 +478,19 @@ export class HomeComponent implements OnInit {
         console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
     price = doc['price']*<number>this.number;
-    
-  
+
+
 
 
     if(doc && number>0){
       this.nodeapi.getCart('0').subscribe((res)=>{
-        
+
         if(res.error_code === 401){
           alert("please login")
           this.route.navigate(['/login'])
 
         }else if(res.error_code === 200){
-         
+
 
           if(res.message==="Cart is Empty"){
             tax_amount = price/(1+(this.tax/100));
@@ -498,7 +505,7 @@ export class HomeComponent implements OnInit {
             "thickness":doc.dimension[0].thickness,
             "quantity":this.number,
             "total":price,
-            
+
             "Dimension":[{
               "width":100,
               "height":200,
@@ -510,21 +517,21 @@ export class HomeComponent implements OnInit {
             "shipping_cost":this.shipping_cost,
             "tax":tax_amount}
 
-            
-          
 
 
-        
+
+
+
           this.nodeapi.addToCart(data).subscribe((response)=>{
             // localStorage.removeItem('cart')
             localStorage.setItem('cart',JSON.stringify(this.number))
             alert("cart is updated");
-            
+
             this.route.navigate(['/customer/cart'])
 
 
           })
-         
+
           }else if(res.message!=="Cart is Empty"){
             console.log("document",doc)
             cart_amount = res.data[0].total_amount+price;
@@ -553,26 +560,26 @@ export class HomeComponent implements OnInit {
             "total_amount":price,
 
             "cart_total":cart_amount+this.shipping_cost+tax_amount,
-            
+
             "shipping_cost":this.shipping_cost,
 
             "tax":tax_amount
           }
-      
-            
+
+
               // res.data[0].bundle.push(data_updated)
-              
+
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
-                
+
                 localStorage.removeItem('cart')
                 localStorage.setItem('cart',total_quantity)
-                
-              
+
+
                 console.log(total_quantity)
                 this.route.navigate(['/customer/cart'])
               })
-             
-            
+
+
           }
 
         }
@@ -581,18 +588,18 @@ export class HomeComponent implements OnInit {
     else if(number<1){
       alert("Slabs count can not be zero")
     }
-        
-    
+
+
   },(err)=>{
       console.log(err);
       alert("Fail to get port detail")
-      
+
     })}else {
       alert("please login.")
     }}else if(this.number===0){
       alert("Please add item to the cart")
     }
-    
+
   }
   viewMore(type){
     this.isviewmore = true;
@@ -604,7 +611,7 @@ export class HomeComponent implements OnInit {
       console.log("id",id)
       if(res.data!==null){
         let data = {
-          
+
           "data":[{
             "_id":id,
             "docs":res.data
@@ -613,30 +620,30 @@ export class HomeComponent implements OnInit {
         this.items = data['data']
         console.log(this.items)
       }
-      
+
     })
   }
-  
+
   search(){
     this.issearched = true;
     this.isviewmore =false
     if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByColorWithPrice(this.searchcolor,0).subscribe((data)=>{
         if(data!==null && typeof data['data'] !== 'undefined'){
           this.isnull = false;
           console.log(data['data']);
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data['data']
             }]
           }
         this.items = local_data.data;
-        
-        
+
+
         }else{
           this.items = []
           this.isnull = true;
@@ -648,14 +655,14 @@ export class HomeComponent implements OnInit {
             this.isnull = false;
             let id = data.data[0]['product_type']
             let local_data = {
-            
+
               "data":[{
                 "_id":id,
                 "docs":data.data
               }]
             }
           this.items = local_data.data;
-          
+
           }else{
             this.items = []
             this.isnull = true;
@@ -666,21 +673,21 @@ export class HomeComponent implements OnInit {
 
       })
     }else{
-      
+
       this.nodeapi.searchByColor(this.searchcolor,0).subscribe((data)=>{
         console.log('data',data )
         if(data!==null && typeof data['data'] !== 'undefined' ){
           this.isnull = false;
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data;
-        
+
         }else{
           this.items = []
           this.isnull = true;
@@ -698,22 +705,22 @@ export class HomeComponent implements OnInit {
     this.issearched = true;
     this.isviewmore =false
     if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByTypeWithPrice(this.searchtype,0).subscribe((data)=>{
         if(data !==null && typeof data['data'] !== 'undefined'){
           this.isnull = false;
           console.log(data['data'])
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
               "docs":data.data
             }]
           }
         this.items = local_data.data;
-        
-        
+
+
         }else{
           // alert("no item to display");
           this. items = []
@@ -726,14 +733,14 @@ export class HomeComponent implements OnInit {
             this.isnull = false;
             let id = data.data[0]['product_type']
             let local_data = {
-            
+
               "data":[{
                 "_id":id,
                 "docs":data.data
               }]
             }
           this.items = local_data.data;
-          
+
           }else{
             this.items = []
             this.isnull = true;
@@ -750,7 +757,7 @@ export class HomeComponent implements OnInit {
           console.log("data",data)
           let id = data.data[0]['product_type']
           let local_data = {
-          
+
             "data":[{
               "_id":id,
 
@@ -759,7 +766,7 @@ export class HomeComponent implements OnInit {
           }
         this.items = local_data.data;
         console.log('item',local_data)
-        
+
         }else{
           this.items = []
           this.isnull = true;

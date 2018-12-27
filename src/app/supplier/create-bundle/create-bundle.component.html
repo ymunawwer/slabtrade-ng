@@ -211,10 +211,10 @@
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-                                        
+
                                         <form #f = ngForm (ngSubmit)="onDimensionSave(f)" >
                                         <div class="modal-body">
-                                            
+
                                             <div class="row">
                                                     <ng-template ngFor  [ngForOf]= "createRange(bundle.no_of_slabs)" let-i="index" >
                                                 <div class="col-sm-12" >
@@ -245,7 +245,7 @@
                                                         </div>
                                                     </div>
                                                 </div></ng-template>
-                                             
+
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -394,10 +394,10 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary" (click)="onCreateBundle()">Create Bundle</button>
+                    <button type="button" class="btn btn-primary btn-sm create-bdl-btn" (click)="onCreateBundle()">Create Bundle</button>
                 </form>
             </div>
         </div>
-        
+
     </div>
 </div>

@@ -4,6 +4,8 @@ import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+declare var $: any;
+
 @Component({
   selector: 'app-supplier-register',
   templateUrl: './supplier-register.component.html',
@@ -22,9 +24,14 @@ export class SupplierRegisterComponent implements OnInit {
   ngAfterViewInit(){
     this.formRef.valueChanges.subscribe(data =>{
       console.log('Form changes', data);
-      
 
-    })
+
+    });
+
+    $('.country').select2({
+      placeholder: 'Select Country'
+  });
+
   }
 
 
@@ -32,7 +39,7 @@ export class SupplierRegisterComponent implements OnInit {
   onSubmit(form:NgForm){
     var d = new Date();
     var n = d.getMonth();
-    
+
     // console.log(form)
     let alias = 'SUP'+'-'+n+'-'+d.getTime();
     console.log(alias)

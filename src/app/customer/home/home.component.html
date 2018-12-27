@@ -73,7 +73,7 @@ input[type=number]::-webkit-outer-spin-button {
                                       <input type="radio" name = "color" value="808080" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
                                       <span class="checkmark"></span>
                                   </label>
-                              
+
                               </div>
                               <div class="inner-bar">
                                   <div class="side-bar">
@@ -115,7 +115,7 @@ input[type=number]::-webkit-outer-spin-button {
                                  <a (click)="viewMore(item._id)" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
                                  <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
                                  <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
-                                 
+
                              </div>
                            </div>
                            <div class="row">
@@ -206,7 +206,31 @@ input[type=number]::-webkit-outer-spin-button {
                     <div class="row">
                         <div class="col-md-6">
 
-                                <img class="xzoom" src="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg" xoriginal="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg" />
+                            <div class="exzoom" id="exzoom">
+                                <!-- Images -->
+                                <div class="exzoom_img_box">
+                                  <ul class='exzoom_img_ul'>
+
+                                      <ng-template ngFor let-item_image [ngForOf]= "item_image" let-i="index" >
+
+                                          <li>
+                                                <img [src]="sanitizeUrl(item_image)">
+                                          </li>
+                                      </ng-template>
+
+                                  </ul>
+                                </div>
+                                <!-- <a href="https://www.jqueryscript.net/tags.php?/Thumbnail/">Thumbnail</a> Nav-->
+                                <div class="exzoom_nav"></div>
+                                <!-- Nav Buttons -->
+                                <p class="exzoom_btn">
+                                    <a href="javascript:void(0);" class="exzoom_prev_btn"> < </a>
+                                    <a href="javascript:void(0);" class="exzoom_next_btn"> > </a>
+                                </p>
+                              </div>
+
+
+                                <!-- <img class="xzoom" src="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg" xoriginal="https://slab-trade-upload.s3.amazonaws.com/image-1545823618938-image-1545391290141-a3.jpg" />
 
                                 <div class="xzoom-thumbs">
                                         <a [href]="sanitizeUrl(item_image[0])">
@@ -216,7 +240,7 @@ input[type=number]::-webkit-outer-spin-button {
 
                                   <a [href]="sanitizeUrl(item_image)">
                                         <img class="xzoom-gallery" width="80" [src]="sanitizeUrl(item_image)">
-                                      </a></ng-template>
+                                      </a></ng-template> -->
                                   <!-- <a [href]="sanitizeUrl(url+item_image[0])">
                                     <img class="xzoom-gallery" width="80" [src]="sanitizeUrl(url+item_image)">
                                   </a>
@@ -226,7 +250,7 @@ input[type=number]::-webkit-outer-spin-button {
                                   <a href="sanitizeUrl(url+item_image[0])">
                                     <img class="xzoom-gallery" width="80" [src]="sanitizeUrl(url+item_image[0])">
                                   </a> -->
-                                </div>
+                                <!-- </div> -->
 
 
                             <!-- <div class="exzoom" id="exzoom"> -->
@@ -396,6 +420,8 @@ input[type=number]::-webkit-outer-spin-button {
                     </div></div>
             </div>
         </div>
+
+
 
         <!-- bootstrap.js -->
         <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
