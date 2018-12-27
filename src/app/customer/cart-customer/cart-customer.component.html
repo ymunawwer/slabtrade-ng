@@ -218,7 +218,7 @@
                                                         <input class="form-control" type="text" placeholder="Zip" name = "address1_zip" required minlength="6" #zip="ngModel" [(ngModel)]="user.address1_zip">
                                                         <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger">
                                                                 <div  *ngIf="zip.errors && zip.errors.minlength">
-                                                                    Atleast 10 Digit.
+                                                                    Atleast 6 Digit.
                                                                 </div>
                                           
                                             <div *ngIf="zip.errors.required">

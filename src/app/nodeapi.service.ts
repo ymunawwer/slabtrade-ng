@@ -345,6 +345,15 @@ cartRecalculate(data):Observable<any>{
 
 
 
+getShippingDoc(id){
+  let token = this.auth.getToken();
+
+  return this.http.get(ENV.customer + '/shippingdownload?id='+id,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+}
 
   
 

@@ -8,6 +8,7 @@ import { NodeapiService } from '../../nodeapi.service';
 })
 export class OrderComponent implements OnInit {
   order:any;
+  doc_arr:any;
   street:String;
   city:String;
   state:String;
@@ -73,7 +74,7 @@ export class OrderComponent implements OnInit {
     console.log('order',doc)
     this.node.getOrderByCustomer(doc._id).subscribe((res)=>{
       if(res['error_code']===200){
-        
+        this.getShippingDoc(doc['_id'])
         this.street = doc['shipping_Addr'][0]['street']
         this.city = doc['shipping_Addr'][0]['city']
         this.state = doc['shipping_Addr'][0]['state']
@@ -108,6 +109,15 @@ export class OrderComponent implements OnInit {
     })
 
 
+  }
+
+
+  getShippingDoc(id){
+    this.node.getShippingDoc(id).subscribe((res)=>{
+      this.doc_arr = res['data'];
+      console.log(res)
+
+    })
   }
 
 }

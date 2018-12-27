@@ -16,7 +16,7 @@ declare var feather:any;
 export class CartCustomerComponent implements OnInit {
   cart_item:any;
   tax:number;
-  
+  amount;
   shipping:number;
   shipping_detail:any;
   total:number;
@@ -78,6 +78,7 @@ export class CartCustomerComponent implements OnInit {
       if(res.error_code===200){
         if(res.message!=="Cart is Empty"){
           console.log("cart up",res)
+          this.amount = res['data'][0]['total_amount']
           this.tax = res['data'][0]['tax'];
           this.shipping = res['data'][0]['shipping_cost'];
           this.total = res.data[0]['cart_total'];
@@ -193,21 +194,48 @@ confirmToCheckOut(){
     // this.total_item = res.data[0].total_quantity;
 
 
-    // let data = {
-    //   "cart_total":,
-    //   "tax":,
-    //   "total_amount":this.total - item['price'],
-    //   "total_quantity":this.total_item - 1
-    // }
+    
     console.log(item);
     // delete this.cart_item[i];
     this.nodeApi.removeCartItem(item['_id']).subscribe((res)=>{
       console.log(res)
+      console.log("total",this.total)
+      console.log("tax",this.port_list[0]['tax_percentage'])
+      
+
+
       if(res['error_code'] ===200){
-      alert("Succesfully removed")
-      localStorage.setItem('cart',JSON.stringify(0));
-      window.location.reload();
-      this.getCartItem();
+        let tax_cal = (1+(this.port_list[0]['tax_percentage']/100));
+        let data;
+        if(this.total_item - item['quantity']!==0){
+          data = {
+            "id":this.auth.getUser()['_id'],
+            "cart_total":(this.amount- item['total'])+((this.amount- item['total'])/tax_cal) + this.port_list[0]['shipping_cost'],
+            "tax":(this.amount- item['total'])/tax_cal,
+            "total_amount":this.amount - item['total'],
+            "total_quantity":this.total_item - item['quantity']
+          }
+
+        }else if(this.total_item - item['quantity']===0){
+          data = {
+            "id":this.auth.getUser()['_id'],
+            "cart_total":(this.amount- item['total'])+((this.amount- item['total'])/tax_cal),
+            "tax":(this.amount- item['total'])/tax_cal,
+            "total_amount":this.amount - item['total'],
+            "total_quantity":this.total_item - item['quantity']
+          }
+        }
+        
+        this.nodeapi.cartRecalculate(data).subscribe((res)=>{
+          alert("Succesfully removed")
+          localStorage.setItem("cart",JSON.stringify(this.total_item - item['quantity']));
+          window.location.reload();
+          this.getCartItem();
+          
+        })
+
+        
+     
       }else if(res['error_code'] ===500){
         alert("Please try again later.")
       }

@@ -170,33 +170,16 @@
           <div class="supplier-doc">
               <h4 class="sub-title">Shipping Document</h4>
               <div class="documet-box">
-                  <div class="row document-list">
-                      <div class="col-md-6">
-                          <h4>Document Name 1</h4>
-                      </div>
-                      <div class="col-md-6 text-right">
-                          <a href="#" class="btn btn-primary btn-sm">View</a>
-                          <a href="#" class="btn btn-secondary btn-sm">Download</a>
-                      </div>
-                  </div>
-                  <div class="row document-list">
-                      <div class="col-md-6">
-                          <h4>Document Name 2</h4>
-                      </div>
-                      <div class="col-md-6 text-right">
-                          <a href="#" class="btn btn-primary btn-sm">View</a>
-                          <a href="#" class="btn btn-secondary btn-sm">Download</a>
-                      </div>
-                  </div>
-                  <div class="row document-list">
-                      <div class="col-md-6">
-                          <h4>Document Name 3</h4>
-                      </div>
-                      <div class="col-md-6 text-right">
-                          <a href="#" class="btn btn-primary btn-sm">View</a>
-                          <a href="#" class="btn btn-secondary btn-sm">Download</a>
-                      </div>
-                  </div>
+                    <ng-template ngFor let-doc [ngForOf]= "doc_arr" let-i="index"> 
+                            <div class="row document-list">
+                                <div class="col-md-6">
+                                    <h4>Document Name {{i+1}}</h4>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href={{doc}} class="btn btn-primary btn-sm">View</a>
+                                    <a href={{doc}} class="btn btn-secondary btn-sm">Download</a>
+                                </div>
+                            </div></ng-template>
               </div>
           </div>
       </section>
