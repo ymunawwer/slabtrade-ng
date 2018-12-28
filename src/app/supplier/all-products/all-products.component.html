@@ -20,15 +20,16 @@
                     </thead>
 
                     <tbody>
-                        <ng-template ngFor let-product [ngForOf]= "product" let-i="index" >
-                        <tr>
+                        <!-- <ng-template ngFor let-product [ngForOf]= "product" let-i="index" > -->
+                        <tr *ngFor="let product of product">
                             <td><a class="fields">#{{product.bundle_number}}</a></td>
                             <td><a  class="fields">{{product.product_name}} <span class="flag-icon flag-icon-us"></span></a></td>
                             <td>
                                 <a (click) = "editProduct(product)" class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-danger">Delete</a>
                             </td>
-                        </tr></ng-template>
+                        </tr>
+                    <!-- </ng-template> -->
                         
                     </tbody>
                 </table>
@@ -36,7 +37,7 @@
         </section>
 
 </div>
-
+</div></div>
         <div *ngIf="isBulk">
                 <div >
                         <div class="container">
@@ -89,16 +90,20 @@
         </div>
 
         <div *ngIf="isUpdate">
+                <div id="page-container">
+                        <app-sidebar></app-sidebar>
+                        <div class="page-wrapper">
+                          <app-navbar></app-navbar>
                 <div class="page-inner">
-                        <div id="smartwizard1">
-                            <ul class="nav justify-content-center">
-                                <li><a href="#step-1">Slab Info<br /></a></li>
-                                <li><a href="#step-2">Bundle Info<br /></a></li>
-                                <li><a href="#step-3">Images<br /></a></li>
-                                <li><a href="#step-4">Addition info<br /></a></li>
-                            </ul>
-                            <div class="page-content">
-                                    <div id="step-1" class="page-content">
+                    <div id="smartwizard3">
+                        <ul class="nav justify-content-center">
+                            <li><a href="#step-1">Slab Info<br /></a></li>
+                            <li><a href="#step-2">Bundle Info<br /></a></li>
+                            <li><a href="#step-3">Images<br /></a></li>
+                            <li><a href="#step-4">Addition info<br /></a></li>
+                        </ul>
+                        <div>
+                            <div id="step-1" class="page-content">
                                             <form >
                                                 <div class="row form-box">
                                                     <div class="col-sm-12">
@@ -113,11 +118,11 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Product Type</label>
                                     <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.product_type" [ngModelOptions]="{standalone: true}" required>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
+                                            <option>Type</option>
+                                            <option value="granite">Granite</option>
+                                                <option value="marble">Marble</option>
+                                                <option value="quartzite">Quartzite</option>
+                                                <option value="quartz">Quartz</option>
                                     </select>
                                 </div>
                             </div>
@@ -152,11 +157,10 @@
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Color</label>
                                     <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.color" [ngModelOptions]="{standalone: true}" required>
-                                        <option >#000</option>
-                                        <option>#fff</option>
-                                        <option>#888</option>
-                                        <option>#f0f0f0</option>
-                                        <option>#adb6ff</option>
+                                            <option>Color</option>
+                                            <option value="#000000">Black</option>
+                                            <option value="#808080">Grey</option>
+                                            <option value="#0000ff">Blue</option>
                                     </select>
                                 </div>
                             </div>
@@ -178,13 +182,13 @@
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="formGroupExampleInput">Color Name</label>
-                                                            <input type="text" class="form-control" placeholder="Color Name" [(ngModel)]="new_color.name" name = "new_color">
+                                                            <input type="text" class="form-control" placeholder="Color Name" name = "new_color">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <label for="formGroupExampleInput">Color Code</label>
-                                                            <input type="text" class="form-control" placeholder="Color Code" [(ngModel)]="new_color.code" name = "new_color_code">
+                                                            <input type="text" class="form-control" placeholder="Color Code"  name = "new_color_code">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -204,12 +208,12 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Width" [(ngModel)] = "bundle.width" name="width" required minlength="1">
+                                            <input type="text" class="form-control" placeholder="Width" [(ngModel)] = "bundle.dimension[0].width" name="width" [ngModelOptions]="{standalone: true}" required minlength="1">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Height" [(ngModel)] = "bundle.height" name = "height" required minlength="1">
+                                            <input type="text" class="form-control" placeholder="Height" [(ngModel)] = "bundle.dimension[0].height" name = "height" [ngModelOptions]="{standalone: true}" required minlength="1">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -258,7 +262,7 @@
                                 <div class="form-group">
                                     <label for="formGroupExampleInput">Weight</label>
                                     <div class="input-group mb-3">
-                                        <input type="text" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.weight" name="weight" required minlength="1">
+                                        <input type="text" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.net_weight" name="weight" required minlength="1">
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="basic-addon2">LB</span>
                                         </div>
@@ -283,7 +287,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Slabs</label>
-                                    <input class="form-control" type="number" value="5" min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required minlength="1">
+                                    <input class="form-control" type="number"  min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required minlength="1">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -468,7 +472,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Product Description</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onProductDescriptionChange($event)" name="product_description"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)] = "productDescription" name="product_description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -476,7 +480,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Bundle Description</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onBundleDescriptionChange($event)" name = "bundle_description"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="bundleDescription" name = "bundle_description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -484,7 +488,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="exampleFormControlTextarea1">Inspection Report</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onInspectionReportChange($event)" name="inspection_report"></textarea>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="inspection_report" [(ngModel)]="inspectionReport"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -505,4 +509,4 @@
 
 
     </div>
-</div>
+</div></div></div>

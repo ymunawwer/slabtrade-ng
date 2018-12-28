@@ -17,12 +17,14 @@ export class AllOrdersComponent implements OnInit {
   order:any;
   isorderlist:boolean;
   ispaymentdetails:boolean;
+  cancel_status:boolean;
   ispurchaseorder:boolean;
   isorderdetail:boolean;
   isupload:boolean;
   files:any;
   bool:boolean;
   payment_status:String;
+  payment_mode:String;
   isOrderClicked:boolean;
 
   constructor(private node:NodeapiService,private route:Router,private auth:AuthService) { 
@@ -123,6 +125,12 @@ export class AllOrdersComponent implements OnInit {
     this.isorderlist =false
     this.order = doc;
     console.log(doc)
+    if(doc['cancel_status']==="Accepted"){
+      this.cancel_status = false
+    }else{
+      this.cancel_status = true
+    }
+    
     console.log(this.orders)
     this.isOrderClicked = true;
 
@@ -144,6 +152,7 @@ export class AllOrdersComponent implements OnInit {
       alert("Order Accepted")
       element.disabled = true;
       this.bool = false;
+      window.location.reload();
     },(err)=>{
       alert("Please try again.")
     })
@@ -154,6 +163,7 @@ export class AllOrdersComponent implements OnInit {
       alert("Order Rejected")
       element.disabled = true;
       this.bool =false;
+      window.location.reload();
     },(err)=>{
       alert("Please try again")
     })
@@ -195,8 +205,10 @@ export class AllOrdersComponent implements OnInit {
 
 getWiredDoc(){
   this.node.downloadWiredDoc(this.order._id).subscribe((res)=>{
+    console.log('zz',res['data'])
     this.payment_status = res['data']['payment_status'];
     this.wired_doc_arr = res['data']['docs'];
+    this.payment_mode = res['data']['payment_mode'];
     
   },(err)=>{
     alert("Please try again later.")

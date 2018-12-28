@@ -1,9 +1,10 @@
-import { Component, OnInit,Renderer2 } from '@angular/core';
+import { Component,Renderer ,OnInit,Renderer2 } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import {ViewChild, ElementRef} from '@angular/core';
 import { AuthService } from '../../auth.service';
 import {NodeapiService} from '../../nodeapi.service'
 import { Router } from '@angular/router'
+declare var $:any;
 declare var feather:any;
 @Component({
   selector: 'app-create-bundle',
@@ -17,6 +18,7 @@ export class CreateBundleComponent implements OnInit {
   flag:number;
   file:any;
   thickness_new;
+  isdimensionsave;
   aray:any;
  bundle = {
    'product_name':'',
@@ -60,9 +62,10 @@ new_color = {
   'code':''
 }
 
-  constructor(private renderer: Renderer2,private auth:AuthService,private node:NodeapiService,private route:Router) {
+  constructor(private ren:Renderer,private renderer: Renderer2,private auth:AuthService,private node:NodeapiService,private route:Router) {
     this.unit = "cm";
     this.dimension = [];
+    this.isdimensionsave = false;
     this.aray=[];
     this.bundle.supplier_id = this.auth.getUser()._id;
     this.file =[];
@@ -121,7 +124,7 @@ new_color = {
     this.node.createBundle(formData).subscribe((res)=>{
       // console.log("success")
       alert("Success");
-      this.route.navigate(['/supplier'])
+      this.route.navigate(['/supplier/products'])
     },(err)=>{
       alert("Please try again.")
     })
@@ -261,10 +264,14 @@ new_color = {
 
     // })
   }
-
+  @ViewChild('close') close;
   onDimensionSave(form:NgForm){
     this.dimension = []
     let x = form.value
+  
+
+    
+
     
   for(let i =0;i<this.bundle.no_of_slabs;i++){
     let obj={};
@@ -385,7 +392,18 @@ new_color = {
     // })
   }
 
+  setColor(val){
+    this.bundle.color = val;
+    console.log(this.bundle.color);
+  }
 
+
+  setType(val){
+    
+    this.bundle.product_type = val;
+    console.log(this.bundle.product_type);
+    
+  }
 
 
 }

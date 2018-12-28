@@ -3,7 +3,8 @@ import {NodeapiService} from '../../nodeapi.service'
 import saveAs from 'file-saver';
 import {saveAs as importedSaveAs} from "file-saver";
 import { AuthService } from '../../auth.service';
-
+import { Router } from '@angular/router';
+declare var $:any;
 declare var feather:any;
 @Component({
   selector: 'app-all-products',
@@ -50,7 +51,7 @@ export class AllProductsComponent implements OnInit {
      'weight':0.0,
      'bundle_number':'',
      'slab_weight':0,
-     'net_area':0.0,
+     'net_area':0,
      'net_weight':0.0,
      'product_description':'',
      'bundle_description':'',
@@ -60,7 +61,7 @@ export class AllProductsComponent implements OnInit {
  
   }
   
-  constructor(private node:NodeapiService,private auth:AuthService) { 
+  constructor(private node:NodeapiService,private auth:AuthService,private router:Router) { 
     feather.replace();
     this.product = [];
     this.step1=false;
@@ -81,9 +82,32 @@ export class AllProductsComponent implements OnInit {
   ngOnInit() {
     feather.replace();
     this.node.getProduct().subscribe((result)=>{
+      console.log(result)
       this.product = result;
       
+      
     })
+
+
+    $('#smartwizard3').smartWizard({
+      selected: 0, // Initial selected step, 0 = first step 
+      keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+      autoAdjustHeight: true, // Automatically adjust content height
+      cycleSteps: false, // Allows to cycle the navigation of steps
+      backButtonSupport: true, // Enable the back button support
+      useURLhash: false, // Enable selection of the step based on url hash
+      showStepURLhash: false,
+      lang: { // Language variables
+          next: 'Next',
+          previous: 'Previous'
+      },
+      anchorSettings: {
+          anchorClickable: true, // Enable/Disable anchor navigation
+          enableAllAnchors: true, // Activates all anchors clickable all times
+          markDoneStep: true, // add done css
+          enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+      },
+  });
   }
   onBulk(){
     this.isBulk = true;
@@ -149,30 +173,34 @@ export class AllProductsComponent implements OnInit {
   this.isUpdate_step4=false;
   this.step1=false;
     
-    console.log(product)
-
-    this.bundle['product_name'] = product['product_name']
+    // console.log(product['net_dimension'][0]['width'])
+    this.bundle = product;
+    this.bundle.net_area = this.bundle['dimension'][0]['width']*this.bundle['dimension'][0]['height']
+    // this.bundle['product_name'] = product['product_name']
     
-    this.bundle['supplier_id']= product['supplier_id']
-    this.bundle['product_type']= product['product_type']
-    this.bundle['product_type_code']= product['product_type_code']
-    this.bundle['quality']= product['quality']
-    this.bundle['no_of_slabs']= product['no_of_slabs']
-    this.bundle['price']= product['price']
-    this.bundle['color']= product['coloe']
-    this.bundle['dimension']= product['dimension']
-    this.bundle['width']= product['net_dimension'][0]['width']
-    this.bundle['height']= product['net_dimension'][0]['height']
-    this.bundle['thickness']= product['dimension'][0]['thisckness']
-    this.bundle['unit']= product['net_dimension']['unit']
-    this.bundle['weight']= product['net_weight']
-    this.bundle['bundle_number']= product['bundle_number']
-    this.bundle['slab_weight']= product['slab_weight']
-    this.bundle['net_area']= product['net_area']
-    this.bundle['net_weight']= product['net_weight']
-    this.bundle['product_description']= product['product_description']
-    this.bundle['bundle_description']= product['Bundle_description']
-    this.bundle['inspection_report']= product['inspection_report']
+    // this.bundle['supplier_id']= product['supplier_id']
+    // this.bundle['product_type']= product['product_type']
+    // this.bundle['product_type_code']= product['product_type_code']
+    // this.bundle['quality']= product['quality']
+    // this.bundle['no_of_slabs']= product['no_of_slabs']
+    // this.bundle['price']= product['price']
+    // this.bundle['color']= product['color']
+    // this.bundle['dimension']= product['dimension']
+    // this.bundle['width']= product['net_dimension'][0]['width']
+    // this.bundle['height']= product['net_dimension'][0]['height']
+    // this.bundle['thickness']= product['dimension'][0]['thisckness']
+    // this.bundle['unit']= product['net_dimension']['unit']
+    // this.bundle['weight']= product['net_weight']
+    // this.bundle['bundle_number']= product['bundle_number']
+    // this.bundle['slab_weight']= product['slab_weight']
+    // this.bundle['net_area']= product['net_area']
+    // this.bundle['net_weight']= product['net_weight']
+    // this.bundle['product_description']= product['product_description']
+    // this.bundle['bundle_description']= product['Bundle_description']
+    // this.bundle['inspection_report']= product['inspection_report']
+
+
+    console.log("demo",this.bundle)
     
   }
 
@@ -207,11 +235,15 @@ export class AllProductsComponent implements OnInit {
   }
 
   onUpdate(){
+    this.bundle['net_weight'] = (this.bundle['dimension'][0]['width']*this.bundle['dimension'][0]['height']*this.bundle['dimension'][0]['thickness'])/166;
     this.node.updateProduct(this.bundle).subscribe((update_result)=>{
-
+      alert("Bundle Updated.")
+      window.location.reload();
       console.log(update_result)
+      
 
     },(err)=>{
+      alert("Failed to update.Please try again.")
       console.log(err)
     })
   }
@@ -228,6 +260,72 @@ export class AllProductsComponent implements OnInit {
     return items;
   }
 
+
+  onProductDescriptionChange(ev) {
+    try {
+
+      this.bundle.product_description = ev.target.value;
+      console.log(this.bundle.product_description);
+    } catch(e) {
+      console.info('could not set textarea-value');
+    }
+  }
+
+
+  onBundleDescriptionChange(ev) {
+    try {
+      this.bundle.bundle_description = ev.target.value;
+    } catch(e) {
+      console.info('could not set textarea-value');
+    }
+  }
+
+  onInspectionReportChange(ev) {
+    try {
+      this.bundle.inspection_report = ev.target.value;
+    } catch(e) {
+      console.info('could not set textarea-value');
+    }
+  }
+
+
+  get inspectionReport () {
+    return this.bundle.inspection_report
+  }
+
+  get bundleDescription () {
+    return this.bundle['Bundle_description']
+  }
+
+  get productDescription () {
+    return this.bundle.product_description
+  }
+
+  set inspectionReport (v) {
+    try{
+      this.bundle.inspection_report = v;}
+    catch(e) {
+      console.log('error occored while you were typing the JSON');
+    };
+  }
+
+  set bundleDescription (v) {
+    try{console.log(v)
+      this.bundle.bundle_description = v;}
+    catch(e) {
+      console.log('error occored while you were typing the JSON');
+    };
+  }
+
+  set productDescription (v) {
+    try{
+      console.log(v)
+      this.bundle.product_description = v;
+    console.log(this.bundle.product_description)}
+    catch(e) {
+      console.log('error occored while you were typing the JSON');
+    };
+  }
 
 
 

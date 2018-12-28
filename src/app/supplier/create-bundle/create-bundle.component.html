@@ -25,13 +25,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Product Type</label>
-                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.product_type" [ngModelOptions]="{standalone: true}" required>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                                <select class="form-control" #g id="exampleFormControlSelect1" (change)="setType(g.value)" required>
+                                        <option>Type</option>
+                                    <option value="granite">Granite</option>
+                                        <option value="marble">Marble</option>
+                                        <option value="quartzite">Quartzite</option>
+                                        <option value="quartz">Quartz</option>
+                                        
+                                    </select>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -64,12 +65,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Color</label>
-                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.color" [ngModelOptions]="{standalone: true}" required>
-                                    <option >#000</option>
-                                    <option>#fff</option>
-                                    <option>#888</option>
-                                    <option>#f0f0f0</option>
-                                    <option>#adb6ff</option>
+                                <!-- [(ngModel)] = "bundle.color" -->
+                                <select class="form-control" #t id="exampleFormControlSelect1" (change)="setColor(t.value)" required>
+                                        <option>Color</option>
+                                    <option value="#000000">Black</option>
+                                    <option value="#808080">Grey</option>
+                                    <option value="#0000ff">Blue</option>
+                                
                                 </select>
                             </div>
                         </div>
@@ -198,21 +200,21 @@
                                 <input class="form-control" type="number" value="5" min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required minlength="1">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" >
                             <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#editSlabs">
                                 Edit Dimension For Selected Slabs
                             </button>
-                            <div class="modal fade" id="editSlabs" tabindex="-1" role="dialog" aria-labelledby="editSlabsLabel" aria-hidden="true" style="z-index: 9999;">
+                            <div class="modal fade" id="editSlabs" tabindex="-1" role="dialog" aria-labelledby="editSlabsLabel" aria-hidden="true" style="z-index: 9999;" >
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="editSlabsLabel">Edit Dimension For Slabs</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" #close>
                                                 <span aria-hidden="true">&times;</span>
                                             </button>
                                         </div>
-
-                                        <form #f = ngForm (ngSubmit)="onDimensionSave(f)" >
+                                        <!-- (ngSubmit)="onDimensionSave(f)" -->
+                                        <form #f = ngForm  id="myModal" >
                                         <div class="modal-body">
 
                                             <div class="row">
@@ -250,7 +252,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="onDimensionSave(f)">Save changes</button>
                                         </div>
                                    </form>
                                     </div>
