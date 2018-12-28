@@ -16,7 +16,7 @@ export class CreateBundleComponent implements OnInit {
   dimension:any;
   flag:number;
   file:any;
-  
+  thickness_new;
   aray:any;
  bundle = {
    'product_name':'',
@@ -31,14 +31,14 @@ export class CreateBundleComponent implements OnInit {
     'dimension':[{
       'width':0,
       'height':0,
-      'thickness':1
+      'thickness':0,
       
 
     }],
     
       'width':0,
       'height':0,
-      'thickness':1,
+      'thickness':0,
       'unit':'',
 
   
@@ -95,6 +95,8 @@ new_color = {
 
 
   onCreateBundle(){
+    this.bundle.thickness = this.thickness_new
+    this.bundle.dimension[0].thickness = this.thickness_new;
     this.bundle.unit = <string>this.unit;
     const formData:any = new FormData();
     const file: Array<File> = this.file;
@@ -120,6 +122,8 @@ new_color = {
       // console.log("success")
       alert("Success");
       this.route.navigate(['/supplier'])
+    },(err)=>{
+      alert("Please try again.")
     })
   }
 
@@ -286,7 +290,7 @@ new_color = {
       console.log(area)
     })
     this.bundle.net_area = area;
-    this.bundle.net_weight = (this.bundle.net_area*this.bundle.dimension[0].thickness) / 166;
+    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
   }
   // console.log(this.dimension)
   this.bundle.dimension=this.dimension;

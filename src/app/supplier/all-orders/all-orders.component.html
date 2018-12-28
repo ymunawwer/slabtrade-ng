@@ -5,7 +5,9 @@
 
 <div class="page-inner sub-menu-inner">
         <div *ngIf="isOrderClicked">
-   <section class="sub-menu">
+   <section style="
+   top: 75px;
+   left: 70px;" class="sub-menu">
         <ul>
             <li>
                 <a [ngClass]="{'active': isorderdetail === true }" (click)="orderDetailTab()">Order Details</a>
@@ -36,18 +38,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-template ngFor let-order [ngForOf]= "orders" let-i="index" >
-                       <tr>
-                            <td><a (click)="orderDetail(order)" class="fields">#{{order._id}}</a></td>
-                            <td><a (click)="orderDetail(order)" class="fields">{{name[i]}} <span class="flag-icon flag-icon-us"></span></a></td>
-                            <td><a (click)="orderDetail(order)" class="fields">"{{order.created_at}}"</a></td>
-                            <td><a (click)="orderDetail(order)" class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
+                        <!-- <ng-template ngFor let-order [ngForOf]= "orders" let-i="index" > -->
+                       <tr *ngFor='let order of orders'>
+                            <td><a (click)="orderDetail1(order)" class="fields">#{{order._id}}</a></td>
+                            <td><a class="fields">{{order.name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                            <td><a class="fields">"{{order.created_at}}"</a></td>
+                            <td><a class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
                             <td>
-                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a (click)="orderDetail1(order)" class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
-                        </ng-template>
+                        <!-- </ng-template> -->
                     </tbody>
                 </table>
             </div>
@@ -78,11 +80,11 @@
                                     <ng-template ngFor let-item [ngForOf]= "order.products" let-i="index" >
                                     <tr>
                                         <td>{{item.bundle_id}}</td>
-                                        <td>{{item.dimension[0].net_area}}sqft</td>
-                                        <td>{{item.dimension[0].thickness}}mm</td>
+                                        <td>{{item.dimension[0].width*item.dimension[0].height}}</td>
+                                        <td>{{item.dimension[0].thickness}}</td>
                                         <td>{{item.dimension[0].width}}X{{item.dimension[0].height}}</td>
                                         <td>{{item.quantity}}</td>
-                                        <td>{{item.price}}</td>
+                                        <td>{{order.total}}</td>
                                     </tr>
                                   </ng-template>
                                 </tbody>
