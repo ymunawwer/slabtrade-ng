@@ -485,11 +485,11 @@ console.log('images', this.item_image);
     if(doc && number>0){
       this.nodeapi.getCart('0').subscribe((res)=>{
 
-        if(res.error_code === 401){
-          alert("please login")
-          this.route.navigate(['/login'])
+        if(res.error_code === 401) {
 
-        }else if(res.error_code === 200){
+          this.route.navigate(['/login']);
+
+        } else if(res.error_code === 200) {
 
 
           if(res.message==="Cart is Empty"){
@@ -594,10 +594,10 @@ console.log('images', this.item_image);
       console.log(err);
       alert("Fail to get port detail")
 
-    })}else {
-      alert("please login.")
-    }}else if(this.number===0){
-      alert("Please add item to the cart")
+    })} else {
+      this.route.navigate(['/login']);
+    }} else if(this.number===0) {
+      alert('Please add item to the cart');
     }
 
   }

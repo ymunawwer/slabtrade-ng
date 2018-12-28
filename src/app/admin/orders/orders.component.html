@@ -5,7 +5,7 @@
     <div *ngIf="ishome">
     <div class="page-inner sub-menu-inner">
       <div class="container">
-         
+
           <section class="order-table">
               <h5 class="sub-title">Orders</h5>
               <div class="table-details orders">
@@ -20,11 +20,11 @@
                           </tr>
                       </thead>
                       <tbody>
-                            <ng-template ngFor let-order [ngForOf]= "orders" let-i="index"> 
+                            <ng-template ngFor let-order [ngForOf]= "orders" let-i="index">
                           <tr>
                               <td><a (click) = "isOrderClick(order)" class="fields">#{{order._id}}</a></td>
                               <td><a (click) = "isOrderClick(order)" class="fields">{{order.name}} <span class="flag-icon flag-icon-us"></span></a></td>
-                              <td><a (click) = "isOrderClick(order)" class="fields">{{order.created_at}}</a></td>
+                              <td><a (click) = "isOrderClick(order)" class="fields">{{order.created_at | date:'shortDate'}}</a></td>
                               <td><a (click) = "isOrderClick(order)" class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
                               <td>
                                   <a class="btn btn-primary" (click)="isOrderClick(order)">Edit</a>
@@ -37,7 +37,7 @@
               </div>
           </section></div>
 
-         
+
         </div>
 
       </div>
@@ -45,19 +45,22 @@
 
       <div *ngIf="!ishome">
 
-            <section class="sub-menu">
+            <section style="
+              top: 75px;
+              left: 70px;
+              " class="sub-menu">
                     <ul>
                         <li>
-                            <a class="active" (click)="isOrderStatus()">Order Status</a>
+                            <a [ngClass]="isorderstatus ? 'active' : ''" (click)="isOrderStatus()">Order Status</a>
                         </li>
                         <li>
-                            <a (click)="isPaymentMode()">Payment Details</a>
+                            <a [ngClass]="ispaymentmode ? 'active' : ''" (click)="isPaymentMode()">Payment Details</a>
                         </li>
                         <li>
-                            <a (click)="isSupplierDetail()">Supplier Details</a>
+                            <a [ngClass]="issupplierdetail ? 'active' : '' " (click)="isSupplierDetail()">Supplier Details</a>
                         </li>
                         <li>
-                            <a (click)="is_Customer()">Customer</a>
+                            <a [ngClass]="isCustomer ? 'active' : ''" (click)="is_Customer()">Customer</a>
                         </li>
                     </ul>
                 </section>
@@ -65,10 +68,10 @@
 
       </div>
 
-      
+
       <div *ngIf="isorderstatus">
-          
-            
+
+
             <div class="page-inner sub-menu-inner">
                     <div class="container">
                         <section class="order-status">
@@ -79,7 +82,7 @@
                                         <option>Action</option>
                                         <option>Pending</option>
                                         <option>Processing</option>
-                                        <option>Confirmed</option>
+                                        <option value="Accepted">Confirmed</option>
                                         <option>Shipped</option>
                                         <option>Arrived</option>
                                         <option>Delivered</option>
@@ -109,8 +112,8 @@
                                 <div class="form-group">
                                     <label for="FormContros">Payment Mode</label>
                                     <select class="form-control" id="FormControls" [(ngModel)] = "payment">
-                                        <option>Card</option>
-                                        <option>Cash</option>
+                                        <option value="Card">Card</option>
+                                        <option value="cash">Cash</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -182,8 +185,8 @@
                             <div class="supplier-doc">
                                 <h4 class="sub-title">Document Verification</h4>
                                 <div class="document-box">
-                                    
-                                    <ng-template ngFor let-doc [ngForOf]= "doc_arr" let-i="index"> 
+
+                                    <ng-template ngFor let-doc [ngForOf]= "doc_arr" let-i="index">
                                     <div class="row document-list">
                                         <div class="col-md-6">
                                             <h4>Document Name {{i+1}}</h4>
@@ -193,8 +196,8 @@
                                             <a href={{doc}} class="btn btn-secondary btn-sm">Download</a>
                                         </div>
                                     </div></ng-template>
-                                
-                                  
+
+
                                 </div>
                             </div>
                         </section>
@@ -220,7 +223,7 @@
                                 </div>
                             </section>
                             <section class="customer-verification">
-                                    <ng-template ngFor let-product [ngForOf]= "bundle_arr" let-i="index"> 
+                                    <ng-template ngFor let-product [ngForOf]= "bundle_arr" let-i="index">
                                 <div class="customer-doc">
                                     <!-- <div class="right-description"> -->
                                     <h4 class="bundle-header">Bundle Block No:#{{i}}</h4>
@@ -262,7 +265,7 @@
                                                 <td class="table-option col-md-8">Net Weight :</td>
                                                 <td class="table-option1 col-md-4">
                                                     <ul>
-                                                        <li class="item">{{product['net_weight']}}kg</li>
+                                                        <li class="item">{{product['net_weight']}}LBS</li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -270,7 +273,7 @@
                                                 <td class="table-option col-md-8">Gross Weight :</td>
                                                 <td class="table-option1 col-md-4">
                                                     <ul>
-                                                        <li class="item">{{product['slab_weight']}}kg</li>
+                                                        <li class="item">{{product['slab_weight']}}LBS</li>
                                                     </ul>
                                                 </td>
                                             </tr>
@@ -287,4 +290,3 @@
 
 
 </div></div>
- 

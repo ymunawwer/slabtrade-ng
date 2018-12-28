@@ -1,6 +1,10 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {NodeapiService} from '../../nodeapi.service'
 import { AdminApiService } from '../../admin-api.service';
+import { DataService } from './../../services/data.service';
+
+
 declare var feather:any;
 @Component({
   selector: 'app-home',
@@ -12,7 +16,7 @@ export class HomeComponent implements OnInit {
   pendingOrder:any;
   approvedOrder:any;
   bool:boolean;
-  constructor(private admin_api:AdminApiService,private node:NodeapiService) {
+  constructor(private admin_api:AdminApiService,private node:NodeapiService, private dataservice: DataService, private router: Router) {
     this.count = {
       'total_sales':'loading...',
       'customer_count':'loading...',
@@ -24,26 +28,26 @@ export class HomeComponent implements OnInit {
      this.getOrders();
     this.getCount();
 
-    
 
 
 
-   
+
+
    }
 
   ngOnInit() {
     feather.replace();
-   
+
   }
 
   getCount(){
     this.admin_api.getCount().subscribe((res)=>{
       console.log(res.data);
-      
+
       this.count = res.data;
       this.count['total_sales']='loading...';
       this.count['day_to_day_sales']='loading...';
-      
+
     })
 
   }
@@ -52,9 +56,9 @@ export class HomeComponent implements OnInit {
     this.admin_api.getOrdes().subscribe((res)=>{
       console.log(res);
 
-      
+
       res['data'].forEach(element => {
-        
+
         if(element['cancel_status']==='Accepted'){
           this.approvedOrder.push(element)
 
@@ -62,13 +66,13 @@ export class HomeComponent implements OnInit {
           this.pendingOrder.push(element)
 
         }
-        
+
       });
       console.log('pending',this.pendingOrder)
       console.log('accepted',this.approvedOrder)
-    
+
     })
-  
+
 
   }
 
@@ -78,7 +82,7 @@ export class HomeComponent implements OnInit {
     this.node.changeOrderStatus(element,"Accepted").subscribe((result)=>{
       alert("Order Accepted")
       window.location.reload();
-      
+
       this.bool = false;
     },(err)=>{
       alert("Please try again.")
@@ -95,5 +99,11 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  orderDetail(order) {
+
+    this.dataservice.setOption('selectedOrder', order);
+    this.router.navigate(['/admin/order']);
+
+  }
 
 }
