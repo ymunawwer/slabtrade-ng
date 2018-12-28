@@ -595,6 +595,7 @@ console.log('images', this.item_image);
       alert("Fail to get port detail")
 
     })} else {
+      alert('please Login to Continue');
       this.route.navigate(['/login']);
     }} else if(this.number===0) {
       alert('Please add item to the cart');
