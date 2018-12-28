@@ -69,22 +69,23 @@
                                       <th scope="col">Order Id</th>
                                       <th scope="col">Name</th>
                                       <th scope="col">Date</th>
-                                      <th scope="col">Action</th>
+                                      <th scope="col">Status</th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  <ng-template ngFor let-order [ngForOf]= "pendingOrder" let-i="index" >
-                                  <tr>
-                                      <td><a href="order-status.html" class="fields">#{{order._id}}</a></td>
+                                  <ng-template  ngFor let-order [ngForOf]= "pendingOrder" let-i="index" >
+                                  <tr (click)="orderDetail(order)">
+                                      <td><a class="fields">#{{order._id}}</a></td>
                                       <!-- {{pendingorder.user}} -->
-                                      <td><a href="order-status.html" class="fields">{{order.name}} <span class="flag-icon flag-icon-us"></span></a></td>
-                                      <td><a href="order-status.html" class="fields">{{order.created_at}}</a></td>
-                                      <td>
+                                      <td><a class="fields">{{order.name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                                      <td><a class="fields">{{order.created_at | date: 'shortDate'}}</a></td>
+                                      <!-- <td>
                                           <a class="btn btn-primary" (click)="approveOrder(order._id)">Accept</a>
                                           <a class="btn btn-danger" (click)="rejectOrder(order._id)">Reject</a>
-                                      </td>
+                                      </td> -->
+                                      <td><a class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
                                   </tr></ng-template>
-                                 
+
                               </tbody>
                           </table>
                       </div>
@@ -101,19 +102,21 @@
                                       <th scope="col">Order Id</th>
                                       <th scope="col">Name</th>
                                       <th scope="col">Date</th>
-                                      <th scope="col">Action</th>
+                                      <th scope="col">Status</th>
                                   </tr>
                               </thead>
                               <tbody>
-                                  <ng-template ngFor let-approveorder [ngForOf]= "approvedOrder" let-i="index" >
-                                  <tr>
-                                      <td><a href="order-status.html" class="fields">#{{approveorder._id}}</a></td>
-                                      <td><a href="order-status.html" class="fields">{{approveorder.name}}<span class="flag-icon flag-icon-us"></span></a></td>
-                                      <td><a href="order-status.html" class="fields">{{approveorder.created_at}}</a></td>
-                                      <td>
+                                  <ng-template  ngFor let-approveorder [ngForOf]= "approvedOrder" let-i="index" >
+                                  <tr (click)="orderDetail(approveorder)">
+                                      <td><a  class="fields">#{{approveorder._id}}</a></td>
+                                      <td><a  class="fields">{{approveorder.name}}<span class="flag-icon flag-icon-us"></span></a></td>
+                                      <td><a  class="fields">{{approveorder.created_at | date: 'shortDate'}}</a></td>
+                                      <!-- <td>
                                           <a class="btn btn-primary" (click)="approveOrder(order._id)">Accept</a>
                                           <a class="btn btn-danger" (click)="rejectOrder(order._id)">Reject</a>
-                                      </td>
+                                      </td> -->
+                                      <td><a class="fields"><span class="badge badge-success">{{approveorder.cancel_status}}</span></a></td>
+
                                   </tr>
                                 </ng-template>
                               </tbody>

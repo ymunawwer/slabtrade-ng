@@ -40,7 +40,7 @@
                       <tr>
                           <td><a (click)="getOrderDetail(item)" class="fields">#{{item._id}}</a></td>
                           <td><a (click)="getOrderDetail(item)" class="fields">{{item.name}} <span class="flag-icon flag-icon-us"></span></a></td>
-                          <td><a (click)="getOrderDetail(item)" class="fields">{{item.created_at}}</a></td>
+                          <td><a (click)="getOrderDetail(item)" class="fields">{{item.created_at | date:'shortDate'}}</a></td>
                           <td><a (click)="getOrderDetail(item)" class="fields"><span class="badge badge-warning">{{item.cancel_status}}</span></a></td>
                           <td>
                               <a href="#" class="btn btn-primary">Edit</a>

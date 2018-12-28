@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminApiService } from '../../admin-api.service';
 import {NodeapiService} from '../../nodeapi.service'
 import { Router } from '@angular/router';
+import { DataService } from '../../services/data.service';
 declare var feather:any;
 @Component({
   selector: 'app-orders',
@@ -23,16 +24,38 @@ export class OrdersComponent implements OnInit {
   paymentstatus;
   orders:any;
   order_status:any;
-  constructor(private adminApi: AdminApiService,private node:NodeapiService,private router:Router) {
+  selectedOrder: any;
+  constructor(private adminApi: AdminApiService,private node:NodeapiService,private router:Router, private dataservice: DataService) {
     this.orders =[]
     this.getOrder();
     this.file = []
     this.bundle_arr = [];
+
+    this.selectedOrder = {};
+
+    console.log('selected order', dataservice.getOption());
+
+    if (dataservice.getOption()) {
+
+      this.selectedOrder = dataservice.getOption()['selectedOrder'];
+
+      this.isOrderClick(this.selectedOrder);
+
+    }
+
+
    }
 
   ngOnInit() {
+
+    if (JSON.stringify(this.selectedOrder) === '{}') {
+
     this.home();
-    
+
+
+    }
+
+
   }
 
   home(){
@@ -84,11 +107,11 @@ export class OrdersComponent implements OnInit {
     await this.adminApi.getOrdes().subscribe((res)=>{
       this.orders = res['data'];
       console.log(this.orders)
-      
+
     },(err)=>{alert(err)
     console.log(err)
     })
-    
+
 
   }
 
@@ -96,12 +119,12 @@ export class OrdersComponent implements OnInit {
     console.log(order)
     this.isOrderStatus();
     this.order_status = order['cancel_status'];
-    this.payment = order['patment'];
+    this.payment = order['payment'];
     this.paymentstatus = order['payment_status']
     this.order = order;
     this.products = this.order['products'];
 
-    
+
 
   }
   onStatusUpdate(){
@@ -121,8 +144,8 @@ export class OrdersComponent implements OnInit {
   }
 
   oderDetail(){
-   
-    // this.doc_arr = 
+
+    // this.doc_arr =
     for(let product of this.products){
       console.log(product['bundle_id'])
       this.adminApi.getProductDetail(product['bundle_id']).subscribe((res)=>{
@@ -135,7 +158,7 @@ export class OrdersComponent implements OnInit {
   rejectOrder(element){
     this.node.changeOrderStatus(element,"Reject").subscribe((result)=>{
       alert("Order Rejected")
-      
+
       window.location.reload();
     },(err)=>{
       alert("Please try again")
@@ -144,23 +167,23 @@ export class OrdersComponent implements OnInit {
 
 
   wiredDocUpload(){
-    
-      
+
+
       const formData:any = new FormData();
       const file: Array<File> = this.file;
-    
-  
+
+
       // formData.append("bundle_data",this.bundle)
       for(let i =0; i < file.length; i++){
-        
+
         formData.append("wired_file", file[i][0], file[i][0]['name']);
     }
-      
+
       // console.log("bundle",this.bundle)
       this.adminApi.uploadWiredDoc(this.order['_id'],formData).subscribe((res)=>{
         // console.log("success")
         alert("Successfully Uploaded");
-        
+
       },(err)=>{
         alert('Upload Failed.Please try again.');
       })
@@ -168,18 +191,18 @@ export class OrdersComponent implements OnInit {
 
 
   allFilesToUpload(event){
-    
-      
+
+
     // document.getElementById('inputGroupFile07_label').innerText = event.target.files[0]['name'];
-    
+
     this.file.push(<File>event.target.files)
-    
+
 
   }
 
   remove(index){
     this.file[index] = null;
-    
+
   }
 
 
@@ -188,15 +211,15 @@ export class OrdersComponent implements OnInit {
     this.adminApi.statusPaymentUpdate(this.order['_id'],this.paymentstatus,this.payment).subscribe((res)=>{
       // console.log("success")
       alert("Successfully Updated");
-      
+
     },(err)=>{
       alert('Upload Failed.Please try again.');
     })
-  
+
 
   }
-  
-  
-  
+
+
+
 
 }

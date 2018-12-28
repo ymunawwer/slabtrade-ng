@@ -13,13 +13,14 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   err:boolean;
-  
-  constructor(private auth:AuthService,private router:Router) { 
+
+  constructor(private auth:AuthService,private router:Router) {
    this.err  = true;
-   
+
   }
 
   ngOnInit() {
+
   }
   @ViewChild('f') myForm;
   ngAfterViewInit(){
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
     if(!form.invalid){
     let login_data = {'email':form.value.email,'password':form.value.password}
     this.auth.doLogin(login_data).subscribe((res)=>{
-      
+
       sessionStorage.setItem('currentUser',JSON.stringify(res));
       if(this.auth.getUser().roles[0]==='supplier'){
         this.router.navigate(['/supplier']);
