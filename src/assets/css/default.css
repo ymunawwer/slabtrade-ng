@@ -377,6 +377,41 @@ img {
     background-color: #fff;
 }
 
+
+
+
+#smartwizard3 ul li a {
+  font-size: 0.88em;
+  padding: 1.5em;
+  font-weight: bold;
+  color: #303031 !important;
+}
+
+#smartwizard3 {
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 3em;
+  background-color: #fff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+  border-radius: 0 !important;
+}
+
+#smartwizard3 ul li {
+  position: relative;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+#smartwizard3 .sw-toolbar {
+  border-radius: 0 !important;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding: 10px;
+  margin-bottom: 0 !important;
+  background-color: #fff;
+}
+
+
 .page-content .form-box {
     /*padding: 4em;*/
     font-size: 0.76em;

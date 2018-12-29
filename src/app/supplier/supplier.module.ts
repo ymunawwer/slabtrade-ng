@@ -14,9 +14,10 @@ import { AllProductsComponent } from './all-products/all-products.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HomeComponent as supplierHomeComponent } from './home/home.component'
 import { HttpModule } from '@angular/http';
-import { FirstPageComponent } from './first-page/first-page.component'
+import { FirstPageComponent } from './first-page/first-page.component';
+import { EditProductComponent } from './edit-product/edit-product.component'
 @NgModule({
-  declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent],
+  declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent, EditProductComponent],
   imports: [
     CommonModule,
     SupplierRoutingModule,

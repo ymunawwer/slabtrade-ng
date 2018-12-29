@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient,HttpErrorResponse,HttpParams, HttpHeaders, } from '@angular/common/http';
 import {RequestOptions,Headers,Http,ResponseContentType} from '@angular/http';
 import { Observable,throwError } from 'rxjs';
-import { map } from 'rxjs/operators'; 
+import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import {ENV } from './core/env.config';
 import { AuthService } from '../app/auth.service';
@@ -78,7 +78,7 @@ export class NodeapiService {
     let token = this.auth.getToken();
     return this.http.get(ENV.customer+'/searchproductwithprice?id='+type+'&type=producttype&page='+ page,{headers:{'Auth':'Bearer ' + token}});
 
-   
+
 
   }
 
@@ -86,7 +86,7 @@ export class NodeapiService {
     let token = this.auth.getToken();
     return this.http.get(ENV.customer+'/searchproductwithprice?id='+color+'&type=color&page='+ page,{headers:{'Auth':'Bearer ' + token}});
 
- 
+
 
   }
 
@@ -112,7 +112,7 @@ export class NodeapiService {
 
   }
 
- 
+
 
   addToCart(data):Observable<any>{
     let token = this.auth.getToken();
@@ -126,7 +126,7 @@ export class NodeapiService {
 // removecartitem
 removeCartItem(bundle):Observable<any>{
   let token = this.auth.getToken();
- 
+
   return this.http.get(ENV.customer + '/removecartitem?id='+this.auth.getUser()._id+'&bundle='+bundle,{headers:{'Auth':'Bearer ' + token}}).pipe(
     catchError(err=>this.handleError(err))
 
@@ -135,7 +135,7 @@ removeCartItem(bundle):Observable<any>{
 
   getCart(page):Observable<any>{
     let token = this.auth.getToken();
-   
+
     return this.http.get(ENV.customer + '/cart?id='+this.auth.getUser()._id+'&page='+page,{headers:{'Auth':'Bearer ' + token}}).pipe(
       catchError(err=>this.handleError(err))
 
@@ -163,9 +163,9 @@ removeCartItem(bundle):Observable<any>{
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
     headers.append('Auth','Bearer ' + token);
-    
+
     return this.http.post(ENV.customer + '/checkout',data,{headers:headers});
-  
+
 
 
   }
@@ -189,13 +189,13 @@ removeCartItem(bundle):Observable<any>{
   getOrder(){
     let token = this.auth.getToken();
     return this.http.get(ENV.supplier +'/getallorder?id='+this.auth.getUser()._id,{headers:{'Auth':'Bearer ' + token}});
-    
+
   }
 
   getOrderByCustomer(id){
     let token = this.auth.getToken();
     return this.http.get(ENV.customer +'/getorder?id='+id,{headers:{'Auth':'Bearer ' + token}});
-    
+
   }
 
 
@@ -208,7 +208,7 @@ removeCartItem(bundle):Observable<any>{
 
 
   getCustomerName(_id){
-    
+
     let token = this.auth.getToken();
     return this.http.get(ENV.supplier +'/getcustomer?id='+_id,{headers:{'Auth':'Bearer ' + token}});
   }
@@ -267,10 +267,10 @@ downloadFile(): Observable<Blob> {
   // headers.append('responseType','ResponseContentType'+'.Blob')
   headers.append('Auth','Bearer ' + token)
   let options = new RequestOptions({headers: headers,responseType: ResponseContentType.Blob });
-  
+
   return this.htp.get(ENV.supplier+'/csvdownload?id='+this.auth.getUser()._id, options)
       .pipe(map(res => res.blob()));
-     
+
 }
 
 downloadWiredDoc(id): Observable<any> {
@@ -279,17 +279,17 @@ downloadWiredDoc(id): Observable<any> {
   // headers.append('responseType','ResponseContentType'+'.Blob')
   headers.append('Auth','Bearer ' + token)
   let options = new RequestOptions({headers: headers});
-  
+
   return this.http.get(ENV.supplier+'/downloadwireddoc?id='+id, {headers:{'Auth':'Bearer ' + token}})
-      
-     
+
+
 }
 
 createBundle(data):Observable<any>{
   let token = this.auth.getToken();
   const headers = new HttpHeaders();
-     
-     
+
+
         headers.append('Auth','Bearer ' + token);
   return this.http.post(ENV.supplier+'/upload',data,{headers:headers})
 }
@@ -324,9 +324,9 @@ updateProduct(data):Observable<any>{
   let token = this.auth.getToken();
   const headers = new HttpHeaders();
   headers.append('Auth','Bearer'+token);
-  
 
-  
+
+
   return this.http.post(ENV.supplier+'/update',data,{headers:{'Auth':'Bearer ' + token}})
 
 }
@@ -336,9 +336,9 @@ cartRecalculate(data):Observable<any>{
   let token = this.auth.getToken();
   const headers = new HttpHeaders();
   headers.append('Auth','Bearer'+token);
-  
 
-  
+
+
   return this.http.post(ENV.customer+'/recalculate',data,{headers:{'Auth':'Bearer ' + token}})
 
 }
@@ -355,7 +355,17 @@ getShippingDoc(id){
 
 }
 
-  
+getProductDetail(id) {
+  const token = this.auth.getToken();
+
+  return this.http.get(ENV.supplier + '/editProduct/' + id, {headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
+
+}
+
+
 
 
 

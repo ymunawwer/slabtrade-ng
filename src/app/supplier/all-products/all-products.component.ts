@@ -21,7 +21,7 @@ export class AllProductsComponent implements OnInit {
   isUpdate_step2:boolean;
   isUpdate_step3:boolean;
   isUpdate_step4:boolean;
-  
+
   isUpdate:boolean;
 
   bundle = {
@@ -38,16 +38,16 @@ export class AllProductsComponent implements OnInit {
        'width':0,
        'height':0,
        'thickness':0
-       
- 
+
+
      }],
-     
+
        'width':0,
        'height':0,
        'thickness':0,
        'unit':'',
- 
-   
+
+
      'weight':0.0,
      'bundle_number':'',
      'slab_weight':0,
@@ -56,12 +56,12 @@ export class AllProductsComponent implements OnInit {
      'product_description':'',
      'bundle_description':'',
      'inspection_report':''
- 
- 
- 
+
+
+
   }
-  
-  constructor(private node:NodeapiService,private auth:AuthService,private router:Router) { 
+
+  constructor(private node:NodeapiService,private auth:AuthService,private router:Router) {
     feather.replace();
     this.product = [];
     this.step1=false;
@@ -73,7 +73,7 @@ export class AllProductsComponent implements OnInit {
     this.isProductList = true;
     this.supplier_id = this.auth.getUser()._id;
     this.file = []
-    
+
   }
 
 
@@ -84,13 +84,13 @@ export class AllProductsComponent implements OnInit {
     this.node.getProduct().subscribe((result)=>{
       console.log(result)
       this.product = result;
-      
-      
+
+
     })
 
 
     $('#smartwizard3').smartWizard({
-      selected: 0, // Initial selected step, 0 = first step 
+      selected: 0, // Initial selected step, 0 = first step
       keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
       autoAdjustHeight: true, // Automatically adjust content height
       cycleSteps: false, // Allows to cycle the navigation of steps
@@ -134,13 +134,13 @@ export class AllProductsComponent implements OnInit {
 
 
   csvToUpload(event){
-    
-      
+
+
       // document.getElementById('inputGroupFile07_label').innerText = event.target.files[0]['name'];
       event.target.labels[0].innerText = event.target.files[0]['name'];
       this.file.push(<File>event.target.files)
-      
-  
+
+
     }
   csvUpload(){
     const formData:any = new FormData();
@@ -148,13 +148,13 @@ export class AllProductsComponent implements OnInit {
 
     formData.append("supplier_id",this.supplier_id)
     for(let i =0; i < file.length; i++){
-      
+
       formData.append("product_csv", file[i][0], file[i][0]['name']);
   }
-    
-    
-    
-    
+
+
+
+
     this.node.uploadProductCsv(formData).subscribe((result)=>{
       alert("Uploaded Succesfully");
     },(err)=>{
@@ -172,12 +172,12 @@ export class AllProductsComponent implements OnInit {
   this.isUpdate_step3 = false;
   this.isUpdate_step4=false;
   this.step1=false;
-    
+
     // console.log(product['net_dimension'][0]['width'])
     this.bundle = product;
     this.bundle.net_area = this.bundle['dimension'][0]['width']*this.bundle['dimension'][0]['height']
     // this.bundle['product_name'] = product['product_name']
-    
+
     // this.bundle['supplier_id']= product['supplier_id']
     // this.bundle['product_type']= product['product_type']
     // this.bundle['product_type_code']= product['product_type_code']
@@ -201,7 +201,7 @@ export class AllProductsComponent implements OnInit {
 
 
     console.log("demo",this.bundle)
-    
+
   }
 
   updateStep2(){
@@ -240,7 +240,7 @@ export class AllProductsComponent implements OnInit {
       alert("Bundle Updated.")
       window.location.reload();
       console.log(update_result)
-      
+
 
     },(err)=>{
       alert("Failed to update.Please try again.")
@@ -330,5 +330,5 @@ export class AllProductsComponent implements OnInit {
 
 
 
-  
+
 }
