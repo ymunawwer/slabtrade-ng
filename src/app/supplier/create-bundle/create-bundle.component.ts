@@ -12,7 +12,7 @@ declare var feather:any;
   styleUrls: ['./create-bundle.component.sass']
 })
 export class CreateBundleComponent implements OnInit {
-  globalInstance: any;       
+  globalInstance: any;
   unit:String;
   dimension:any;
   flag:number;
@@ -34,16 +34,16 @@ export class CreateBundleComponent implements OnInit {
       'width':0,
       'height':0,
       'thickness':0,
-      
+
 
     }],
-    
+
       'width':0,
       'height':0,
       'thickness':0,
       'unit':'',
 
-  
+
     'weight':0.0,
     'bundle_number':'',
     'slab_weight':0,
@@ -70,12 +70,44 @@ new_color = {
     this.bundle.supplier_id = this.auth.getUser()._id;
     this.file =[];
    }
-  
+
   ngOnInit() {
     feather.replace();
-    
+    // profile image upload preview
+    function readURL(input, preview) {
+      if (input.files && input.files[0]) {
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+              $('#' + preview + '_image_preview').css('background-image', 'url(' + e.target['result']+ ')');
+          }
+
+          reader.readAsDataURL(input.files[0]);
+      }
   }
-  createRange(number){
+
+    $('#prev_img_upload_btn').change(function() {
+      readURL(this, 'prev');
+  });
+
+  $('#other_img_upload_btn').change(function() {
+      readURL(this, 'other');
+  });
+
+  $('#other2_img_upload_btn').change(function() {
+      readURL(this, 'other2');
+  });
+
+  $('#other3_img_upload_btn').change(function() {
+      readURL(this, 'other3');
+  });
+  $('#other4_img_upload_btn').change(function() {
+      readURL(this, 'other4');
+  });
+
+
+  }
+  createRange(number) {
     var items: number[] = [];
     for(var i = 1; i <= number; i++){
        items.push(i);
@@ -86,12 +118,12 @@ new_color = {
   }
 
   allFilesToUpload(event){
-    
-      
+
+
     // document.getElementById('inputGroupFile07_label').innerText = event.target.files[0]['name'];
-    
+
     this.file.push(<File>event.target.files)
-    
+
 
   }
 
@@ -107,7 +139,7 @@ new_color = {
       if(key==="dimension"){
         // alert(JSON.stringify(value))
         formData.append(key,JSON.stringify(value))
-        
+
       }
       else if(key!=="dimension"){
       formData.append(key,value)
@@ -116,10 +148,10 @@ new_color = {
 
     // formData.append("bundle_data",this.bundle)
     for(let i =0; i < file.length; i++){
-      
+
       formData.append("image", file[i][0], file[i][0]['name']);
   }
-    
+
     // console.log("bundle",this.bundle)
     this.node.createBundle(formData).subscribe((res)=>{
       // console.log("success")
@@ -155,8 +187,8 @@ new_color = {
       console.info('could not set textarea-value');
     }
   }
-  
- 
+
+
   onUnitChange(event){
 
     let prev_unit = this.unit;
@@ -170,7 +202,7 @@ new_color = {
             this.bundle.dimension[index].height = item.height/2.54;
             this.bundle.dimension[index].width = item.width/2.54;
             this.bundle.dimension[index].thickness = item.thickness/2.54;
-            
+
           })
           this.bundle.net_area = this.bundle.net_area/6.452;
           this.bundle.height = this.bundle.height/2.54;
@@ -183,12 +215,12 @@ new_color = {
             this.bundle.dimension[index].height = item.height/100;
             this.bundle.dimension[index].width = item.width/100;
             this.bundle.dimension[index].thickness = item.thickness/100;
-            
+
           })
           this.bundle.net_area = this.bundle.net_area/10000;
           this.bundle.height = this.bundle.height/100;
             this.bundle.width = this.bundle.width/100;
-            
+
 
 
 
@@ -202,7 +234,7 @@ new_color = {
             this.bundle.dimension[index].height = item.height*39.37;
             this.bundle.dimension[index].width = item.width*39.37;
             this.bundle.dimension[index].thickness = item.thickness*39.37;
-            
+
           })
           this.bundle.net_area = this.bundle.net_area*1550.003;
           this.bundle.height = this.bundle.height*39.37;
@@ -215,7 +247,7 @@ new_color = {
             this.bundle.dimension[index].height = item.height*100;
             this.bundle.dimension[index].width = item.width*100;
             this.bundle.dimension[index].thickness = item.thickness*100;
-            
+
           })
           this.bundle.net_area = this.bundle.net_area*10000;
           this.bundle.height = this.bundle.height*100;
@@ -233,7 +265,7 @@ new_color = {
             this.bundle.dimension[index].height = item.height/39.37;
             this.bundle.dimension[index].width = item.width/39.37;
             this.bundle.dimension[index].thickness = item.thickness/39.37;
-            
+
           })
           this.bundle.net_area = this.bundle.net_area/1550.003;
           this.bundle.height = this.bundle.height/39.37;
@@ -246,7 +278,7 @@ new_color = {
             this.bundle.dimension[index].height = item.height*2.54;
             this.bundle.dimension[index].width = item.width*2.54;
             this.bundle.dimension[index].thickness = item.thickness*2.54;
-            
+
           })
           this.bundle.net_area = this.bundle.net_area*6.452;
           this.bundle.height = this.bundle.height*2.54;
@@ -260,7 +292,7 @@ new_color = {
         }
       }
 
-      
+
 
     // })
   }
@@ -268,29 +300,29 @@ new_color = {
   onDimensionSave(form:NgForm){
     this.dimension = []
     let x = form.value
-  
 
-    
 
-    
+
+
+
   for(let i =0;i<this.bundle.no_of_slabs;i++){
     let obj={};
     Object.keys(form.value).forEach((key)=>{
       if(key.startsWith('dimension['+i+']')){
         if(key==="dimension["+i+"]['width']"){
-          
+
           obj['width']=this.unitConversion(x[key])
 
         }
         if(key==="dimension["+i+"]['height']"){
-          
+
           obj['height']=this.unitConversion(x[key])
 
         }
       }
     })
     let area = 0
-    
+
     this.dimension.push(obj);
     this.dimension.forEach((el)=>{
       area = area+(el['width']*el['height'])
@@ -305,7 +337,7 @@ new_color = {
 
   }
   dimensionKeyUp(event){
-    
+
     console.log(this.aray);
   }
 
@@ -325,24 +357,24 @@ new_color = {
   unitConversion(value){
 
     let prev_unit = this.unit;
-    
-    
+
+
 
       if(prev_unit==='cm'){
         if(this.unit==='inch'){
-        
+
           return value/2.54;
-       
-            
-      
+
+
+
 
 
 
         }else if(this.unit==='m'){
-        
+
             return value/100;
-            
-    
+
+
 
 
         }else{
@@ -350,16 +382,16 @@ new_color = {
         }
       }else if(prev_unit==='m'){
         if(this.unit==='inch'){
-       
+
             return value*39.37;
-   
+
 
 
         }else if(this.unit==='cm'){
-        
+
             return value*100;
-            
-      
+
+
 
 
 
@@ -368,17 +400,17 @@ new_color = {
         }
       }else if(prev_unit==='inch'){
         if(this.unit==='m'){
-         
+
             return value/39.37;
-            
-       
+
+
 
 
         }else if(this.unit==='cm'){
-        
+
             return value*2.54;
-            
-       
+
+
 
 
 
@@ -387,7 +419,7 @@ new_color = {
         }
       }
 
-      
+
 
     // })
   }
@@ -399,10 +431,10 @@ new_color = {
 
 
   setType(val){
-    
+
     this.bundle.product_type = val;
     console.log(this.bundle.product_type);
-    
+
   }
 
 

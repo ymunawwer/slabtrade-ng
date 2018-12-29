@@ -7,28 +7,32 @@ feather.replace()
 
 $(document).ready(function() {
 
+
+
+  $('#smartwizard3').smartWizard({
+    selected: 0, // Initial selected step, 0 = first step
+    keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+    autoAdjustHeight: true, // Automatically adjust content height
+    cycleSteps: false, // Allows to cycle the navigation of steps
+    backButtonSupport: true, // Enable the back button support
+    useURLhash: false, // Enable selection of the step based on url hash
+    showStepURLhash: false,
+    lang: { // Language variables
+        next: 'Next',
+        previous: 'Previous'
+    },
+    anchorSettings: {
+        anchorClickable: true, // Enable/Disable anchor navigation
+        enableAllAnchors: true, // Activates all anchors clickable all times
+        markDoneStep: true, // add done css
+        enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
+    },
+});
+
+
     // Smart Wizard
     $('#smartwizard').smartWizard({
-        selected: 0, // Initial selected step, 0 = first step 
-        keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
-        autoAdjustHeight: true, // Automatically adjust content height
-        cycleSteps: false, // Allows to cycle the navigation of steps
-        backButtonSupport: true, // Enable the back button support
-        useURLhash: false, // Enable selection of the step based on url hash
-        showStepURLhash: false,
-        lang: { // Language variables
-            next: 'Next',
-            previous: 'Previous'
-        },
-        anchorSettings: {
-            anchorClickable: true, // Enable/Disable anchor navigation
-            enableAllAnchors: true, // Activates all anchors clickable all times
-            markDoneStep: true, // add done css
-            enableAnchorOnDoneStep: true // Enable/Disable the done steps navigation
-        },
-    });
-    $('#smartwizard3').smartWizard({
-        selected: 0, // Initial selected step, 0 = first step 
+        selected: 0, // Initial selected step, 0 = first step
         keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
         autoAdjustHeight: true, // Automatically adjust content height
         cycleSteps: false, // Allows to cycle the navigation of steps
@@ -47,8 +51,9 @@ $(document).ready(function() {
         },
     });
 
+
     $('#smartwizard1').smartWizard({
-        selected: 0, // Initial selected step, 0 = first step 
+        selected: 0, // Initial selected step, 0 = first step
         keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
         autoAdjustHeight: true, // Automatically adjust content height
         cycleSteps: false, // Allows to cycle the navigation of steps
