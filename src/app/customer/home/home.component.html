@@ -131,7 +131,7 @@ input[type=number]::-webkit-outer-spin-button {
                                           <div class="bg-img">
                                               <a>
                                                   <!-- [ngStyle]="{'background-image': 'url(' + photo + ')'}" -->
-                                    <div class="card-img" [style.background-image] = "getBackground(doc.images[0].path)"  >
+                                    <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
                                     </div>
                                     <h4>{{doc.product_name}}</h4>
                                     <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->

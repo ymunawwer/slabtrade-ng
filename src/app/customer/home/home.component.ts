@@ -74,8 +74,14 @@ export class HomeComponent implements OnInit {
 
 
   getBackground(image) {
-    image = image.replace('home/gamasome/slabtrade/public/','');
-    return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+    
+    // image = image.replace('home/gamasome/slabtrade/public/','');
+    if(image){
+      return this._sanitizer.bypassSecurityTrustStyle(`url(${image.path})`);
+    }else{
+      return null;
+    }
+  
 }
 
   async getHomePage(){
