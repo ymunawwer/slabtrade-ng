@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, RoutesRecognized } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 
 @Component({
@@ -13,9 +14,13 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   err:boolean;
+  previousUrl: string;
 
-  constructor(private auth:AuthService,private router:Router) {
+  constructor(private auth:AuthService,private router:Router, private dataservice: DataService) {
    this.err  = true;
+   if (auth.isAuthenticated()) {
+     router.navigate(['/']);
+   }
 
   }
 
