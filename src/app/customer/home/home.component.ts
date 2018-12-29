@@ -572,17 +572,25 @@ console.log('images', this.item_image);
             "tax":tax_amount
           }
 
-
+// "error_code":200,"Message":"Please add more item to the container.","data":{"bundle_id":"987986","bundle_name":"Marble","supplier_id":"5c075eec28d89c7915c53ea9"
               // res.data[0].bundle.push(data_updated)
 
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
+                if(res["error_code"] ===200){
+                  if(res['Message'] === "Please add more item to the container."){
+                    alert("please add item From similar Supplier or remove the last added item from your cart.")
+                  }else{
+                    console.log("updated cart",res)
+                    localStorage.removeItem('cart')
+                    localStorage.setItem('cart',total_quantity)
+    
+    
+                    console.log(total_quantity)
+                    this.route.navigate(['/customer/cart'])
 
-                localStorage.removeItem('cart')
-                localStorage.setItem('cart',total_quantity)
-
-
-                console.log(total_quantity)
-                this.route.navigate(['/customer/cart'])
+                  }
+                }
+             
               })
 
 
