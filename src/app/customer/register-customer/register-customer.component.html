@@ -100,10 +100,10 @@
                             class="alert alert-danger">
 
                           <div *ngIf="home.errors.required">
-                           Last Name is required.
+                           Home phone is required.
                           </div>
                           <div *ngIf="home.errors.minlength">
-                            Last must be at least 6 characters long.
+                            Home phone must be at least 10 digit long.
                           </div>
                         </div>
                     </div></div>
@@ -155,7 +155,7 @@
                            Street is required.
                           </div>
                           <div *ngIf="street.errors.minlength">
-                            Street must be at least 10 character long.
+                            Street must be at least 7 character long.
                           </div>
                         </div>
                         </div>
@@ -458,8 +458,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <input class="form-control" type="text" placeholder="Zip" name = "zip" ngModel required minlength="6" #zip="ngModel">
-                            <div *ngIf="zip.invalid && (zip.dirty || zip.touched)"
-                            class="alert alert-danger">
+                            <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger">
 
                           <div *ngIf="zip.errors.required">
                            Zip is required.

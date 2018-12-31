@@ -9,7 +9,7 @@ declare var feather: any;
   styleUrls: ['./edit-product.component.sass']
 })
 export class EditProductComponent implements OnInit {
-
+  unit;
   file;
   bundle = {
     'product_name':'',
@@ -169,6 +169,16 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
 
   }
+  onUnitChange(event){
 
+  }
+
+
+  onDimensionSave(f){
+
+  }
+onDimensionChange(){
+
+}
 
 }

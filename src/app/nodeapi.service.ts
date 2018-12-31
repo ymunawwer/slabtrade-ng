@@ -237,6 +237,8 @@ uploadShippingDoc(data){
 
 
 
+
+
 changeOrderStatus(id,status):Observable<any>{
   let token = this.auth.getToken();
   // localhost:3002/admin/order/orderstatus
@@ -362,6 +364,21 @@ getProductDetail(id) {
     catchError(err=>this.handleError(err))
 
   );
+
+}
+
+
+
+downloadPurchaseOrder(id): Observable<any> {
+  let token = this.auth.getToken();
+  let headers = new Headers();
+  // headers.append('responseType','ResponseContentType'+'.Blob')
+  headers.append('Auth','Bearer ' + token)
+  headers.append('Content-Type', 'application/json');
+  // let options = new RequestOptions({headers: headers });
+ 
+  return this.http.get(ENV.supplier+'/downloadpurchaseorder?id='+id, {headers:{'auth':token}})
+      // .pipe(map(res => res.blob()));
 
 }
 

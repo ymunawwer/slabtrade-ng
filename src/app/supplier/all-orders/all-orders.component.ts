@@ -14,6 +14,7 @@ export class AllOrdersComponent implements OnInit {
   orders:any;
   name:any;
   wired_doc_arr:any;
+  purchase_order:any;
   order:any;
   isorderlist:boolean;
   ispaymentdetails:boolean;
@@ -94,7 +95,7 @@ export class AllOrdersComponent implements OnInit {
     this.ispurchaseorder=true
     this.isupload = false
     this.isorderlist =false
-    
+    this.getPurchaseOrder();
   }
 
   paymentDetailTab(){
@@ -216,4 +217,19 @@ getWiredDoc(){
   console.log(this.payment_status)
 }
 
+getPurchaseOrder(){
+  this.node.downloadPurchaseOrder(this.order._id).subscribe((res)=>{
+    console.log('zz',res)
+    // this.payment_status = res['data']['payment_status'];
+    this.purchase_order = res['data'][0]['path'];
+    // this.payment_mode = res['data']['payment_mode'];
+    
+  },(err)=>{
+    alert("Please try again later.")
+  })
+  console.log("purchase_order",this.purchase_order)
 }
+
+}
+
+
