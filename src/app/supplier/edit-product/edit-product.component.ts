@@ -429,19 +429,9 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
 
   }
-  onUnitChange(event){
-
-  }
-
-
-  onDimensionSave(f){
-
-  }
+ 
 onDimensionChange(){
-
-<<<<<<< HEAD
 }
-=======
   getBackground(image) {
     if (image) {
       return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
@@ -456,6 +446,5 @@ dimensionKeyUp(event){
   console.log(this.aray);
 }
 
->>>>>>> 87e6d18e7306ea1980b100a4f0d3207d5cf0de20
 
 }
