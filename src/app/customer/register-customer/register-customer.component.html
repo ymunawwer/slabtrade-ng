@@ -193,7 +193,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <!-- <input class="form-control" type="text" placeholder="Country"> -->
-                            <select class="country" name = "country" ngModel required #country="ngModel" ngModel>
+                            <select class="country" name = "country" ngModel #country="ngModel">
                                 <option></option>
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
@@ -474,7 +474,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel  #mailing_street="ngModel">
+                            <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="7" #mailing_street="ngModel">
                             <div *ngIf="mailing_street.invalid && (mailing_street.dirty || mailing_street.touched)"
                             class="alert alert-danger">
 
