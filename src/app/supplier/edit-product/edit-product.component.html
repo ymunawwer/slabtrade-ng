@@ -105,7 +105,7 @@
                                       </div>
                                       <div class="modal-footer">
                                           <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary" (click)="onDimensionChange()" [disabled]="!f.valid">Save changes</button>
+                                          <button type="button" class="btn btn-primary" (click)="onDimensionChange(f)" [disabled]="!f.valid">Save changes</button>
                                       </div>
                                   </div>
                               </div>
@@ -201,10 +201,10 @@
                           </div>
                       </div>
                       <div class="col-md-6">
-                          <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#editSlabs">
+                          <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#editSlabs2">
                               Edit Dimension For Selected Slabs
                           </button>
-                          <div class="modal fade" id="editSlabs" tabindex="-1" role="dialog" aria-labelledby="editSlabsLabel" aria-hidden="true" style="z-index: 9999;">
+                          <div class="modal fade" id="editSlabs2" tabindex="-1" role="dialog" aria-labelledby="editSlabsLabel" aria-hidden="true" style="z-index: 9999;">
                               <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                       <div class="modal-header">
@@ -214,7 +214,7 @@
                                           </button>
                                       </div>
 
-                                      <form #f = ngForm (ngSubmit)="onDimensionSave(f)" >
+                                      <form #f = ngForm>
                                       <div class="modal-body">
 
                                           <div class="row">
@@ -224,7 +224,7 @@
                                                   <div class="row">
                                                       <div class="col-md-4" >
                                                           <div class="form-group">
-                                                              <input  type="text" class="form-control" placeholder="Width" name="dimension[{{i}}]['width']" [(ngModel)]="aray[i]['width']" (keyup)="dimensionKeyUp($event)">
+                                                              <input  type="text" class="form-control" placeholder="Width" name="dimension[{{i}}]['width']" [(ngModel)]="aray[i]['width']"  (keyup)="dimensionKeyUp($event)">
                                                           </div>
                                                       </div>
                                                       <div class="col-md-4">
@@ -252,7 +252,7 @@
                                       </div>
                                       <div class="modal-footer">
                                           <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                                          <button type="submit" class="btn btn-primary">Save changes</button>
+                                          <button type="submit" class="btn btn-primary" data-dismiss="modal" (click)="onDimensionSave(f)">Save changes</button>
                                       </div>
                                  </form>
                                   </div>
@@ -311,10 +311,10 @@
                   <div class="col-md-4">
                       <div class="prev-img-blk-outer">
                           <div class="prev-img-blk">
-                              <div class="img_outer" id="prev_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Preview+Image);">
+                              <div class="img_outer" id="prev_image_preview" [style.background-image] = "images[0] ? getBackground(images[0].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn prev-up-btn">
-                                  <input type="file" name="image[0]" id="prev_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                  <input type="file" name="image[0]" id="prev_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 0)" />
                               </div>
                           </div>
                       </div>
@@ -336,37 +336,37 @@
                   <div class="col-md-12">
                       <div class="other-img-blk-outer">
                           <div class="other-img-blk">
-                              <div class="img_outer" id="other_image_preview"  style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                              <div class="img_outer" id="other_image_preview"  [style.background-image] = "images[1] ? getBackground(images[1].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                  <input type="file" name="image[0]" id="other_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 1)" />
                               </div>
                           </div>
                       </div>
                       <div class="other-img-blk-outer">
                           <div class="other-img-blk">
-                              <div class="img_outer" id="other2_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                              <div class="img_outer" id="other2_image_preview" [style.background-image] = "images[2] ? getBackground(images[2].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other2_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                  <input type="file" name="image[0]" id="other2_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 2)" />
                               </div>
                           </div>
                       </div>
                       <div class="other-img-blk-outer">
                           <div class="other-img-blk">
-                              <div class="img_outer" id="other3_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                              <div class="img_outer" id="other3_image_preview" [style.background-image] = "images[3] ? getBackground(images[3].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other3_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                  <input type="file" name="image[0]" id="other3_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 3)" />
                               </div>
                           </div>
                       </div>
                       <div class="other-img-blk-outer">
                           <div class="other-img-blk">
-                              <div class="img_outer" id="other4_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Other+Image);">
+                              <div class="img_outer" id="other4_image_preview" [style.background-image] = "images[4] ? getBackground(images[4].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other4_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event)" />
+                                  <input type="file" name="image[0]" id="other4_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 4)" />
                               </div>
                           </div>
                       </div>

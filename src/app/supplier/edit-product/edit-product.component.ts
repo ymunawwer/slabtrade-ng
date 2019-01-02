@@ -1,6 +1,8 @@
 import { NodeapiService } from './../../nodeapi.service';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 declare var $: any;
 declare var feather: any;
 @Component({
@@ -10,9 +12,15 @@ declare var feather: any;
 })
 export class EditProductComponent implements OnInit {
 
-  file;
+  file = [];
+  images = [];
+  dummyArray = [];
+  aray:any;
+  thickness_new = 0;
+  dimension:any;
+  unit:String;
   bundle = {
-    'product_name':'',
+    'product_name': '',
      'type':'',
      'supplier_id':'',
      'product_type':'',
@@ -52,9 +60,10 @@ export class EditProductComponent implements OnInit {
   productDescription;
   inspectionReport;
 
-  constructor(private apiService: NodeapiService, private router: Router, private route: ActivatedRoute) {
+  constructor(private apiService: NodeapiService, private router: Router, private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
 
-
+this.aray = [];
+this.unit = 'cm';
 
    }
 
@@ -131,6 +140,8 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
       this.productDescription = this.bundle['product_description'];
       this.inspectionReport = this.bundle['inspection_report'];
 
+      this.images = this.bundle['images'];
+
 
     } else {
       alert('Error ocuured');
@@ -141,19 +152,269 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   }
 
-  createRange(number) {
-    const items: number[] = [];
-    for (let i = 1; i <= number; i++) {
-    }
-    return items;
+
+  unitConversion(value){
+
+    let prev_unit = this.unit;
+
+
+
+      if(prev_unit==='cm'){
+        if(this.unit==='inch'){
+
+          return value/2.54;
+
+
+
+
+
+
+        }else if(this.unit==='m'){
+
+            return value/100;
+
+
+
+
+        }else{
+          return value;
+        }
+      }else if(prev_unit==='m'){
+        if(this.unit==='inch'){
+
+            return value*39.37;
+
+
+
+        }else if(this.unit==='cm'){
+
+            return value*100;
+
+
+
+
+
+        }else{
+          return value;
+        }
+      }else if(prev_unit==='inch'){
+        if(this.unit==='m'){
+
+            return value/39.37;
+
+
+
+
+        }else if(this.unit==='cm'){
+
+            return value*2.54;
+
+
+
+
+
+        }else{
+          return value;
+        }
+      }
+
+
+
+    // })
   }
+
+  createRange(number) {
+    this.dummyArray = [];
+    this.aray = [];
+    console.log('number', number);
+    for(let i = 1; i <= number; i++) {
+
+       this.dummyArray.push(i);
+       this.aray.push(new Object());
+
+    }
+    this.aray = this.bundle.dimension;
+
+    if(this.dummyArray.length != this.aray.length) {
+      for (let i =this.aray.length; i <= this.dummyArray.length; i++) {
+
+                this.aray[i] = { width: 0, height: 0, thickness: 0};
+
+
+      }
+    }
+
+    return this.dummyArray;
+  }
+
+
+  onUnitChange(event){
+
+    let prev_unit = this.unit;
+    console.log("event",event.target.querySelector('input').value)
+    // this.bundle.dimension.forEach((item)=>{
+      this.unit = event.target.querySelector('input').value
+
+      if(prev_unit==='cm'){
+        if(this.unit==='inch'){
+          this.bundle.dimension.forEach((item,index)=>{
+            this.bundle.dimension[index].height = item.height/2.54;
+            this.bundle.dimension[index].width = item.width/2.54;
+            this.bundle.dimension[index].thickness = item.thickness/2.54;
+
+          })
+          this.bundle.net_area = this.bundle.net_area/6.452;
+          this.bundle.height = this.bundle.height/2.54;
+            this.bundle.width = this.bundle.width/2.54;
+
+
+
+        }else if(this.unit==='m'){
+          this.bundle.dimension.forEach((item,index)=>{
+            this.bundle.dimension[index].height = item.height/100;
+            this.bundle.dimension[index].width = item.width/100;
+            this.bundle.dimension[index].thickness = item.thickness/100;
+
+          })
+          this.bundle.net_area = this.bundle.net_area/10000;
+          this.bundle.height = this.bundle.height/100;
+            this.bundle.width = this.bundle.width/100;
+
+
+
+
+
+        }else{
+          //unit not change
+        }
+      }else if(prev_unit==='m'){
+        if(this.unit==='inch'){
+          this.bundle.dimension.forEach((item,index)=>{
+            this.bundle.dimension[index].height = item.height*39.37;
+            this.bundle.dimension[index].width = item.width*39.37;
+            this.bundle.dimension[index].thickness = item.thickness*39.37;
+
+          })
+          this.bundle.net_area = this.bundle.net_area*1550.003;
+          this.bundle.height = this.bundle.height*39.37;
+            this.bundle.width = this.bundle.width*39.37;
+
+
+
+        }else if(this.unit==='cm'){
+          this.bundle.dimension.forEach((item,index)=>{
+            this.bundle.dimension[index].height = item.height*100;
+            this.bundle.dimension[index].width = item.width*100;
+            this.bundle.dimension[index].thickness = item.thickness*100;
+
+          })
+          this.bundle.net_area = this.bundle.net_area*10000;
+          this.bundle.height = this.bundle.height*100;
+            this.bundle.width = this.bundle.width*100;
+
+
+
+
+        }else{
+          //unit not change
+        }
+      }else if(prev_unit==='inch'){
+        if(this.unit==='m'){
+          this.bundle.dimension.forEach((item,index)=>{
+            this.bundle.dimension[index].height = item.height/39.37;
+            this.bundle.dimension[index].width = item.width/39.37;
+            this.bundle.dimension[index].thickness = item.thickness/39.37;
+
+          })
+          this.bundle.net_area = this.bundle.net_area/1550.003;
+          this.bundle.height = this.bundle.height/39.37;
+            this.bundle.width = this.bundle.width/39.37;
+
+
+
+        }else if(this.unit==='cm'){
+          this.bundle.dimension.forEach((item,index)=>{
+            this.bundle.dimension[index].height = item.height*2.54;
+            this.bundle.dimension[index].width = item.width*2.54;
+            this.bundle.dimension[index].thickness = item.thickness*2.54;
+
+          })
+          this.bundle.net_area = this.bundle.net_area*6.452;
+          this.bundle.height = this.bundle.height*2.54;
+            this.bundle.width = this.bundle.width*2.54;
+
+
+
+
+        }else{
+          //unit not change
+        }
+      }
+
+
+
+    // })
+  }
+
+  onDimensionSave(form:NgForm){
+    this.dimension = [];
+    let x = form.value;
+
+
+
+
+
+  for(let i =0;i<this.bundle.no_of_slabs;i++){
+    let obj={};
+    Object.keys(form.value).forEach((key)=>{
+      if(key.startsWith('dimension['+i+']')){
+        if(key==="dimension["+i+"]['width']"){
+
+          obj['width']=this.unitConversion(x[key])
+
+        }
+        if(key==="dimension["+i+"]['height']"){
+
+          obj['height']=this.unitConversion(x[key])
+
+        }
+      }
+    })
+    let area = 0
+
+    this.dimension.push(obj);
+    this.dimension.forEach((el)=>{
+      area = area+(el['width']*el['height'])
+      console.log(area)
+    })
+    this.bundle.net_area = area;
+    console.log('weight', this.bundle.net_area*this.thickness_new);
+    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+  }
+  // console.log(this.dimension)
+  this.bundle.dimension=this.dimension;
+
+
+  }
+
 
   onUpdate() {
     this.bundle['net_weight'] =
     (this.bundle['dimension'][0]['width'] * this.bundle['dimension'][0]['height'] * this.bundle['dimension'][0]['thickness']) / 166;
+
+    const formData:any = new FormData();
+    const file: Array<File> = this.file;
+
+    for (let i = 0; i < file.length; i++) {
+
+      formData.append('image', file[i][0], file[i][0]['name']);
+  }
+
+  console.log('this.bundle', this.bundle);
+
     this.apiService.updateProduct(this.bundle).subscribe((update_result) => {
       alert('Bundle Updated.');
-      window.location.reload();
+      this.router.navigate(['supplier/products']);
       console.log(update_result);
     }, (err) => {
       alert('Failed to update.Please try again.');
@@ -161,14 +422,27 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     });
   }
 
-  allFilesToUpload(event) {
+  allFilesToUpload(event, index) {
 
-    console.log('file changed', event.target.files);
-
+    this.images[index] =  event.target.files[0];
     this.file.push(<File>event.target.files);
 
 
   }
+
+  getBackground(image) {
+    if (image) {
+      return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);
+    } else {
+      return null;
+    }
+
+}
+
+dimensionKeyUp(event){
+
+  console.log(this.aray);
+}
 
 
 }

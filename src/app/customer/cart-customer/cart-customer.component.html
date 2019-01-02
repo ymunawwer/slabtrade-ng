@@ -45,13 +45,13 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <ng-template ngFor let-item [ngForOf]= "cart_item" let-i="index">
+                            <ng-template ngFor let-item [ngForOf]= "result" let-i="index">
                         <tr>
                             <td>{{item.bundle_name}}</td>
                             <td>{{item.Dimension[0].width*item.Dimension[0].height}}</td>
                             <td>{{item.thickness}}</td>
                             <td>{{item.Dimension[0].width}}X{{item.Dimension[0].height}}</td>
-                            <td>{{item.quantity}}</td>
+                            <td>{{map.get(item.bundle_id)}}</td>
                             <td>${{(item.total===undefined?0:item.total)}}</td>
                             <td class="text-center" (click)="remove(item)"><a class="remove">Remove</a></td>
                         </tr></ng-template>

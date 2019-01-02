@@ -29,6 +29,12 @@ export class CartCustomerComponent implements OnInit {
   user:any;
   port:any;
   unloadRadio: any = 'yes';
+
+  result;
+
+  map = new Map();
+
+
   constructor(private nodeapi:NodeapiService,private nodeApi:NodeapiService,private location:PlatformLocation,private auth:AuthService,private router:Router) {
     this.unload= true;
     this.cart_item = []
@@ -88,6 +94,41 @@ export class CartCustomerComponent implements OnInit {
 
           this.iscartempty = false;
           console.log(this.cart_item);
+
+          this.cart_item.forEach(element => {
+              var sup = element['bundle_id'];
+
+               console.log("element",this.map.has(sup));
+
+               if(this.map.has(sup)){
+
+               this.map.set(sup,this.map.get(sup)+element['quantity']);
+
+               console.log(element['supplier_id'])
+               }else{
+                   this.map.set(sup,element['quantity'])
+
+
+               } });
+
+               console.log("map",this.map);
+
+               console.log('value', this.map.get('31'));
+
+
+                this.result = this.cart_item.reduce((unique, o) => {
+                if(!unique.some(obj => obj.bundle_id === o.bundle_id)) {
+                  unique.push(o);
+                }
+                return unique;
+            },[]);
+            console.log('result', this.result);
+
+
+
+
+
+
 
         }else if(res.message==="Cart is Empty"){
           this.iscartempty = true;
