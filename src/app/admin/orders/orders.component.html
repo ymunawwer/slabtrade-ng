@@ -1,3 +1,13 @@
+<style>
+.enabled_color {
+  font-weight: 600;
+  color: black;
+}
+
+.disabled_color {
+  font-weight: 600;
+}
+</style>
 <div id="page-container">
   <app-sidebar></app-sidebar>
   <div class="page-wrapper">
@@ -79,13 +89,12 @@
                                 <div class="form-group">
                                     <label for="FormContros">Order Status</label>
                                     <select class="form-control" id="FormControls" [(ngModel)]="order_status">
-                                        <option>Action</option>
-                                        <option>Pending</option>
-                                        <option>Processing</option>
-                                        <option value="Accepted">Confirmed</option>
-                                        <option>Shipped</option>
-                                        <option>Arrived</option>
-                                        <option>Delivered</option>
+                                        <option class='enabled_color'>Pending</option>
+                                        <option class='enabled_color'>Processing</option>
+                                        <option [ngClass]="checking_order_status === 'Pending' ? 'disabled_color' : 'enabled_color'"  [disabled]="checking_order_status === 'Pending'" value="Accepted">Confirmed</option>
+                                        <option [ngClass]="(checking_order_status === 'Pending' || checking_order_status === 'Processing') ? 'disabled_color' : 'enabled_color'" [disabled]="checking_order_status === 'Pending' || checking_order_status === 'Processing'">Shipped</option>
+                                        <option [ngClass]="(checking_order_status === 'Pending' || checking_order_status === 'Processing' || checking_order_status === 'Accepted') ? 'disabled_color' : 'enabled_color'" [disabled]="checking_order_status === 'Pending' || checking_order_status === 'Processing' || checking_order_status === 'Accepted'">Arrived</option>
+                                        <option [ngClass]="(checking_order_status === 'Pending' || checking_order_status === 'Processing' || checking_order_status === 'Accepted' || checking_order_status == 'Shipped') ? 'disabled_color' : 'enabled_color'" [disabled]="checking_order_status === 'Pending' || checking_order_status === 'Processing' || checking_order_status === 'Accepted' || checking_order_status == 'Shipped'">Delivered</option>
                                     </select>
                                 </div>
                                 <div class="text-right">
@@ -119,9 +128,9 @@
                                 <div class="form-group">
                                     <label for="FormContros">Payment Status</label>
                                     <select class="form-control" id="FormControls" [(ngModel)] = "paymentstatus">
-                                        <option>Pending</option>
-                                        <option>Payment In Progress</option>
-                                        <option>Paid</option>
+                                        <option class="enabled_color">Pending</option>
+                                        <option class="enabled_color">Payment In Progress</option>
+                                        <option [ngClass]="checking_payment_status === 'Pending' ? 'disabled_color' : 'enabled_color'"  [disabled]="checking_payment_status === 'Pending'">Paid</option>
                                     </select>
                                 </div>
                                 <div class="text-right">
@@ -382,7 +391,7 @@
                 </div>
             </div>
         </div>
-   
+
         <a (click) = "createPurchaseOrder()" style="float:right;" class="btn btn-primary">Create</a>
 </div>
 </div>
