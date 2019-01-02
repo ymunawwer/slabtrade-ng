@@ -172,7 +172,7 @@
                           <div class="form-group">
                               <label for="formGroupExampleInput">Weight</label>
                               <div class="input-group mb-3">
-                                  <input type="text" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.net_weight" name="weight" required minlength="1">
+                                  <input type="text" class="form-control" (change)="netWeightChanged($event)" placeholder="Weight" [(ngModel)] = "bundle.net_weight" name="weight" required minlength="1">
                                   <div class="input-group-append">
                                       <span class="input-group-text" id="basic-addon2">LB</span>
                                   </div>
@@ -197,7 +197,7 @@
                       <div class="col-md-6">
                           <div class="form-group">
                               <label for="exampleFormControlSelect1">Slabs</label>
-                              <input class="form-control" type="number"  min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required minlength="1">
+                              <input class="form-control" type="number"  min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" (change)="no_of_slab_increased($event)" name = "slab_quantity" required minlength="1">
                           </div>
                       </div>
                       <div class="col-md-6">
@@ -220,7 +220,7 @@
                                           <div class="row">
                                                   <ng-template ngFor  [ngForOf]= "createRange(bundle.no_of_slabs)" let-i="index" >
                                               <div class="col-sm-12" >
-                                                  <label for="formGroupExampleInput">Slab {{i}}</label>
+                                                  <label for="formGroupExampleInput">Slab {{i + 1}}</label>
                                                   <div class="row">
                                                       <div class="col-md-4" >
                                                           <div class="form-group">
@@ -292,7 +292,7 @@
                           <div class="row">
                               <div class="col-md-6">
                                   <div class="form-group">
-                                      <input type="text" class="form-control" [(ngModel)] = "bundle.net_weight" name = "net_weight" required minlength="1">
+                                      <input type="text" class="form-control" [(ngModel)] = "bundle.bundle_weight" name = "net_weight" required minlength="1">
                                   </div>
                               </div>
                               <div class="col-md-6">
@@ -382,7 +382,7 @@
                       <div class="col-sm-12">
                           <div class="form-group">
                               <label for="exampleFormControlTextarea1">Product Description</label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)] = "productDescription" name="product_description"></textarea>
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)] = "bundle.product_description" name="product_description"></textarea>
                           </div>
                       </div>
                   </div>
@@ -390,7 +390,7 @@
                       <div class="col-sm-12">
                           <div class="form-group">
                               <label for="exampleFormControlTextarea1">Bundle Description</label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="bundleDescription" name = "bundle_description"></textarea>
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="bundle.Bundle_description" name = "bundle_description"></textarea>
                           </div>
                       </div>
                   </div>
@@ -398,11 +398,11 @@
                       <div class="col-sm-12">
                           <div class="form-group">
                               <label for="exampleFormControlTextarea1">Inspection Report</label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="inspection_report" [(ngModel)]="inspectionReport"></textarea>
+                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="inspection_report" [(ngModel)]="bundle.inspection_report"></textarea>
                           </div>
                       </div>
                   </div>
-                  <button type="button" class="btn btn-primary" (click)="onUpdate()">Update Bundle</button>
+                  <button type="button" class="btn btn-primary create-bdl-btn" (click)="onUpdate()">Update Bundle</button>
               </form>
           </div>
           </div>

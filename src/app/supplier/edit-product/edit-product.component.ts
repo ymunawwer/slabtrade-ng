@@ -48,8 +48,9 @@ export class EditProductComponent implements OnInit {
      'net_area':0,
      'net_weight':0.0,
      'product_description':'',
-     'bundle_description':'',
-     'inspection_report':''
+     'Bundle_description':'',
+     'inspection_report':'',
+     'bundle_weight': 0.0,
 
 
 
@@ -109,7 +110,7 @@ this.unit = 'cm';
 
   $('#smartwizard3').smartWizard({
     selected: 0, // Initial selected step, 0 = first step
-    keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+    keyNavigation: false, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
     autoAdjustHeight: true, // Automatically adjust content height
     cycleSteps: false, // Allows to cycle the navigation of steps
     backButtonSupport: true, // Enable the back button support
@@ -131,14 +132,15 @@ this.unit = 'cm';
 this.apiService.getProductDetail(this.productId).subscribe(data => {
 
     if (data['error_code'] === 200) {
-
+      let sum = 0;
       this.bundle = data['data'];
       console.log('product data', this.bundle);
-      this.bundle.net_area = this.bundle['dimension'][0]['width'] * this.bundle['dimension'][0]['height'];
+      for (let i = 0; i < this.bundle['dimension'].length; i++) {
+            sum += this.bundle['dimension'][i]['width'] * this.bundle['dimension'][i]['height'];
+      }
+      this.bundle.net_area = sum;
 
-      this.bundleDescription = this.bundle['Bundle_description'];
-      this.productDescription = this.bundle['product_description'];
-      this.inspectionReport = this.bundle['inspection_report'];
+      this.bundle.bundle_weight = this.bundle.no_of_slabs * this.bundle.net_weight;
 
       this.images = this.bundle['images'];
 
@@ -384,12 +386,14 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
     this.dimension.push(obj);
     this.dimension.forEach((el)=>{
-      area = area+(el['width']*el['height'])
+      area = area+(el['width']*el['height']);
+      el['thickness'] = this.bundle.dimension[0].thickness;
       console.log(area)
     })
     this.bundle.net_area = area;
     console.log('weight', this.bundle.net_area*this.thickness_new);
-    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+    // this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+       this.bundle.bundle_weight = this.bundle.net_weight * this.bundle.no_of_slabs;
   }
   // console.log(this.dimension)
   this.bundle.dimension=this.dimension;
@@ -397,10 +401,19 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   }
 
+  netWeightChanged(value) {
+
+    this.bundle.bundle_weight = value.target.value * this.bundle.no_of_slabs;
+
+  }
+
+  no_of_slab_increased(value) {
+    this.bundle.bundle_weight = value.target.value * this.bundle.net_weight;
+  }
 
   onUpdate() {
-    this.bundle['net_weight'] =
-    (this.bundle['dimension'][0]['width'] * this.bundle['dimension'][0]['height'] * this.bundle['dimension'][0]['thickness']) / 166;
+    // this.bundle['net_weight'] =
+    // (this.bundle['dimension'][0]['width'] * this.bundle['dimension'][0]['height'] * this.bundle['dimension'][0]['thickness']) / 166;
 
     const formData:any = new FormData();
     const file: Array<File> = this.file;
