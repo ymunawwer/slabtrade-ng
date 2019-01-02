@@ -74,14 +74,14 @@ export class HomeComponent implements OnInit {
 
 
   getBackground(image) {
-    
+
     // image = image.replace('home/gamasome/slabtrade/public/','');
     if(image){
       return this._sanitizer.bypassSecurityTrustStyle(`url(${image.path})`);
     }else{
       return null;
     }
-  
+
 }
 
   async getHomePage(){
@@ -526,7 +526,7 @@ console.log('images', this.item_image);
 
 
 
-
+console.log('data', data);
 
           this.nodeapi.addToCart(data).subscribe((response)=>{
             // localStorage.removeItem('cart')
@@ -583,14 +583,14 @@ console.log('images', this.item_image);
                     console.log("updated cart",res)
                     localStorage.removeItem('cart')
                     localStorage.setItem('cart',total_quantity)
-    
-    
+
+
                     console.log(total_quantity)
                     this.route.navigate(['/customer/cart'])
 
                   }
                 }
-             
+
               })
 
 
