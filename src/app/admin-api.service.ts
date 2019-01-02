@@ -198,6 +198,21 @@ statusPaymentUpdate(id,status,payment){
 
 
 
+
+uploadPurchaseOrder(data){
+  let token = this.auth.getToken();
+  console.log(token)
+  const headers = new HttpHeaders();
+        headers.append('Content-Type', 'multipart/form-data');
+        // headers.append('Accept', 'application/pdf');
+        headers.append('auth','Bearer ' + token);
+        headers.append('role',this.auth.getUser().roles[0]);
+        // data['supplier_id']= this.auth.getUser()._id;
+  console.log('api',data)
+  return this.http.post(ENV.admin +'/order/uploadpurchaseorder',data,{headers:headers});
+
+}
+
 // /order/uploadshippingdetail?id=
 
 

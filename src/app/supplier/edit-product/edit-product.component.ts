@@ -442,7 +442,9 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
 
   }
-
+ 
+onDimensionChange(){
+}
   getBackground(image) {
     if (image) {
       return this._sanitizer.bypassSecurityTrustStyle(`url(${image})`);

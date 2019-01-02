@@ -176,7 +176,7 @@
                                     <div class="col-md-6 text-right">
                                         <a href="#" class="btn btn-primary">View</a>
                                         <a href="#" class="btn btn-secondary">Edit</a>
-                                        <a href="#" class="btn btn-primary">Create</a>
+                                        <a (click) = "purchaseOrder()" class="btn btn-primary">Create</a>
                                     </div>
                                 </div>
                             </div>
@@ -289,4 +289,100 @@
             </div>
 
 
-</div></div>
+</div>
+
+
+
+<div *ngIf="iscreatepurchaseorder"  class = "purchase-order">
+
+    <div class="page-inner sub-menu-inner">
+        <div class="container">
+            <div class="invoice-box">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="invoice-logo"><img src="../img/1.png"></div>
+                            <div class="invoice-address">
+                                <h3>blue planet inc-boston</h3>
+                                <p>135 Oak Hill Way Brockton,MA 02301 P:508-857-2440 F:508-857-2445</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="invoice-right text-right ">
+                                <p>Invoice# <strong>bp02</strong></p>
+                                <p>Invoice Date<b>:</b><strong> {{purchase_order.invoice_date| date}}</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="text-center">Invoice</h4>
+                    <div class="invoice-vendor">
+                        <h3>Vendor:</h3>
+                        <h5>{{purchase_order.name}}</h5>
+                        <p>{{purchase_order.street}}, {{purchase_order.city}}-{{purchase_order.state}} {{purchase_order.zip}}.</p>
+                    </div>
+                    <section class="invoice-table">
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">Bill #</th>
+                                    <th scope="col">Due Date</th>
+                                    <th scope="col">Payment Terms</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>{{random}}</td>
+                                    <td><input type="date" [(ngModel)]="purchase_order.due_date"></td>
+                                    <td>Net 30 Days</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+
+                    <section class="invoice-table mt-4">
+                        <table class="table table-bordered">
+                            <thead class="text-center">
+                                <tr>
+                                    <th scope="col">Account</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Extended</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>#<input type="text" [(ngModel)]="purchase_order.account"></td>
+                                    <td><input type="text" [(ngModel)]="purchase_order.description"></td>
+                                    <td><input type="text" [(ngModel)]="purchase_order.location"></td>
+                                    <td><input type="text" [(ngModel)]=purchase_order.quantity></td>
+                                    <td>$<input type="text" [(ngModel)]="purchase_order.price"></td>
+                                    <td>$<input type="text" [(ngModel)]="purchase_order.extended"></td>
+                                </tr>
+                                <tr class="invoice-total">
+                                    <td colspan="5" class="text-right">Sub Total</td>
+                                    <td>${{purchase_order.extended}}</td>
+                                </tr>
+                                <tr class="invoice-total">
+                                    <td colspan="5" class="text-right">Tax</td>
+                                    <td>$<input type="text" [(ngModel)]=purchase_order.tax></td>
+                                </tr>
+                                <tr class="invoice-total">
+                                    <td colspan="5" class="text-right">Total</td>
+                                    <td>${{purchase_order.extended*1 + purchase_order.tax*1}}</td>
+                                </tr>
+                                <!-- <tr class="invoice-total">
+                                    <td colspan="5" class="text-right">Balance Due</td>
+                                    <td>${{purchase_order_total}}</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+   
+        <a (click) = "createPurchaseOrder()" style="float:right;" class="btn btn-primary">Create</a>
+</div>
+</div>
