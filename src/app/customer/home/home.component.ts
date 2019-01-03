@@ -72,6 +72,12 @@ export class HomeComponent implements OnInit {
      return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
+  getDiscountedPrice(price, discout_percent) {
+
+    return price - (discout_percent / 100) * price;
+
+  }
+
 
   getBackground(image) {
 
@@ -113,7 +119,9 @@ export class HomeComponent implements OnInit {
             }
          }
       })
-    })}else if(data['error_code']===401){
+    })
+  console.log('items', this.items);
+  }else if(data['error_code']===401){
 
     sessionStorage.removeItem('currentUser')
     this.nodeapi.fetchHomePage().subscribe((data)=>{
@@ -271,6 +279,7 @@ export class HomeComponent implements OnInit {
   this.viewItemClickCount++;
 
 console.log('images', this.item_image);
+console.log('doc', this.doc);
 
   }
 
@@ -633,7 +642,7 @@ console.log('data', data);
           }]
         }
         this.items = data['data']
-        console.log(this.items)
+        console.log('items', this.items);
       }
 
     })

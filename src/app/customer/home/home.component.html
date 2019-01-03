@@ -134,8 +134,8 @@ input[type=number]::-webkit-outer-spin-button {
                                     <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
                                     </div>
                                     <h4>{{doc.product_name}}</h4>
-                                    <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
-                                    <span class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
+                                    <span style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
+                                    <span *ngIf="doc.price != undefined" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value)}}</span>
 
                                        <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
                                     </a>
@@ -164,8 +164,9 @@ input[type=number]::-webkit-outer-spin-button {
                                   <div class="card-img" [style.background-image] = "getBackground(docsearch.images[0].path)"  >
                                   </div>
                                   <h4>{{docsearch.product_name}}</h4>
-                                  <!-- <span class="price" style="opacity: 0.4;"><strike>$ 350</strike></span> -->
-                                  <span class="price">{{docsearch.price===undefined?'':'$'+docsearch.price}}</span>
+
+                                  <span style="margin: 10px; opacity: 0.4;" class="price"><s>{{docsearch.price===undefined?'':'$'+docsearch.price}}</s></span>
+                                   <span *ngIf="doc.price != undefined" class="price">$ {{getDiscountedPrice(docsearch.price, docsearch.offer_value)}}</span>
 
                                      <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(docsearch)'>View Details</button>
                                   </a>
@@ -215,7 +216,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 <div class="exzoom_img_box">
                                   <ul class='exzoom_img_ul'>
 
-                                    <li *ngFor="let item of item_image" [(ngModel)]="item_image">
+                                    <li *ngFor="let item of item_image">
                                       <img [src]="sanitizeUrl(item)">
                                     </li>
 
@@ -309,7 +310,8 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option col-md-8">Price</td>
                                             <td class="table-option1 col-md-4">
                                                 <ul>
-                                                    <li class="item">${{doc.price}} </li>
+                                                   <li style="width: max-content" class="item"> <span style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
+                                                    <span *ngIf="doc.price != undefined" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value)}}</span></li>
                                                 </ul>
                                             </td>
                                         </tr>

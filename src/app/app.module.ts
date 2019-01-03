@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -29,16 +28,16 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
     AppComponent,
     LoginComponent,
     ForgotPasswordComponent,
- 
-    SupplierRegisterComponent,
- 
-    LoginRegisterComponent,
- 
-  
- 
 
-    
-   
+    SupplierRegisterComponent,
+
+    LoginRegisterComponent,
+
+
+
+
+
+
   ],
   imports: [
     BrowserModule,
@@ -49,7 +48,7 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
     NgbModule,
     CustomerModule,
     SupplierModule,
-    AdminModule
+    AdminModule,
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

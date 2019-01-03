@@ -1,0 +1,71 @@
+<div id="page-container">
+
+    <app-sidebar></app-sidebar>
+
+    <div class="page-wrapper">
+
+      <app-navbar></app-navbar>
+
+      <div class="page-inner sub-menu-inner">
+          <div class="container">
+              <div class="row">
+                  <div style="margin-left: -30px" class="col-md-12">
+                      <div class="filter-box row">
+                          <div class="form-group col-md-6 mb-3">
+                              <label>Select Product Name</label>
+                              <select [(ngModel)]="data.product_type" class="form-control">
+                                  <option value="Granite">Granite</option>
+                                  <option value="Marble">Marble</option>
+                                  <option value="Quartzite">Quartzite</option>
+                                  <option value="Quartz">Quartz</option>
+
+                              </select>
+                          </div>
+                          <div class="form-group col-md-6 mb-3">
+                              <label>Select Offer Date</label>
+                              <!-- <input type="text" class="daterange form-control" name=""> -->
+                              <input type="text"
+                            placeholder="Daterangepicker"
+                            class="daterange form-control"
+                            [(ngModel)]="data.dateRange"
+                            bsDaterangepicker>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                              <label><strong>Offer Value (in %)</strong></label>
+                              <div class="input-group ip-with-select">
+                                  <input [(ngModel)]="data.offer_value" type="text" class="form-control" aria-label="Text input with dropdown button">
+                                  <!-- <div class="input-group-append">
+                                      <select class="form-control">
+                                          <option>%</option>
+                                          <option>$</option>
+                                      </select>
+                                  </div> -->
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div style="margin-left: -30px"  class="col-md-12 col-xs-12">
+                      <div class="row mt-3">
+                          <div class="text-right col-md-12 no-padding">
+                              <a (click)="addDeal()" class="btn btn-primary no-margin btn-sm">Add</a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+
+
+
+
+

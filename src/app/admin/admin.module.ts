@@ -1,3 +1,4 @@
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -11,16 +12,19 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CustomerListDetailsComponent } from './customer-list-details/customer-list-details.component';
 import { LoginComponent } from './login/login.component';
+import { SalesReportComponent } from './sales-report/sales-report.component';
+import { DealsComponent } from './deals/deals.component';
+import { CreateDealComponent } from './create-deal/create-deal.component';
 
 @NgModule({
   declarations: [    HomeComponent,
- 
+
     OrdersComponent,
- 
+
     CustomerDetailsComponent,
- 
+
     SupplierDetailsComponent,
- 
+
     ShippingDetailsComponent,
 
     SidebarComponent,
@@ -29,13 +33,20 @@ import { LoginComponent } from './login/login.component';
 
     CustomerListDetailsComponent,
 
-    LoginComponent
+    LoginComponent,
+
+    SalesReportComponent,
+
+    DealsComponent,
+
+    CreateDealComponent
 
     ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+    BsDatepickerModule.forRoot()
   ]
 })
 export class AdminModule { }

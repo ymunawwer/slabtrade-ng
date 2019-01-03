@@ -3,7 +3,7 @@ import { AuthService } from '../app/auth.service';
 import { HttpClient,HttpErrorResponse,HttpParams, HttpHeaders, } from '@angular/common/http';
 import {RequestOptions,Headers,Http,ResponseContentType} from '@angular/http';
 import { Observable,throwError } from 'rxjs';
-import { map } from 'rxjs/operators'; 
+import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
 import {ENV } from './core/env.config';
 @Injectable({
@@ -37,14 +37,14 @@ export class AdminApiService {
   }
 
   getOrdes():Observable<any>{
-    
+
 
   let token = this.auth.getToken();
 
 
     return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
 
-    
+
   }
 
   getUser():Observable<any>{
@@ -70,7 +70,7 @@ export class AdminApiService {
     let token = this.auth.getToken();
 
     return this.http.post(ENV.admin +  '/port/updatePort',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
-   
+
 
 
 
@@ -81,7 +81,7 @@ export class AdminApiService {
 
     return this.http.post(ENV.admin + '/port/add',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
 
- 
+
 
 
   }
@@ -95,7 +95,7 @@ export class AdminApiService {
 
     return this.http.post(ENV.admin + '/port/remove',data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
 
- 
+
 
 
   }
@@ -181,8 +181,8 @@ getShippingDoc(id){
 uploadWiredDoc(id,data):Observable<any>{
   let token = this.auth.getToken();
   const headers = new HttpHeaders();
-     
-     
+
+
         headers.append('Auth','Bearer ' + token);
   return this.http.post(ENV.admin+'/order/uploadshippingdetail?id='+id,data,{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}})
 }
@@ -216,7 +216,35 @@ uploadPurchaseOrder(data){
 // /order/uploadshippingdetail?id=
 
 
+getSalesReport(data) {
+  const token = this.auth.getToken();
+  // tslint:disable-next-line:max-line-length
+  return this.http.get(ENV.admin + '/report/salesreport?type=' + data.type + '&start=' + data.startDate + '&end=' + data.endDate + '&status=' + data.status + '&port=' + data.region,
+  {headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+  );
+}
 
+
+createDeal(data) {
+
+  const token = this.auth.getToken();
+
+  const headers = new HttpHeaders();
+
+  const inputData = {
+
+    'product_type': data.product_type,
+    'offer_value': data.offer_value,
+    'start_date': data.start_date,
+    'end_date': data.end_date
+  };
+
+  headers.append('Auth','Bearer ' + token);
+  return this.http.post(ENV.admin + '/deals/createdeal', inputData,
+  {headers: {'Auth': 'Bearer ' + token, 'role': this.auth.getUser().roles[0]}});
+
+}
 
 
 
