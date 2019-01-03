@@ -16,56 +16,25 @@
                       <table class="table table-bordered">
                           <thead>
                               <tr>
-                                  <th scope="col">SNO</th>
-                                  <th scope="col">Product ID</th>
-                                  <th scope="col">Product Name</th>
-                                  <th scope="col">Actual Price</th>
-                                  <th scope="col">Offer</th>
-                                  <th scope="col">Offer Price</th>
+                                  <!-- <th scope="col">SNO</th> -->
+                                  <th scope="col">Product Type</th>
+                                  <th scope="col">Offer %</th>
                                   <th scope="col">Offer Date</th>
                                   <th scope="col">Action</th>
                               </tr>
                           </thead>
                           <tbody>
-                              <tr>
-                                  <td><a href="" class="fields">1</a></td>
-                                  <td><a href="" class="fields">#123</a></td>
-                                  <td><a href="" class="fields">Slab Green</a></td>
-                                  <td><a href="" class="fields">$120</a></td>
-                                  <td><a href="" class="fields">10%</a></td>
-                                  <td><a href="" class="fields">$108</a></td>
-                                  <td><a href="" class="fields">10-05-2018 to 10-01-2019</a></td>
+                              <tr *ngFor="let deal of deals; let i = index">
+                                  <!-- <td><a href="" class="fields">{{++i}}</a></td> -->
+                                  <td><a href="" class="fields">{{deal.product_type}}</a></td>
+                                  <td><a href="" class="fields">{{deal.offer_value}}%</a></td>
+                                  <td><a href="" class="fields">{{deal.start_date | date:'shortDate'}} to {{deal.end_date | date:'shortDate'}}</a></td>
                                   <td>
                                       <a href="#" class="btn btn-primary">Edit</a>
                                       <a href="#" class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
-                              <tr>
-                                  <td><a href="" class="fields">1</a></td>
-                                  <td><a href="" class="fields">#123</a></td>
-                                  <td><a href="" class="fields">Slab Green</a></td>
-                                  <td><a href="" class="fields">$120</a></td>
-                                  <td><a href="" class="fields">$20</a></td>
-                                  <td><a href="" class="fields">$100</a></td>
-                                  <td><a href="" class="fields">10-05-2018 to 10-01-2019</a></td>
-                                  <td>
-                                      <a href="#" class="btn btn-primary">Edit</a>
-                                      <a href="#" class="btn btn-danger">Delete</a>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td><a href="" class="fields">1</a></td>
-                                  <td><a href="" class="fields">#123</a></td>
-                                  <td><a href="" class="fields">Slab Green</a></td>
-                                  <td><a href="" class="fields">$120</a></td>
-                                  <td><a href="" class="fields">10%</a></td>
-                                  <td><a href="" class="fields">$108</a></td>
-                                  <td><a href="" class="fields">10-05-2018 to 10-01-2019</a></td>
-                                  <td>
-                                      <a href="#" class="btn btn-primary">Edit</a>
-                                      <a href="#" class="btn btn-danger">Delete</a>
-                                  </td>
-                              </tr>
+
                           </tbody>
                       </table>
                   </div>

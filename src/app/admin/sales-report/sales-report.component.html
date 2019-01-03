@@ -340,6 +340,10 @@
                                       </td> -->
                                   </tr>
 
+                                  <tr *ngIf="orders.length === 0">
+                                     <td colspan="4">No Orders Found</td>
+                                  </tr>
+
                               </tbody>
                           </table>
                       </div>

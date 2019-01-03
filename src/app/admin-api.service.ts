@@ -225,6 +225,17 @@ getSalesReport(data) {
   );
 }
 
+getAllDeals() {
+
+  const token = this.auth.getToken();
+  // tslint:disable-next-line:max-line-length
+  return this.http.get(ENV.admin + '/deals/getdeal',
+  {headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+  );
+
+}
+
 
 createDeal(data) {
 
