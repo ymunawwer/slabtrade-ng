@@ -27,12 +27,10 @@
               "src/assets"
             ],
             "styles": [
-              // "src/styles.sass",
-              // "./node_modules/bootstrap/dist/css/bootstrap.css",
-              // "node_modules/xzoom/dist/xzoom.css"
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [
-              "./node_modules/jspdf/dist/jspdf.min.js" 
+              "./node_modules/jspdf/dist/jspdf.min.js"
 
             ]
           },

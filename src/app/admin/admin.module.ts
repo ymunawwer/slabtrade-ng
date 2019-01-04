@@ -1,3 +1,4 @@
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -13,16 +14,19 @@ import { CustomerListDetailsComponent } from './customer-list-details/customer-l
 import { LoginComponent } from './login/login.component';
 import { MapComponent } from './map/map.component';
 
+import { SalesReportComponent } from './sales-report/sales-report.component';
+import { DealsComponent } from './deals/deals.component';
+import { CreateDealComponent } from './create-deal/create-deal.component';
 
 @NgModule({
   declarations: [    HomeComponent,
- 
+
     OrdersComponent,
- 
+
     CustomerDetailsComponent,
- 
+
     SupplierDetailsComponent,
- 
+
     ShippingDetailsComponent,
 
     SidebarComponent,
@@ -33,7 +37,12 @@ import { MapComponent } from './map/map.component';
 
     LoginComponent,
 
-    MapComponent
+    MapComponent,
+    SalesReportComponent,
+
+    DealsComponent,
+
+    CreateDealComponent
 
     ],
   imports: [
@@ -41,6 +50,7 @@ import { MapComponent } from './map/map.component';
     AdminRoutingModule,
     FormsModule,
    
+    BsDatepickerModule.forRoot()
   ]
 })
 export class AdminModule { }

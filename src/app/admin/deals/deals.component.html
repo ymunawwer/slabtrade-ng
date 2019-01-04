@@ -1,0 +1,48 @@
+<div id="page-container">
+
+    <app-sidebar></app-sidebar>
+
+    <div class="page-wrapper">
+
+      <app-navbar></app-navbar>
+
+      <div class="page-inner sub-menu-inner">
+          <div class="container">
+              <div class="text-right">
+                  <a [routerLink]="['/admin/createDeal']" class="btn btn-primary btn-sm mb-3">Add New Deals</a>
+              </div>
+              <section class="order-table">
+                  <div class="table-details orders text-center">
+                      <table class="table table-bordered">
+                          <thead>
+                              <tr>
+                                  <!-- <th scope="col">SNO</th> -->
+                                  <th scope="col">Product Type</th>
+                                  <th scope="col">Offer %</th>
+                                  <th scope="col">Offer Date</th>
+                                  <th scope="col">Action</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let deal of deals; let i = index">
+                                  <!-- <td><a href="" class="fields">{{++i}}</a></td> -->
+                                  <td><a  class="fields">{{deal.product_type}}</a></td>
+                                  <td><a  class="fields">{{deal.offer_value}}%</a></td>
+                                  <td><a  class="fields">{{deal.start_date | date:'shortDate'}} to {{deal.end_date | date:'shortDate'}}</a></td>
+                                  <td>
+                                      <a  class="btn btn-primary">Edit</a>
+                                      <a  class="btn btn-danger">Delete</a>
+                                  </td>
+                              </tr>
+
+                          </tbody>
+                      </table>
+                  </div>
+              </section>
+          </div>
+      </div>
+
+    </div>
+
+
+  </div>

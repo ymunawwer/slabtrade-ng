@@ -10,7 +10,7 @@ declare var feather:any;
   selector: 'app-orders',
   templateUrl: './orders.component.html',
   styleUrls: ['./orders.component.sass'],
- 
+
 })
 export class OrdersComponent implements OnInit {
   ishome:boolean;
@@ -25,9 +25,11 @@ export class OrdersComponent implements OnInit {
   file:any;
   doc_arr:any;
   paymentstatus;
+  checking_payment_status: any;
   orders:any;
   iscreatepurchaseorder:boolean;
   order_status:any;
+  checking_order_status: any;
   selectedOrder: any;
   purchase_order = {
     "invoice_date":0,
@@ -46,10 +48,10 @@ export class OrdersComponent implements OnInit {
     "extended":0,
     "tax":0,
 
-    
+
   }
   random = 0;
-  
+
   constructor( private adminApi: AdminApiService,private node:NodeapiService,private router:Router, private dataservice: DataService) {
     this.orders =[]
     this.getOrder();
@@ -72,10 +74,10 @@ export class OrdersComponent implements OnInit {
    }
 
   ngOnInit() {
-    
-  
+
+
     if (JSON.stringify(this.selectedOrder) === '{}') {
-      
+
     this.home();
 
 
@@ -171,25 +173,29 @@ export class OrdersComponent implements OnInit {
     console.log("Order",order)
     this.isOrderStatus();
     this.order_status = order['cancel_status'];
+    this.checking_order_status = order['cancel_status'];
     this.payment = order['payment'];
-    this.paymentstatus = order['payment_status']
+    this.paymentstatus = order['payment_status'];
+    this.checking_payment_status = order['payment_status'];
     this.order = order;
     this.products = this.order['products'];
 
-    
 
-    
-    
+
+
+
 
 
   }
   onStatusUpdate(){
     console.log(this.order._id)
     console.log(this.order.cancel_status)
+    let self = this;
     this.adminApi.updateStatus(this.order._id,this.order_status).subscribe(function(result){
       console.log(result)
       if(result['error_code']===200 && result['Message']!=='invalid order id'){
-        alert(result['Message'])
+        alert(result['Message']);
+        self.checking_order_status = self.order_status;
       }else if(result['error_code']===200 && result['Message']==='invalid order id'){
         alert(result['Message'])
       }else{
@@ -264,9 +270,14 @@ export class OrdersComponent implements OnInit {
 
   updateStatus(){
 
+    let self = this;
+
     this.adminApi.statusPaymentUpdate(this.order['_id'],this.paymentstatus,this.payment).subscribe((res)=>{
       // console.log("success")
       alert("Successfully Updated");
+
+      self.checking_payment_status = self.paymentstatus;
+
 
     },(err)=>{
       alert('Upload Failed.Please try again.');
@@ -303,22 +314,22 @@ export class OrdersComponent implements OnInit {
 }
 
   createPurchaseOrder(){
-  
-    
+
+
     var source = window.document.getElementsByClassName("purchase-order")[0];
     const options = {background: "white", height: source.clientHeight, width: source.clientWidth};
-   
+
     console.log("source",source)
 
     html2canvas(source, options).then((canvas) => {
       //Initialize JSPDF
-      
+
       let doc = new jsPDF("l", "mm", "a4");
       //Converting canvas to Image
       var width = doc.internal.pageSize.getWidth();
-      
+
       var height = doc.internal.pageSize.getHeight();
-    
+
       let imgData = canvas.toDataURL("image/PNG");
       //Add image Canvas to PDF
       doc.addImage(imgData, 'PNG', 0, 0,width,height);
