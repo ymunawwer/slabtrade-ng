@@ -26,14 +26,15 @@ export class RegisterCustomerComponent implements OnInit {
       console.log('Form changes', data);
 
     });
-    $('.country').select2({
-      placeholder: 'Select Country'
-  });
+  //   $('.country').select2({
+  //     placeholder: 'Select Country'
+  // });
   }
 
 
 
   onSubmit(form:NgForm){
+    console.log(form.value);
     var d = new Date();
     var n = d.getMonth();
 

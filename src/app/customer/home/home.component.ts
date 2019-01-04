@@ -16,7 +16,7 @@ declare var $ :any;
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
-
+  quantity = 0;
   url = ENV.server;
   viewItemClickCount = 0;
   isitemclicked = false
@@ -39,7 +39,8 @@ export class HomeComponent implements OnInit {
   constructor(private nodeapi:NodeapiService,private sanitizer: DomSanitizer,private location: PlatformLocation,private _sanitizer: DomSanitizer,private auth:AuthService,private route:Router) {
     this.trustedUrl = this._sanitizer.bypassSecurityTrustUrl("http://localhost:4200/");
     this.items = []
-    this.number = JSON.parse(localStorage.getItem('cart'));
+
+    this.number = JSON.parse(localStorage.getItem('cart'))%6;
     this.similarproduct = []
     this.item_image =[]
     this.image =[]
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit {
   async getHomePage(){
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
     this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
-
+      console.log(data)
       this.items = data.data
      var count =0;
      if(data['error_code']===200){
@@ -117,7 +118,7 @@ export class HomeComponent implements OnInit {
 
     sessionStorage.removeItem('currentUser')
     this.nodeapi.fetchHomePage().subscribe((data)=>{
-
+      
       this.items = data.data
 
 
@@ -353,14 +354,24 @@ console.log('images', this.item_image);
 
   incCount() {
     let container_count = 1;
+    let prev = JSON.parse(localStorage.getItem('cart'))%6;
     if(this.number <= 5 ) {
     this.number += 1;
-    }else if(this.number === 6 ) {
-      container_count +=1;
-      this.number = 1;
-
-
+                                                               // 6 - 4%6
+    this.quantity =Math.abs(prev - this.number);
+    // console.log("differnce",prev - this.number)                // item in cart - count 1 - 4 |-3|
+   
+    // console.log("Quantity",this.quantity)
     }
+    // else if(this.number%6 ===0 ) {
+    //   container_count +=1;
+    //   this.number = 1;
+      
+      // this.remaining = 6;
+      // console.log(this.quantity)
+
+
+    // }
     if(this.number%6!==0){
       console.log((container_count-1)*6 + this.number)
     }else if(this.number%6===0){
@@ -370,9 +381,13 @@ console.log('images', this.item_image);
   }
 
   decCount() {
-
-    if(this.number >= 1 && this.number>JSON.parse(localStorage.getItem('cart'))) {
+    let prev = JSON.parse(localStorage.getItem('cart'))%6;
+    if(this.number >= 1 && this.number>JSON.parse(localStorage.getItem('cart'))%6) {
       this.number -= 1;
+      this.quantity =Math.abs(prev - this.number);
+      // console.log("differnce",prev - this.number)                // item in cart - count 1 - 4 |-3|
+    
+      // console.log("Quantity",this.quantity)
     }
   }
 
@@ -483,7 +498,7 @@ console.log('images', this.item_image);
         // console.log('port',result['data'],tax,shipping_cost)
         console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
-    price = doc['price']*<number>this.number;
+    price = doc['price']*<number>this.quantity;
 
 
 
@@ -539,17 +554,18 @@ console.log('data', data);
           })
 
           }else if(res.message!=="Cart is Empty"){
+            console.log("quantity",this.quantity);
             console.log("document",doc)
             cart_amount = res.data[0].total_amount+price;
             tax_amount = cart_amount/(1+(this.tax/100));
-            let total_quantity = res.data[0].total_quantity+this.number;
+            let total_quantity = res.data[0].total_quantity+this.quantity;
             let bundle={
               "supplier_id":doc.supplier_id,
               "bundle_id":doc.bundle_number,
               "bundle_name":doc.product_name,
               "net_area":net_area,
               "thickness":doc.dimension[0].thickness,
-              "quantity":number,
+              "quantity":this.quantity,
               "total":price,
               "Dimension":[{
                 "width":doc['dimension'][0]['width'],

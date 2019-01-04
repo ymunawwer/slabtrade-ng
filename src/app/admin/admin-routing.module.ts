@@ -7,8 +7,9 @@ import { SupplierDetailsComponent } from './supplier-details/supplier-details.co
 import { IsAdminGuard } from '../guard/is-admin.guard';
 import {ShippingDetailsComponent} from './shipping-details/shipping-details.component';
 import {LoginComponent} from './login/login.component';
+import { MapComponent } from './map/map.component';
 import { AuthGuard } from '../auth-guard.service';
-const routes: Routes = [{path:'admin',component:LoginComponent},{path:'admin/home',component:HomeComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/order',component:OrdersComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/customer',component:CustomerDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/supplier',component:SupplierDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/shipping',component:ShippingDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]}];
+const routes: Routes = [{path:'admin',component:LoginComponent},{path:'admin/home',component:HomeComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/order',component:OrdersComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/customer',component:CustomerDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/supplier',component:SupplierDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/map',component:MapComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/shipping',component:ShippingDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

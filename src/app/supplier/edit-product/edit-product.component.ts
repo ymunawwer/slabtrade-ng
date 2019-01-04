@@ -430,7 +430,7 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   }
  
-onDimensionChange(){
+onDimensionChange(form:NgForm){
 }
   getBackground(image) {
     if (image) {

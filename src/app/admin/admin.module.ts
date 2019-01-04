@@ -11,6 +11,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CustomerListDetailsComponent } from './customer-list-details/customer-list-details.component';
 import { LoginComponent } from './login/login.component';
+import { MapComponent } from './map/map.component';
+
 
 @NgModule({
   declarations: [    HomeComponent,
@@ -29,13 +31,16 @@ import { LoginComponent } from './login/login.component';
 
     CustomerListDetailsComponent,
 
-    LoginComponent
+    LoginComponent,
+
+    MapComponent
 
     ],
   imports: [
     CommonModule,
     AdminRoutingModule,
-    FormsModule
+    FormsModule,
+   
   ]
 })
 export class AdminModule { }

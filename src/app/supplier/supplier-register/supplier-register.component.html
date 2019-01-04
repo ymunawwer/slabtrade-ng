@@ -235,7 +235,7 @@
         <div class="col-md-4">
             <div class="form-group">
                 <!-- <input class="form-control" type="text" placeholder="Country"> -->
-                <select class="country" name = "country" ngModel  #country="ngModel">
+                <select class="form-control" name = "country" ngModel  #country="ngModel">
                     <option></option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Åland Islands">Åland Islands</option>
@@ -527,7 +527,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="6" #mailing_address="ngModel">
+                <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="3" #mailing_address="ngModel">
                 <div *ngIf="mailing_address.invalid && (mailing_address.dirty || mailing_address.touched)" class="alert alert-danger" >
 
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
@@ -547,7 +547,7 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="6" #mailing_city="ngModel">
+                <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
                 <div *ngIf="mailing_city.invalid && (mailing_city.dirty || mailing_city.touched)" class="alert alert-danger" >
 
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
@@ -587,7 +587,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <select class="country" name = "mailing_country" ngModel #mailing_country="ngModel">
+                <select class="form-control" name = "mailing_country" ngModel #mailing_country="ngModel">
                     <option></option>
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Åland Islands">Åland Islands</option>
