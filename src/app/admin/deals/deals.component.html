@@ -26,12 +26,12 @@
                           <tbody>
                               <tr *ngFor="let deal of deals; let i = index">
                                   <!-- <td><a href="" class="fields">{{++i}}</a></td> -->
-                                  <td><a href="" class="fields">{{deal.product_type}}</a></td>
-                                  <td><a href="" class="fields">{{deal.offer_value}}%</a></td>
-                                  <td><a href="" class="fields">{{deal.start_date | date:'shortDate'}} to {{deal.end_date | date:'shortDate'}}</a></td>
+                                  <td><a  class="fields">{{deal.product_type}}</a></td>
+                                  <td><a  class="fields">{{deal.offer_value}}%</a></td>
+                                  <td><a  class="fields">{{deal.start_date | date:'shortDate'}} to {{deal.end_date | date:'shortDate'}}</a></td>
                                   <td>
-                                      <a href="#" class="btn btn-primary">Edit</a>
-                                      <a href="#" class="btn btn-danger">Delete</a>
+                                      <a  class="btn btn-primary">Edit</a>
+                                      <a  class="btn btn-danger">Delete</a>
                                   </td>
                               </tr>
 
