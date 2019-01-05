@@ -10,7 +10,7 @@
                       <div class="order-details">
                           <div class="form-group">
                               <label for="FormContros" >Select Region</label>
-                              <select class="form-control" id="FormControls" (change)="filterData()">
+                              <select class="form-control" id="FormControls" (change)="onChange($event)">
                                   <option>USA</option>
                                   <option>India</option>
                               </select>
@@ -19,7 +19,7 @@
                   </section>
                   <section class="map-box mb-4">
                       <div id="map_wrapper">
-                          <div #gmap id="map_canvas" class="mapping"></div>
+                          <div #gmap id="map_canvas" class="mapping" style = " max-width: none;width: auto;"></div>
                       </div>
                   </section>
               </div>
@@ -27,7 +27,7 @@
                   <div class="customer-verification map-details no-margin">
                       <div class="customer-doc">
                           <!-- <div class="right-description"> -->
-                          <h4 class="bundle-header">Bundle Block No:#01</h4>
+                          <h4 class="bundle-header">Bundle Block No:#{{orderDetail['block_no']}}</h4>
                           <table class="table-description">
                               <tbody>
                                   <tr class="row-option row">
@@ -50,7 +50,7 @@
                                       <td class="table-option col-md-8">Price</td>
                                       <td class="table-option1 col-md-4">
                                           <ul>
-                                              <li class="item">$350 </li>
+                                              <li class="item">${{orderDetail['price']}} </li>
                                           </ul>
                                       </td>
                                   </tr>

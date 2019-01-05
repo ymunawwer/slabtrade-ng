@@ -155,6 +155,7 @@ export class OrdersComponent implements OnInit {
     this.ispaymentmode=false;
     this.issupplierdetail=false;
     this.isCustomer=true;
+    this.iscreatepurchaseorder = false;
     this.oderDetail();
   }
   async getOrder(){
