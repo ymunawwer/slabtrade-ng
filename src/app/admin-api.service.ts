@@ -60,7 +60,7 @@ export class AdminApiService {
   getPort():Observable<any>{
     let token = this.auth.getToken();
 
-    return this.http.get(ENV.admin + '/order/getallorder',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    return this.http.get(ENV.admin + '/port/allport',{headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
       catchError(err=>this.handleError(err))
 
     );

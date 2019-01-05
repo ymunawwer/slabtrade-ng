@@ -62,6 +62,8 @@ export class LoginComponent implements OnInit {
       }else if(this.auth.getUser().roles[0]==='admin'){
       this.router.navigate(['/admin']);
       console.log(JSON.stringify(res))
+      }else if(res['error_code'] ===200 && res['message']==='Invalid input'){
+        window.location.reload();
       }
     },(error)=>{
       this.err = false;

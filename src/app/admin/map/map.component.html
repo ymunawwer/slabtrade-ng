@@ -1,0 +1,170 @@
+<div id="page-container">
+  <app-sidebar></app-sidebar>
+  <div class="page-wrapper">
+    <app-navbar></app-navbar>
+  <div class="page-inner sub-menu-inner">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-6 col-xs-12">
+                  <section class="order-status mb-4 map-select">
+                      <div class="order-details">
+                          <div class="form-group">
+                              <label for="FormContros" >Select Region</label>
+                              <select class="form-control" id="FormControls" (change)="filterData()">
+                                  <option>USA</option>
+                                  <option>India</option>
+                              </select>
+                          </div>
+                      </div>
+                  </section>
+                  <section class="map-box mb-4">
+                      <div id="map_wrapper">
+                          <div #gmap id="map_canvas" class="mapping"></div>
+                      </div>
+                  </section>
+              </div>
+              <div class="col-md-6 col-xs-12">
+                  <div class="customer-verification map-details no-margin">
+                      <div class="customer-doc">
+                          <!-- <div class="right-description"> -->
+                          <h4 class="bundle-header">Bundle Block No:#01</h4>
+                          <table class="table-description">
+                              <tbody>
+                                  <tr class="row-option row">
+                                      <td class="table-option col-md-8">Type : </td>
+                                      <td class="table-option1 col col-md-4">
+                                          <ul>
+                                              <li class="item">Shopping </li>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                                  <tr class="row-option row">
+                                      <td class="table-option col-md-8">Color :</td>
+                                      <td class="table-option1 col-md-4">
+                                          <ul>
+                                              <li class="item">Black(#000)</li>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                                  <tr class="row-option row">
+                                      <td class="table-option col-md-8">Price</td>
+                                      <td class="table-option1 col-md-4">
+                                          <ul>
+                                              <li class="item">$350 </li>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                                  <tr class="row-option row">
+                                      <td class="table-option col-md-8">Bundle Count :</td>
+                                      <td class="table-option1 col-md-4">
+                                          <ul>
+                                              <li class="item">200</li>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                                  <tr class="row-option row">
+                                      <td class="table-option col-md-8">Net Weight :</td>
+                                      <td class="table-option1 col-md-4">
+                                          <ul>
+                                              <li class="item">500kg</li>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                                  <tr class="row-option row">
+                                      <td class="table-option col-md-8">Gross Weight :</td>
+                                      <td class="table-option1 col-md-4">
+                                          <ul>
+                                              <li class="item">400kg</li>
+                                          </ul>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <!-- </div> -->
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+      <!-- wizard.js -->
+      <script src="../js/jquery.smartWizard.js"></script>
+      <!-- feather-icon -->
+      <script src="https://unpkg.com/feather-icons"></script>
+      <script src="../js/InputSpinner.js"></script>
+      <script src="../js/script.js"></script>
+
+      <script type="text/javascript">
+      jQuery(function($) {
+          // Asynchronously Load the map API 
+          var script = document.createElement('script');
+          script.src = "http://maps.google.com/maps/api/js?sensor=false&callback=initialize";
+          document.body.appendChild(script);
+      });
+
+      function initialize() {
+          var map;
+          var bounds = new google.maps.LatLngBounds();
+          var mapOptions = {
+              mapTypeId: 'roadmap'
+          };
+
+          // Display a map on the page
+          map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+          map.setTilt(45);
+
+          // Multiple Markers
+          var markers = [
+              ['London Eye, London', 51.503454, -0.119562],
+              ['Palace of Westminster, London', 51.499633, -0.124755]
+          ];
+
+          // Info Window Content
+          var infoWindowContent = [
+              ['<div class="map_info_content">' +
+                  '<h6>Order ID : #12345</h6>' +
+                  '<p>Status : <span class="badge badge-success">Delivered</span></p>' + '</div>'
+              ],
+              ['<div class="map_info_content">' +
+                  '<h6>Order ID : #12345</h6>' +
+                  '<p>Status : <span class="badge badge-warning">Processed</span></p>' + '</div>'
+              ]
+          ];
+
+          // Display multiple markers on a map
+          var infoWindow = new google.maps.InfoWindow(),
+              marker, i;
+
+          // Loop through our array of markers & place each one on the map  
+          for (i = 0; i < markers.length; i++) {
+              var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+              bounds.extend(position);
+              marker = new google.maps.Marker({
+                  position: position,
+                  map: map,
+                  title: markers[i][0]
+              });
+
+              // Allow each marker to have an info window    
+              google.maps.event.addListener(marker, 'click', (function(marker, i) {
+                  return function() {
+                      infoWindow.setContent(infoWindowContent[i][0]);
+                      infoWindow.open(map, marker);
+                  }
+              })(marker, i));
+
+              // Automatically center the map fitting all markers on the screen
+              map.fitBounds(bounds);
+          }
+
+          // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+          var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+              this.setZoom(14);
+              google.maps.event.removeListener(boundsListener);
+          });
+
+      }
+      </script>
+</div>

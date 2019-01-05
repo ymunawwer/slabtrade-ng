@@ -7,7 +7,11 @@ import { SupplierDetailsComponent } from './supplier-details/supplier-details.co
 import { IsAdminGuard } from '../guard/is-admin.guard';
 import {ShippingDetailsComponent} from './shipping-details/shipping-details.component';
 import {LoginComponent} from './login/login.component';
+import { MapComponent } from './map/map.component';
 import { AuthGuard } from '../auth-guard.service';
+<<<<<<< HEAD
+const routes: Routes = [{path:'admin',component:LoginComponent},{path:'admin/home',component:HomeComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/order',component:OrdersComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/customer',component:CustomerDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/supplier',component:SupplierDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/map',component:MapComponent,canActivate:[AuthGuard,IsAdminGuard]},{path:'admin/shipping',component:ShippingDetailsComponent,canActivate:[AuthGuard,IsAdminGuard]}];
+=======
 import { SalesReportComponent } from './sales-report/sales-report.component';
 import { CreateDealComponent } from './create-deal/create-deal.component';
 import { DealsComponent } from './deals/deals.component';
@@ -25,6 +29,7 @@ const routes: Routes =
   {path: 'admin/deals', component: DealsComponent, canActivate: [AuthGuard, IsAdminGuard]},
 
 ];
+>>>>>>> b427144457da1838fcf4f5a02204940f24f1b7c6
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

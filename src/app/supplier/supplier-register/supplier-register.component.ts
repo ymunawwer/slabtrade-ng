@@ -28,9 +28,9 @@ export class SupplierRegisterComponent implements OnInit {
 
     });
 
-    $('.country').select2({
-      placeholder: 'Select Country'
-  });
+  //   $('.country').select2({
+  //     placeholder: 'Select Country'
+  // });
 
   }
 

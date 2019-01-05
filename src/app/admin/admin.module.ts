@@ -12,6 +12,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { CustomerListDetailsComponent } from './customer-list-details/customer-list-details.component';
 import { LoginComponent } from './login/login.component';
+import { MapComponent } from './map/map.component';
+
 import { SalesReportComponent } from './sales-report/sales-report.component';
 import { DealsComponent } from './deals/deals.component';
 import { CreateDealComponent } from './create-deal/create-deal.component';
@@ -35,6 +37,7 @@ import { CreateDealComponent } from './create-deal/create-deal.component';
 
     LoginComponent,
 
+    MapComponent,
     SalesReportComponent,
 
     DealsComponent,
@@ -46,6 +49,7 @@ import { CreateDealComponent } from './create-deal/create-deal.component';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
+   
     BsDatepickerModule.forRoot()
   ]
 })
