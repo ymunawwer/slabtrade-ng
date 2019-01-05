@@ -95,14 +95,10 @@ export class HomeComponent implements OnInit {
   async getHomePage(){
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
     this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
-<<<<<<< HEAD
 
       this.items = data.data;
       this.allItems = data.data;
-=======
       console.log(data)
-      this.items = data.data
->>>>>>> ca54c0cd23a981aa484836905227cc0719b1ee3d
      var count =0;
      if(data['error_code']===200){
      await this.items.forEach(el=>{
@@ -345,7 +341,7 @@ console.log('doc', this.doc);
           this.items = local_data.data;
 
           }else{
-            this.items = []
+            this.items = this.allItems;
             this.isnull = true;
             const element = document.querySelector("#top");
           }
@@ -526,14 +522,9 @@ console.log('doc', this.doc);
         // console.log('port',result['data'],tax,shipping_cost)
         console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
-<<<<<<< HEAD
     const discounted_price = this.getDiscountedPrice(doc['price'], doc['offer_value']) ?
     this.getDiscountedPrice(doc['price'], doc['offer_value']) : doc['price'];
-    price = discounted_price*<number>this.number;
-=======
-    price = doc['price']*<number>this.quantity;
->>>>>>> ca54c0cd23a981aa484836905227cc0719b1ee3d
-
+    price = discounted_price*<number>this.quantity;
 
 
 
