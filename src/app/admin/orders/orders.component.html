@@ -362,8 +362,10 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>#<input type="text" [(ngModel)]="purchase_order.account"></td>
-                                    <td><input type="text" [(ngModel)]="purchase_order.description"></td>
+                                    <!-- [(ngModel)]="purchase_order.account" -->
+                                    <td><input type="text" placeholder="Enter Account Number"></td>
+                                    <!-- [(ngModel)]="purchase_order.description" -->
+                                    <td><input type="text" placeholder="Enter Description"></td>
                                     <td><input type="text" [(ngModel)]="purchase_order.location"></td>
                                     <td><input type="text" [(ngModel)]=purchase_order.quantity></td>
                                     <td>$<input type="text" [(ngModel)]="purchase_order.price"></td>
@@ -371,7 +373,7 @@
                                 </tr>
                                 <tr class="invoice-total">
                                     <td colspan="5" class="text-right">Sub Total</td>
-                                    <td>${{purchase_order.extended}}</td>
+                                    <td><span>${{purchase_order.extended}}</span></td>
                                 </tr>
                                 <tr class="invoice-total">
                                     <td colspan="5" class="text-right">Tax</td>

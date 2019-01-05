@@ -43,8 +43,8 @@
                           <td><a (click)="getOrderDetail(item)" class="fields">{{item.created_at | date:'shortDate'}}</a></td>
                           <td><a (click)="getOrderDetail(item)" class="fields"><span class="badge badge-warning">{{item.cancel_status}}</span></a></td>
                           <td>
-                              <a href="#" class="btn btn-primary">Edit</a>
-                              <a href="#" class="btn btn-danger">Delete</a>
+                              <a (click)="getOrderDetail(item)" class="btn btn-primary">Edit</a>
+                              <a class="btn btn-danger">Delete</a>
                           </td>
                       </tr>
                    </ng-template>

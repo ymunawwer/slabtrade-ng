@@ -31,7 +31,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Order Id</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">Bundle Name</th>
                             <th scope="col">Date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
@@ -41,7 +41,7 @@
                         <!-- <ng-template ngFor let-order [ngForOf]= "orders" let-i="index" > -->
                        <tr *ngFor='let order of orders'>
                             <td><a (click)="orderDetail1(order)" class="fields">#{{order._id}}</a></td>
-                            <td><a class="fields">{{order.name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                            <td><a class="fields">{{order.products[0].bundle_id}} <span class="flag-icon flag-icon-us"></span></a></td>
                             <td><a class="fields">{{order.created_at | date:'dd/MM/yyyy'}}</a></td>
                             <td><a class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
                             <td>
@@ -68,7 +68,7 @@
                                         <th rowspan="2">Block number</th>
                                         <th colspan="3">Info</th>
                                         <th rowspan="2">Quantity</th>
-                                        <th rowspan="2">Toatal</th>
+                                        <!-- <th rowspan="2">Toatal</th> -->
                                     </tr>
                                     <tr class="text-center">
                                         <th>Sqft</th>
@@ -84,7 +84,7 @@
                                         <td>{{item.dimension[0].thickness}}</td>
                                         <td>{{item.dimension[0].width}}X{{item.dimension[0].height}}</td>
                                         <td>{{item.quantity}}</td>
-                                        <td>{{order.total}}</td>
+                                        <!-- <td>{{order.total}}</td> -->
                                     </tr>
                                   </ng-template>
                                 </tbody>
@@ -187,16 +187,25 @@
                                 <span href="#" class="badge badge-warning custom-process">{{payment_status}}</span>
                             </div>
                         </div>
-                        <div class="row">
-                                <div class="col-md-6">
-                                    <h3>Payment Mode</h3>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <span href="#" class="badge badge-warning custom-process">{{payment_mode}}</span>
-                                </div>
-                            </div>
+
                     </div>
                 </section>
+
+
+                <section class="supplier-status">
+                  <div class="supplier-details">
+
+                    <div class="row">
+                      <div class="col-md-6">
+                          <h3>Payment Mode</h3>
+                      </div>
+                      <div class="col-md-6 text-right">
+                          <span href="#" class="badge badge-warning custom-process">{{payment_mode}}</span>
+                      </div>
+                  </div>
+                  </div>
+              </section>
+
                 <section class="supplier-verification">
                     <div class="supplier-doc">
                         <h4 class="sub-title">Wire Instruction</h4>

@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   quantity = 0;
   url = ENV.server;
   viewItemClickCount = 0;
+  allItems = [];
   isitemclicked = false
   doc:any;
   port_list:any;
@@ -75,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   getDiscountedPrice(price, discout_percent) {
 
-    return price - (discout_percent / 100) * price;
+    return price - (discout_percent / 100) * price !== NaN ? price - (discout_percent / 100) * price : false;
 
   }
 
@@ -94,8 +95,14 @@ export class HomeComponent implements OnInit {
   async getHomePage(){
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
     this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
+<<<<<<< HEAD
+
+      this.items = data.data;
+      this.allItems = data.data;
+=======
       console.log(data)
       this.items = data.data
+>>>>>>> ca54c0cd23a981aa484836905227cc0719b1ee3d
      var count =0;
      if(data['error_code']===200){
      await this.items.forEach(el=>{
@@ -126,7 +133,7 @@ export class HomeComponent implements OnInit {
 
     sessionStorage.removeItem('currentUser')
     this.nodeapi.fetchHomePage().subscribe((data)=>{
-      
+
       this.items = data.data
 
 
@@ -291,7 +298,18 @@ console.log('doc', this.doc);
 
       if(this.auth.isAuthenticated()){
 
-      this.nodeapi.searchByColorWithPrice(event.target.value,0).subscribe((data)=>{
+        let colorCode = '';
+
+        if(event.target.value.toLowerCase() === 'black') {
+            colorCode = '000000';
+        } else if(event.target.value.toLowerCase() === 'blue') {
+            colorCode = '0000ff';
+        } else if(event.target.value.toLowerCase() === 'grey') {
+            colorCode = '808080';
+        } else {
+          colorCode = '';
+        }
+      this.nodeapi.searchByColorWithPrice(colorCode, 0).subscribe((data)=>{
         if(data !==null && typeof data['data'] !== 'undefined'){
           this.isnull = false;
           console.log(data['data']);
@@ -303,11 +321,12 @@ console.log('doc', this.doc);
               "docs":data['data']
             }]
           }
+
         this.items = local_data.data;
 
 
         }else{
-          this.items = []
+          this.items = this.allItems;
           this.isnull = true;
           const element = document.querySelector("#top");
         }
@@ -369,13 +388,13 @@ console.log('doc', this.doc);
                                                                // 6 - 4%6
     this.quantity =Math.abs(prev - this.number);
     // console.log("differnce",prev - this.number)                // item in cart - count 1 - 4 |-3|
-   
+
     // console.log("Quantity",this.quantity)
     }
     // else if(this.number%6 ===0 ) {
     //   container_count +=1;
     //   this.number = 1;
-      
+
       // this.remaining = 6;
       // console.log(this.quantity)
 
@@ -395,7 +414,7 @@ console.log('doc', this.doc);
       this.number -= 1;
       this.quantity =Math.abs(prev - this.number);
       // console.log("differnce",prev - this.number)                // item in cart - count 1 - 4 |-3|
-    
+
       // console.log("Quantity",this.quantity)
     }
   }
@@ -507,7 +526,13 @@ console.log('doc', this.doc);
         // console.log('port',result['data'],tax,shipping_cost)
         console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
+<<<<<<< HEAD
+    const discounted_price = this.getDiscountedPrice(doc['price'], doc['offer_value']) ?
+    this.getDiscountedPrice(doc['price'], doc['offer_value']) : doc['price'];
+    price = discounted_price*<number>this.number;
+=======
     price = doc['price']*<number>this.quantity;
+>>>>>>> ca54c0cd23a981aa484836905227cc0719b1ee3d
 
 
 
