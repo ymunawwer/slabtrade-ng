@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   url = ENV.server;
   viewItemClickCount = 0;
+  allItems = [];
   isitemclicked = false
   doc:any;
   port_list:any;
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
   issearched = false
   constructor(private nodeapi:NodeapiService,private sanitizer: DomSanitizer,private location: PlatformLocation,private _sanitizer: DomSanitizer,private auth:AuthService,private route:Router) {
     this.trustedUrl = this._sanitizer.bypassSecurityTrustUrl("http://localhost:4200/");
-    this.items = []
+    this.items = [];
     this.number = JSON.parse(localStorage.getItem('cart'));
     this.similarproduct = []
     this.item_image =[]
@@ -74,7 +75,7 @@ export class HomeComponent implements OnInit {
 
   getDiscountedPrice(price, discout_percent) {
 
-    return price - (discout_percent / 100) * price;
+    return price - (discout_percent / 100) * price !== NaN ? price - (discout_percent / 100) * price : false;
 
   }
 
@@ -94,7 +95,8 @@ export class HomeComponent implements OnInit {
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
     this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
 
-      this.items = data.data
+      this.items = data.data;
+      this.allItems = data.data;
      var count =0;
      if(data['error_code']===200){
      await this.items.forEach(el=>{
@@ -290,7 +292,18 @@ console.log('doc', this.doc);
 
       if(this.auth.isAuthenticated()){
 
-      this.nodeapi.searchByColorWithPrice(event.target.value,0).subscribe((data)=>{
+        let colorCode = '';
+
+        if(event.target.value.toLowerCase() === 'black') {
+            colorCode = '000000';
+        } else if(event.target.value.toLowerCase() === 'blue') {
+            colorCode = '0000ff';
+        } else if(event.target.value.toLowerCase() === 'grey') {
+            colorCode = '808080';
+        } else {
+          colorCode = '';
+        }
+      this.nodeapi.searchByColorWithPrice(colorCode, 0).subscribe((data)=>{
         if(data !==null && typeof data['data'] !== 'undefined'){
           this.isnull = false;
           console.log(data['data']);
@@ -302,11 +315,12 @@ console.log('doc', this.doc);
               "docs":data['data']
             }]
           }
+
         this.items = local_data.data;
 
 
         }else{
-          this.items = []
+          this.items = this.allItems;
           this.isnull = true;
           const element = document.querySelector("#top");
         }
@@ -492,7 +506,9 @@ console.log('doc', this.doc);
         // console.log('port',result['data'],tax,shipping_cost)
         console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
-    price = doc['price']*<number>this.number;
+    const discounted_price = this.getDiscountedPrice(doc['price'], doc['offer_value']) ?
+    this.getDiscountedPrice(doc['price'], doc['offer_value']) : doc['price'];
+    price = discounted_price*<number>this.number;
 
 
 
