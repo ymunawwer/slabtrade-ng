@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminApiService } from '../../admin-api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-supplier-details',
@@ -7,6 +8,7 @@ import { AdminApiService } from '../../admin-api.service';
   styleUrls: ['./supplier-details.component.sass']
 })
 export class SupplierDetailsComponent implements OnInit {
+  loading = false;
   supplier_arr:any;
   cancel_status;
   type;
@@ -22,7 +24,7 @@ export class SupplierDetailsComponent implements OnInit {
   country;
   zip_code;
   isClicked;
-  constructor(private adminApi:AdminApiService) { 
+  constructor(private adminApi:AdminApiService) {
     this.supplier_arr = [];
     this.isClicked = false;
     this.getSupplier();
@@ -32,19 +34,20 @@ export class SupplierDetailsComponent implements OnInit {
   }
   getSupplier(){
     var arr = []
+    this.loading = true;
     this.adminApi.getUser().subscribe((res)=>{
       // console.log(res)
       if(Array.isArray(res)){
       res.forEach(element => {
         if(element['roles'][0]==='supplier'){
           this.supplier_arr.push(element)
-          
+
         }
       });
     }
-      
+      this.loading = false;
     })
-    
+
   }
 
   onCustomerdetail(data){
@@ -72,24 +75,48 @@ export class SupplierDetailsComponent implements OnInit {
 
     if(this.cancel_status==='Verified'){
     this.adminApi.onUserApproval(this.email).subscribe((res)=>{
-      alert('Succesfully Approved');
+      Swal({
+        text: 'Succesfully Approved',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
     },(err)=>{
-      alert('Please try again');
+      Swal({
+        text: 'please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
     })
   } else if(this.cancel_status==='Not Verified'){
     this.adminApi.onRegisterUserCancel(this.email).subscribe((res)=>{
-      alert('Succesfully Removed');
+      Swal({
+        text: 'Succesfully Removed',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
 
     },(err)=>{
-      alert('Please try again');
-
+      Swal({
+        text: 'please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     })
 
   }else {
-    alert("Invalid option")
-  }
+    Swal({
+      text: 'Invalid Option',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });  }
 
 
   }
@@ -98,25 +125,45 @@ export class SupplierDetailsComponent implements OnInit {
     console.log(this.type)
     this.adminApi.onTypeUpdate(this.email,this.type).subscribe((res)=>{
       console.log(res)
-      alert('Succesfully Updated');
+      Swal({
+        text: 'Succesfully Updated',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
     },(err)=>{
-      alert('Please try again');
+      Swal({
+        text: 'Please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
     })
 
-  
+
   }
 
 
   onDelete(data){
     let email = data['email'];
     this.adminApi.onRegisterUserCancel(email).subscribe((res)=>{
-      alert("Supplier deleted succesfully.")
+      Swal({
+        text: 'Supplier deleted succesfully.',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       window.location.reload();
     },(err)=>{
-      alert('Please try again later.')
-      
+      Swal({
+        text: 'Please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
     })
 
   }

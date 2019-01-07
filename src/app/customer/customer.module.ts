@@ -10,15 +10,16 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { OrderComponent } from './order/order.component';
-// import { ProductByRegionPopupComponent } from './product-by-region-popup/product-by-region-popup.component';
+import { NgxLoadingModule } from 'ngx-loading';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
-  declarations: [CartCustomerComponent,customerHomeCumponent,CustomerDashboardComponent,SettingsComponent,RegisterCustomerComponent,SidebarComponent,NavbarComponent, OrderComponent],
-  // entryComponents: [ProductByRegionPopupComponent],
+  declarations: [CartCustomerComponent,customerHomeCumponent,CustomerDashboardComponent,SettingsComponent,RegisterCustomerComponent,SidebarComponent,NavbarComponent, OrderComponent, FooterComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxLoadingModule
   ]
 })
 export class CustomerModule { }

@@ -5,6 +5,7 @@ import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 declare var feather:any;
@@ -14,6 +15,7 @@ declare var feather:any;
   styleUrls: ['./cart-customer.component.sass']
 })
 export class CartCustomerComponent implements OnInit {
+  loading = false;
   cart_item:any;
   tax:number;
   amount;
@@ -71,16 +73,24 @@ export class CartCustomerComponent implements OnInit {
   }
   async getPort(){
 
+    this.loading = true;
+
     await this.nodeapi.getPortDetailBycountry(this.user.address1_country).subscribe((result)=>{
       console.log(result);
       this.port_list = result['data'];
       this.port = this.port_list[0]['port_name'];
+      this.loading = false;
+
     })
     console.log(this.port_list);
   }
 
 
   getCartItem(){
+
+    this.loading = true;
+
+
     this.nodeApi.getCart("0").subscribe((res)=>{
       if(res.error_code===200){
         if(res.message!=="Cart is Empty"){
@@ -132,14 +142,28 @@ export class CartCustomerComponent implements OnInit {
 
         }else if(res.message==="Cart is Empty"){
           this.iscartempty = true;
-          alert("cart is empty")
+          Swal({
+            text: 'cart is empty',
+            type: 'error',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
 
         }
 
 
       }else{
-        alert("Please try again");
+        Swal({
+          text: 'Please try again',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
+
       }
+
+      this.loading = false;
+
 
     })
 
@@ -177,13 +201,26 @@ confirmToCheckOut(){
 
   onCheckout(payment,tax,service,total,shipping_addr,port,unload){
 
+    this.loading = true;
+
     this.nodeApi.checkOut(payment,tax,service,total,shipping_addr,port,unload).subscribe((result)=>{
       console.log(result)
       if(result['message']==='Container is not full'){
-        alert("Please add more item to your cart")
+        Swal({
+          text: 'Please add more item to your cart',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
+
       }else if(result['message']!=='Container is not full'){
         // localStorage.setItem('cart',JSON.stringify(0))
-        alert("Order is succefully placed");
+        Swal({
+          text: 'Order is succefully placed',
+          type: 'success',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
         localStorage.setItem('cart',JSON.stringify(0));
         this.router.navigate(['/']);
 
@@ -192,9 +229,18 @@ confirmToCheckOut(){
 
       // this.router.navigate([''])
 
+      this.loading = false;
+
+
     },(err)=>{
       console.log(err);
-      alert("Something went Wrong.please try again later.");
+      Swal({
+        text: 'Something went Wrong.please try again later.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+      this.loading = false;
     })
 
 
@@ -202,6 +248,10 @@ confirmToCheckOut(){
 
 
   clearCart(){
+
+    this.loading = true;
+
+
     this.nodeApi.clearCart().subscribe((result)=>{
       if(result['error_code']===200){
 
@@ -217,10 +267,16 @@ confirmToCheckOut(){
 
 
       }else{
-        alert("Please try again")
+        Swal({
+          text: 'Please try again',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
       }
 
 
+      this.loading = false;
 
 
     })
@@ -239,6 +295,9 @@ confirmToCheckOut(){
 
     console.log(item);
     // delete this.cart_item[i];
+
+    this.loading = true;
+
     this.nodeApi.removeCartItem(item['_id']).subscribe((res)=>{
       console.log(res)
       console.log("total",this.total)
@@ -269,7 +328,13 @@ confirmToCheckOut(){
         }
 
         this.nodeapi.cartRecalculate(data).subscribe((res)=>{
-          alert("Succesfully removed")
+          Swal({
+            text: 'Succesfully removed',
+            type: 'success',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
+
           localStorage.setItem("cart",JSON.stringify(this.total_item - item['quantity']));
           window.location.reload();
           this.getCartItem();
@@ -279,10 +344,23 @@ confirmToCheckOut(){
 
 
       }else if(res['error_code'] ===500){
-        alert("Please try again later.")
+        Swal({
+          text: 'Please try again later.',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
       }
+      this.loading = false;
+
     },(err)=>{
-      alert("Please try again later.")
+      Swal({
+        text: 'Please try again later.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+      this.loading = false;
     })
   }
 

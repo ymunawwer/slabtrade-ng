@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ENV } from 'src/app/core/env.config';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 
+import Swal from 'sweetalert2';
 declare var feather:any;
 declare var jquery:any;
 declare var $ :any;
@@ -18,6 +19,7 @@ declare var $ :any;
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
+  loading = false;
   quantity = 0;
   url = ENV.server;
   viewItemClickCount = 0;
@@ -60,7 +62,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
 
-
     console.log('item',this.items)
     feather.replace();
 
@@ -95,8 +96,11 @@ export class HomeComponent implements OnInit {
 }
 
   async getHomePage(){
+    this.loading = true;
+
     if(this.auth.isAuthenticated() && this.auth.getUser().roles[0]==='customer'){
-    this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
+
+      this.nodeapi.fetchHomePageWithPrice().subscribe(async (data)=>{
 
       this.items = data.data;
       this.allItems = data.data;
@@ -127,6 +131,7 @@ export class HomeComponent implements OnInit {
       })
     })
   console.log('items', this.items);
+  this.loading = false;
   }else if(data['error_code']===401){
 
     sessionStorage.removeItem('currentUser')
@@ -169,11 +174,12 @@ export class HomeComponent implements OnInit {
 
 
 
-
+    this.loading = false;
 
     }
-
+    this.loading = false;
     },(err)=>{
+
       this.nodeapi.fetchHomePage().subscribe((data)=>{
 
         this.items = data.data
@@ -208,6 +214,7 @@ export class HomeComponent implements OnInit {
          })
        })
 
+       this.loading = false;
 
       })
 
@@ -247,6 +254,8 @@ export class HomeComponent implements OnInit {
      })
 
 
+     this.loading = false;
+
 
     })
 
@@ -256,6 +265,8 @@ export class HomeComponent implements OnInit {
   @ViewChild('top') myelement : ElementRef;
 
   viewItemDetail(doc){
+
+
     // console.log(doc)
     this.doc = doc;
     this.doc.images.forEach(element => {
@@ -266,12 +277,15 @@ export class HomeComponent implements OnInit {
     this.isitemclicked = true
     this.issearched = false
     if(doc){
+    this.loading = true;
       this.nodeapi.getSimilarProduct(doc.supplier_id).subscribe((data)=>{
 
         this.similarproduct = data['data'];
 
         const element = document.querySelector("#top");
           if (element) { element.scrollIntoView(); }
+
+    this.loading = false;
 
 
       })
@@ -307,6 +321,8 @@ console.log('doc', this.doc);
         } else {
           colorCode = '';
         }
+
+    this.loading = true;
       this.nodeapi.searchByColorWithPrice(colorCode, 0).subscribe((data)=>{
         if(data !==null && typeof data['data'] !== 'undefined'){
           this.isnull = false;
@@ -328,6 +344,9 @@ console.log('doc', this.doc);
           this.isnull = true;
           const element = document.querySelector("#top");
         }
+
+    this.loading = false;
+
       },(err)=>{
         this.nodeapi.searchByColor(event.target.value,0).subscribe((data)=>{
           if(data !==null && typeof data['data'] !== 'undefined'){
@@ -347,6 +366,8 @@ console.log('doc', this.doc);
             this.isnull = true;
             const element = document.querySelector("#top");
           }
+      this.loading = false;
+
         }
         )
 
@@ -370,6 +391,10 @@ console.log('doc', this.doc);
           this.isnull = true;
           const element = document.querySelector("#top");
         }
+
+    this.loading = false;
+
+
       }
       )
 
@@ -424,6 +449,8 @@ console.log('doc', this.doc);
 
       if(this.auth.isAuthenticated()){
 
+    this.loading = true;
+
       this.nodeapi.searchByTypeWithPrice(event.target.value,0).subscribe((data)=>{
         if(data !==null &&  typeof data['data'] !== 'undefined'){
           this.isnull = false;
@@ -445,6 +472,9 @@ console.log('doc', this.doc);
           this.isnull = true;
           const element = document.querySelector("#top");
         }
+
+    this.loading = false;
+
       },(err)=>{
         this.nodeapi.searchByType(event.target.value,0).subscribe((data)=>{
           if(data !==null && typeof data['data'] !== 'undefined'){
@@ -464,6 +494,8 @@ console.log('doc', this.doc);
             this.isnull = true;
             const element = document.querySelector("#top");
           }
+    this.loading = false;
+
         }
         )
 
@@ -490,6 +522,8 @@ console.log('doc', this.doc);
           this.isnull = true;
           const element = document.querySelector("#top");
         }
+    this.loading = false;
+
       }
       )
 
@@ -516,6 +550,7 @@ console.log('doc', this.doc);
     if(this.auth.isAuthenticated() ){
     customer = this.auth.getUser()['country'];
     console.log(customer)
+    this.loading = true;
     await this.nodeapi.getPortDetailBycountry(customer).subscribe((result)=>{
       console.log(result);
       this.port_list = result['data']
@@ -572,9 +607,13 @@ console.log('data', data);
 
           this.nodeapi.addToCart(data).subscribe((response)=>{
             // localStorage.removeItem('cart')
-            localStorage.setItem('cart',JSON.stringify(this.number))
-            alert("cart is updated");
-
+            localStorage.setItem('cart',JSON.stringify(this.number));
+            Swal({
+              text: 'Cart updated successfully',
+              type: 'success',
+              confirmButtonText: 'ok',
+              confirmButtonColor: '#0a3163'
+            });
             this.route.navigate(['/customer/cart'])
 
 
@@ -621,13 +660,24 @@ console.log('data', data);
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
                 if(res["error_code"] ===200){
                   if(res['Message'] === "Please add more item to the container."){
-                    console.log('Data',res['data']);
-                    alert("please add item From similar Supplier or remove the last added item from your cart.")
+                    Swal({
+                      text: 'please add item From similar Supplier or remove the last added item from your cart.',
+                      type: 'warning',
+                      confirmButtonText: 'ok',
+                      confirmButtonColor: '#0a3163'
+                    });
+
                   }else{
                     console.log("updated cart",res)
                     localStorage.removeItem('cart')
                     localStorage.setItem('cart',total_quantity)
 
+                    Swal({
+                      text: 'Cart updated successfully',
+                      type: 'success',
+                      confirmButtonText: 'ok',
+                      confirmButtonColor: '#0a3163'
+                    });
 
                     console.log(total_quantity)
                     this.route.navigate(['/customer/cart'])
@@ -644,25 +694,51 @@ console.log('data', data);
       })
     }
     else if(number<1){
-      alert("Slabs count can not be zero")
+      Swal({
+        text: 'Slab count cannot be Zero',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     }
+
+    this.loading = false;
 
 
   },(err)=>{
+    this.loading = false;
+
       console.log(err);
-      alert("Fail to get port detail")
+      Swal({
+        text: 'Fail to get port detail',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
     })} else {
-      alert('please Login to Continue');
+      Swal({
+        text: 'Please login to continue',
+        type: 'info',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       this.route.navigate(['/login']);
     }} else if(this.number===0) {
-      alert('Please add item to the cart');
+      Swal({
+        text: 'Please add item to the cart',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     }
 
   }
   viewMore(type){
     this.isviewmore = true;
     this.isnull = false;
+    this.loading = true;
+
     this.nodeapi.searchByType(type,0).subscribe((res)=>{
       console.log(res)
       let data = []
@@ -679,6 +755,7 @@ console.log('data', data);
         this.items = data['data']
         console.log('items', this.items);
       }
+      this.loading = false;
 
     })
   }
@@ -687,6 +764,8 @@ console.log('data', data);
     this.issearched = true;
     this.isviewmore =false
     if(this.auth.isAuthenticated()){
+
+    this.loading = true;
 
       this.nodeapi.searchByColorWithPrice(this.searchcolor,0).subscribe((data)=>{
         if(data!==null && typeof data['data'] !== 'undefined'){
@@ -708,6 +787,9 @@ console.log('data', data);
           this.isnull = true;
           const element = document.querySelector("#top");
         }
+
+    this.loading = false;
+
       },(err)=>{
         this.nodeapi.searchByColor(this.searchcolor,0).subscribe((data)=>{
           if(data !==null && typeof data['data'] !== 'undefined'){
@@ -727,12 +809,15 @@ console.log('data', data);
             this.isnull = true;
             const element = document.querySelector("#top");
           }
+    this.loading = false;
+
         }
         )
 
       })
     }else{
 
+      this.loading = true;
       this.nodeapi.searchByColor(this.searchcolor,0).subscribe((data)=>{
         console.log('data',data )
         if(data!==null && typeof data['data'] !== 'undefined' ){
@@ -752,6 +837,8 @@ console.log('data', data);
           this.isnull = true;
           const element = document.querySelector("#top");
         }
+    this.loading = false;
+
       }
       )
 

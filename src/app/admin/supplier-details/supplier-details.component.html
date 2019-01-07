@@ -1,13 +1,14 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div id="page-container">
   <app-sidebar></app-sidebar>
   <div class="page-wrapper">
     <app-navbar></app-navbar>
 
-    <div *ngIf="!isClicked">  
+    <div *ngIf="!isClicked">
 
     <div class="page-inner sub-menu-inner">
       <div class="container">
-     
+
           <section class="order-table">
               <div class="table-details orders text-center">
                   <table class="table table-bordered">
@@ -21,7 +22,7 @@
                           </tr>
                       </thead>
                       <tbody>
-                            <ng-template ngFor let-supplier [ngForOf]= "supplier_arr" let-i="index"> 
+                            <ng-template ngFor let-supplier [ngForOf]= "supplier_arr" let-i="index">
                                     <tr>
                                         <td><a (click)="onCustomerdetail(supplier)" class="fields">{{supplier.alias}}</a></td>
                                         <td><a (click)="onCustomerdetail(supplier)"  class="fields">{{supplier.first_name}} <span class="flag-icon flag-icon-us"></span></a></td>
@@ -48,7 +49,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Status</label>
                                         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="cancel_status">
-                                            
+
                                             <option>Verified</option>
                                             <option>Not Verified</option>
                                         </select>
@@ -192,22 +193,21 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                               
+
                             <!-- </div> -->
                         </div>
                     </section>
                 </div>
             </div>
-        
+
   </div>
 
- 
+
 
 </div>
 
 
 
 
-  
 
- 
+

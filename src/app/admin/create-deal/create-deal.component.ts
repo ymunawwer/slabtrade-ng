@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminApiService } from '../../admin-api.service';
 import { Router } from '@angular/router';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-create-deal',
   templateUrl: './create-deal.component.html',
   styleUrls: ['./create-deal.component.sass']
 })
 export class CreateDealComponent implements OnInit {
-
+  loading = false;
   data = {
     'dateRange': '',
     'start_date': '',
@@ -36,23 +36,45 @@ export class CreateDealComponent implements OnInit {
 
     if (this.data.dateRange === '' || this.data.offer_value === '' || this.data.product_type === '') {
 
-      alert('All fields are required');
+      Swal({
+        text: 'All fields are required',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
       return false;
 
     }
 
+    this.loading = true;
+
     this.adminservice.createDeal(this.data).subscribe((result) => {
+
+      this.loading = false;
+
 
       if (result['error_code'] === 200) {
 
-        alert(result['message']);
+
+
+        Swal({
+          text: result['message'],
+          type: 'success',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
 
         this.router.navigate(['/admin/deals']);
 
       } else {
 
-        alert('Error occured while creating');
+        Swal({
+          text: 'Error occured while creating',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
 
       }
 

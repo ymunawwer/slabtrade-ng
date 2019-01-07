@@ -1,3 +1,5 @@
+<ngx-loading [show]="loading"></ngx-loading>
+
 <div id="page-container">
   <app-sidebar></app-sidebar>
   <div class="page-wrapper">
@@ -18,7 +20,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                            <ng-template ngFor let-customer [ngForOf]= "customers_arr" let-i="index"> 
+                            <ng-template ngFor let-customer [ngForOf]= "customers_arr" let-i="index">
                         <tr>
                             <td><a class="fields" (click) = onCustomerdetail(customer)>{{customer.alias}}</a></td>
                             <td><a class="fields" (click) = onCustomerdetail(customer)>{{customer.first_name}} <span class="flag-icon flag-icon-us"></span></a></td>
@@ -29,7 +31,7 @@
                                 <a  class="btn btn-danger" (click)="onDelete(customer)">Delete</a>
                             </td>
                         </tr></ng-template>
-                     
+
                     </tbody>
                 </table>
             </div>
@@ -62,7 +64,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Status</label>
                                         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "cancel_status" (select)="onStatusUpdate()">
-                                            
+
                                             <option>Verified</option>
                                             <option>Not Verified</option>
                                         </select>

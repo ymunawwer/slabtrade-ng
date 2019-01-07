@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminApiService } from '../../admin-api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-deals',
@@ -9,11 +10,13 @@ import { AdminApiService } from '../../admin-api.service';
 export class DealsComponent implements OnInit {
 
   deals = [];
+  loading = false;
 
   constructor(private adminservice: AdminApiService) { }
 
   ngOnInit() {
 
+    this.loading = true;
     this.adminservice.getAllDeals().subscribe((result) => {
 
       console.log('result', result);
@@ -21,9 +24,18 @@ export class DealsComponent implements OnInit {
 
         this.deals = result['data'];
 
-      } else {
+      this.loading = false;
 
-        alert('error occured while retriving data');
+
+      } else {
+        this.loading = false;
+
+        Swal({
+          text: 'error occured while retriving data',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
         return false;
 
       }

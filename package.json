@@ -35,7 +35,9 @@
     "json2csv": "^4.3.2",
     "jspdf": "^1.5.3",
     "ngx-bootstrap": "^3.1.4",
+    "ngx-loading": "^3.0.1",
     "rxjs": "~6.3.3",
+    "sweetalert2": "^7.33.1",
     "tether": "^1.4.5",
     "xzoom": "^1.0.14",
     "zone.js": "~0.8.26"

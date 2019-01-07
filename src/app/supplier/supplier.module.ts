@@ -1,3 +1,4 @@
+import { NgxLoadingModule } from 'ngx-loading';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -22,7 +23,8 @@ import { EditProductComponent } from './edit-product/edit-product.component'
     CommonModule,
     SupplierRoutingModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    NgxLoadingModule
   ]
 })
 export class SupplierModule { }

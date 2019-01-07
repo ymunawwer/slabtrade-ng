@@ -5,6 +5,7 @@ import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CountryService } from '../../country.service'
 import { timeout } from 'q';
+import Swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -30,6 +31,9 @@ export class RegisterCustomerComponent implements OnInit {
     this.mailingCountryInfo = [] 
     this.mailingCityInfo= []
    }
+
+  loading = false;
+
 
   @ViewChild('f') formRef;
 
@@ -59,28 +63,56 @@ export class RegisterCustomerComponent implements OnInit {
     let alias = 'CUS'+'-'+n+'-'+d.getTime();
     console.log(alias)
     var data = {'alias':alias,'data':form.value}
+
+    this.loading = true;
     this.auth.doRegister(data).subscribe((res)=>{
       console.log(res)
       if(res['error_code']===200){
         if(res['message']==='user register Succesfully'){
-          alert('Thank you for registering with us.');
+          Swal({
+            text: 'Thank you for registering with us.',
+            type: 'success',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
           this.route.navigate(['/']);
 
         }else{
-          alert("Email or cell phone already register please try with different.")
+
+          Swal({
+            text: 'Email or cell phone already register please try with different.',
+            type: 'error',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
+
         }
         }else if(res['error_code']===500){
-          alert("Please try with different email or try after some time.")
+          Swal({
+            text: 'Please try with different email or try after some time.',
+            type: 'error',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
+
 
         }
 
 
 
+        this.loading = false;
 
 
 
     },(err)=>{
-      alert("Please try with different email or try after some time.")
+      Swal({
+        text: 'Please try with different email or try after some time.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+      this.loading = false;
+
     })
 
 

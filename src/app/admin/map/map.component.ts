@@ -3,6 +3,7 @@ import { Component, OnInit,ViewChild } from '@angular/core';
 import {NodeapiService} from '../../nodeapi.service';
 import { AdminApiService } from '../../admin-api.service';
 import {} from 'googlemaps';
+import Swal from 'sweetalert2';
 declare var $;
 @Component({
   selector: 'app-map',
@@ -34,14 +35,14 @@ export class MapComponent implements OnInit {
   constructor(private nodeApi:NodeapiService,private adminApi:AdminApiService) {
       this.getData();
     this.marker_arr = []
-    
+
       setTimeout(()=>{
         this.filterData()
       },4000);
 
-    
+
    }
- 
+
 
   ngOnInit() {
     //12.934775, lng: 12.934775
@@ -54,7 +55,7 @@ export class MapComponent implements OnInit {
     };
     var marker
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-  
+
     this.marker = new google.maps.Marker({position:new google.maps.LatLng(18.5793, 73.8143)})
     this.marker2 = new google.maps.Marker({position:new google.maps.LatLng(18.5794, 73.8144)})
     this.marker3 = new google.maps.Marker({position:new google.maps.LatLng(18.5795, 73.8145)})
@@ -65,8 +66,8 @@ export class MapComponent implements OnInit {
     this.marker.setMap(this.map)
 
 
-    
-   
+
+
   }
 
 // http://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyCVh6dK0LbT9JKXl-NwvjDKJHKegH7AzhI
@@ -79,28 +80,43 @@ getData(){
     this.user = result;
     console.log("constructor user",result['data'])
   },(err)=>{
-    alert("Fail to load the map.")
+    Swal({
+      text: 'Fail to load the map.',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
   });
 
   this.adminApi.getOrdes().subscribe((result)=>{
     this.orders = result['data'];
     console.log("constructor orders",result['data'])
   },(err)=>{
-    alert("Fail to load the map.")
+    Swal({
+      text: 'Fail to load the map.',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
   });
   this.adminApi.getPort().subscribe((result)=>{
     this.ports = result['data'];
     console.log("constructor port",result['data'])
   },(err)=>{
-    alert("Fail to load the map.")
+    Swal({
+      text: 'Fail to load the map.',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
   });
 }
    //pending - supplier[0]
             //accepted - supplier[0]
             //shipped - port (7 upload contry,port) update order collection
-            
+
             //arrived - customer port
-            //delivered - customer 
+            //delivered - customer
 
 
 filterData(){
@@ -123,8 +139,8 @@ filterData(){
       obj['order'] = element;
       this.order.push(obj)
     }
-    if(element['cancel_status'] === 'Accepted'){ 
-     
+    if(element['cancel_status'] === 'Accepted'){
+
         let obj = {}
         obj['status'] = element['cancel_status']
         let port = this.ports.filter(function(el){
@@ -141,7 +157,7 @@ filterData(){
     }
     if(element['cancel_status'] === 'Shipped'){
       // supplier port need to fix
-       let obj ={} 
+       let obj ={}
       obj['status'] = element['cancel_status']
       let port = this.ports.filter(function(el){
         return el['port_name'] === element['port']
@@ -158,7 +174,7 @@ filterData(){
     if(element['cancel_status'] === 'Arrived'){
       let obj = {
 
-      } 
+      }
       obj['status'] = element['cancel_status']
       let user = this.user.filter(function(el){
         return el['_id'] === element['user_id'][0]
@@ -176,7 +192,7 @@ filterData(){
     if(element['cancel_status'] === 'Delivered'){
       let obj = {
 
-      } 
+      }
       obj['status'] = element['cancel_status']
       let user = this.user.filter(function(el){
         return el['_id'] === element['user_id'][0]
@@ -192,21 +208,26 @@ filterData(){
 
 
 
-    
-    
+
+
   });
   this.displayMarker('usa')
   console.log('order filter',this.order)
 
 }else{
-  alert("please try again")
+  Swal({
+    text: 'please try again',
+    type: 'error',
+    confirmButtonText: 'ok',
+    confirmButtonColor: '#0a3163'
+  });
 }
 
 }
 
 displayMarker(country){
   var marker;
-  
+
   this.order.forEach(item=>{
     if(item['country'] === country){
     marker = new google.maps.Marker({
@@ -272,7 +293,7 @@ clearOverlays() {
 }
 
 
- 
+
 }
 
 

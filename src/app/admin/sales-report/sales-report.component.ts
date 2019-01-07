@@ -12,6 +12,8 @@ declare var $: any;
 })
 export class SalesReportComponent implements OnInit {
 
+  loading = false;
+
   data = {
 
     'type': '',
@@ -33,6 +35,8 @@ export class SalesReportComponent implements OnInit {
   // $('.data-table').DataTable();
 
 
+  this.loading = true;
+
   this.adminservice.getSalesReport(this.data).subscribe((data)=> {
 
     if (data['error_code'] === 200) {
@@ -42,6 +46,7 @@ export class SalesReportComponent implements OnInit {
     }
 
     console.log('data', this.orders);
+    this.loading = false;
 
 
   });
@@ -106,6 +111,8 @@ export class SalesReportComponent implements OnInit {
 
     console.log('sending data', this.data);
 
+    this.loading = true;
+
     this.adminservice.getSalesReport(this.data).subscribe((result)=> {
 
       if (result['error_code'] === 200) {
@@ -116,6 +123,8 @@ export class SalesReportComponent implements OnInit {
 
       console.log('data', this.orders);
 
+  this.loading = false;
+
 
     });
 
@@ -124,10 +133,13 @@ export class SalesReportComponent implements OnInit {
 
   async getPort(value) {
 
+  this.loading = true;
 
      await this.nodeApi.getPortDetailBycountry(value).subscribe((result) => {
       console.log('list', result);
       this.ports = result['data'];
+  this.loading = false;
+
     });
   }
 

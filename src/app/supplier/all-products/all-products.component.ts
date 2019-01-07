@@ -4,6 +4,7 @@ import saveAs from 'file-saver';
 import {saveAs as importedSaveAs} from "file-saver";
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 declare var $:any;
 declare var feather:any;
 @Component({
@@ -12,6 +13,7 @@ declare var feather:any;
   styleUrls: ['./all-products.component.sass']
 })
 export class AllProductsComponent implements OnInit {
+  loading = false;
   product:any;
   isBulk:boolean;
   supplier_id:String;
@@ -81,9 +83,12 @@ export class AllProductsComponent implements OnInit {
 
   ngOnInit() {
     feather.replace();
+    this.loading = true;
     this.node.getProduct().subscribe((result)=>{
       console.log(result)
       this.product = result;
+
+    this.loading = false;
 
 
     })
@@ -126,8 +131,12 @@ export class AllProductsComponent implements OnInit {
   //     })
 
   // })
+  this.loading = true;
+
   this.node.downloadFile().subscribe(blob => {
     importedSaveAs(blob, "prod.csv");
+    this.loading = false;
+
 })
 
   }
@@ -156,9 +165,22 @@ export class AllProductsComponent implements OnInit {
 
 
     this.node.uploadProductCsv(formData).subscribe((result)=>{
-      alert("Uploaded Succesfully");
+
+      Swal({
+        text: 'Uploaded Succesfully',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     },(err)=>{
-      alert("please try again later.");
+
+      Swal({
+        text: 'please try again later.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
     })
   }
 
@@ -237,13 +259,24 @@ export class AllProductsComponent implements OnInit {
   onUpdate(){
     this.bundle['net_weight'] = (this.bundle['dimension'][0]['width']*this.bundle['dimension'][0]['height']*this.bundle['dimension'][0]['thickness'])/166;
     this.node.updateProduct(this.bundle).subscribe((update_result)=>{
-      alert("Bundle Updated.")
+      Swal({
+        text: 'Bundle updated.',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       window.location.reload();
       console.log(update_result)
 
 
     },(err)=>{
-      alert("Failed to update.Please try again.")
+
+      Swal({
+        text: 'Error occured while updating',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       console.log(err)
     })
   }

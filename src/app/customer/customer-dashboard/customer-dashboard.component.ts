@@ -6,6 +6,7 @@ import { ViewChild,ElementRef } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 declare var feather:any;
 @Component({
   selector: 'app-customer-dashboard',
@@ -14,7 +15,7 @@ declare var feather:any;
   providers:[NgbCarousel,NgbCollapse]
 })
 export class CustomerDashboardComponent implements OnInit {
-  
+
   isitemclicked = false
   doc:any;
   items:any;
@@ -36,7 +37,7 @@ export class CustomerDashboardComponent implements OnInit {
   ngOnInit() {
     this.getHomePage();
     feather.replace();
-   
+
   }
 
 
@@ -75,16 +76,16 @@ export class CustomerDashboardComponent implements OnInit {
     if(doc){
       this.nodeapi.getSimilarProduct(doc.supplier_id).subscribe((data)=>{
         this.similarproduct = data;
-        
+
         const element = document.querySelector("#top");
           if (element) { element.scrollIntoView(); }
- 
-       
+
+
       })
     }
-   
-    
-    
+
+
+
 
   }
 
@@ -93,7 +94,7 @@ export class CustomerDashboardComponent implements OnInit {
     if(event.keyCode == 13) {
       this.issearched = true
       if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByColorWithPrice(event.target.value,0).subscribe((data)=>{
         if(data!==null){
         this.items = data.data;
@@ -134,7 +135,7 @@ export class CustomerDashboardComponent implements OnInit {
     if(event.keyCode == 13) {
       this.issearched = true
       if(this.auth.isAuthenticated()){
-   
+
       this.nodeapi.searchByTypeWithPrice(event.target.value,0).subscribe((data)=>{
         if(data!==null){
         this.items = data.data;
@@ -168,7 +169,7 @@ export class CustomerDashboardComponent implements OnInit {
     }
       // rest of your code
     }
-    
+
 
 
   }
@@ -177,14 +178,19 @@ export class CustomerDashboardComponent implements OnInit {
     // console.log(doc,number);
     let net_area = 0;
 
-    
+
 
     if(doc && number>0){
-      
+
       this.nodeapi.getCart('0').subscribe((res)=>{
-        
+
         if(res.error_code === 401){
-          alert("please login")
+          Swal({
+            text: 'please login',
+            type: 'error',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
           this.route.navigate(['/login'])
 
         }else if(res.error_code === 200){
@@ -199,7 +205,7 @@ export class CustomerDashboardComponent implements OnInit {
             "net_area":net_area,
             "thickness":doc.thickness,
             "quantity":number,
-            
+
             "Dimension":[{
               "width":100,
               "height":200,
@@ -208,25 +214,37 @@ export class CustomerDashboardComponent implements OnInit {
 
 
 
-        
+
           this.nodeapi.addToCart(data).subscribe((response)=>{
-            alert("cart is updated");
+            Swal({
+              text: 'cart is updated',
+              type: 'success',
+              confirmButtonText: 'ok',
+              confirmButtonColor: '#0a3163'
+            });
+
             this.route.navigate(['/customer/cart'])
 
 
           })
-         
+
           }else{
-            
+
             let data = {"user_id":this.auth.getUser()._id,"bundle":doc}
-      
+
             this.nodeapi.getCart("0").subscribe((result)=>{
               alert("something")
               result.data[0].bundle.push(doc)
               this.nodeapi.addToCart(result).subscribe((res)=>{
-                alert("succesful")
+                Swal({
+                  text: 'cart is updated',
+                  type: 'success',
+                  confirmButtonText: 'ok',
+                  confirmButtonColor: '#0a3163'
+                });
+
               })
-             
+
             })
           }
 
@@ -234,7 +252,12 @@ export class CustomerDashboardComponent implements OnInit {
       })
     }
     else if(number<1){
-      alert("Slabs count can not be zero")
+      Swal({
+        text: 'Slabs count can not be zero',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     }
   }
 
