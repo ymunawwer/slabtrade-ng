@@ -3,7 +3,9 @@ import { AuthService } from '../../auth.service';
 import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-
+// import { country_state_city } from 'src/assets/js/country-state-city/index.js'
+// import { country_state_city } from 'country-state-city';
+// declare var country:any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,9 +14,9 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   err:boolean;
 
-  constructor(private auth:AuthService,private router:Router) {
+  constructor(private auth:AuthService,private router:Router, ) {
    this.err  = true;
-
+  //  console.log("country",JSON.stringify(this.country.getAllCountries()));
    if (auth.isAuthenticated()) {
     router.navigate(['/admin/home']);
   }
@@ -22,6 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
   @ViewChild('f') myForm;
   ngAfterViewInit(){

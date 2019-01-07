@@ -18,9 +18,15 @@ import { CustomerModule } from './customer/customer.module';
 import { SupplierModule } from './supplier/supplier.module';
 import { AdminModule } from './admin/admin.module';
 import { LoginRegisterComponent } from './login-register/login-register.component';
+import {MatCardModule} from '@angular/material';
+import {MatButtonModule} from '@angular/material';
 
+import { MatFormFieldModule } from '@angular/material';
+import { MatInputModule } from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
+// import { country_state_city } from 'country-state-city';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -28,10 +34,13 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
     AppComponent,
     LoginComponent,
     ForgotPasswordComponent,
-
+    // country_state_city,
     SupplierRegisterComponent,
 
     LoginRegisterComponent,
+    
+    
+    
 
 
 
@@ -40,10 +49,17 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
 
   ],
   imports: [
+    MatButtonModule,
+    MatCardModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDialogModule,
+    BrowserAnimationsModule,
+    // country_state_city,
     ReactiveFormsModule,
     NgbModule,
     CustomerModule,

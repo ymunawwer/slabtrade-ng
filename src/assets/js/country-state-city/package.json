@@ -1,0 +1,88 @@
+{
+  "_args": [
+    [
+      "country-state-city",
+      "/home/gamasome/st"
+    ]
+  ],
+  "_from": "country-state-city@latest",
+  "_id": "country-state-city@0.0.5",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/country-state-city",
+  "_nodeVersion": "6.14.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/country-state-city_0.0.5_1524140740692_0.9022145125869385"
+  },
+  "_npmUser": {
+    "email": "harpreetkhalsagtbit@gmail.com",
+    "name": "harpreetkhalsagtbit"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "country-state-city",
+    "raw": "country-state-city",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/country-state-city/-/country-state-city-0.0.5.tgz",
+  "_shasum": "2ad37501bfcf7444270eef0cdecca0046705fad2",
+  "_shrinkwrap": null,
+  "_spec": "country-state-city",
+  "_where": "/home/gamasome/st",
+  "author": {
+    "name": "harpreetkhalsagtbit@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/harpreetkhalsagtbit/country-state-city/issues"
+  },
+  "dependencies": {},
+  "description": "Library for fetching Country, its States and Cities",
+  "devDependencies": {},
+  "directories": {
+    "lib": "lib"
+  },
+  "dist": {
+    "fileCount": 8,
+    "npm-signature": "-----BEGIN PGP SIGNATURE-----\r\nVersion: OpenPGP.js v3.0.4\r\nComment: https://openpgpjs.org\r\n\r\nwsFcBAEBCAAQBQJa2IrFCRA9TVsSAnZWagAAcIoP/j6zD78xowLg5Gb5/SK6\nkca1okqaVp1s/bjbMZ4gzAypIyBM2PPltZi5kQFCvVtnRtZ4agTMnyXKD7cK\nCvAnaLUHcyfaoVTQhDCVETp26Gq4p+JPZ8GyHr481cOXZZbAjWT8Pn52tQMC\ntzjqEOEnpjAtvg74cmmCBLtEi5vO61HIOwh/OLT+XJT2X7BrtsjaUdmQls/x\n81MhbnC0IPXsBuVFrT1l3FUtZsQ8oHKEBGAhkZcXa6E7CnCc7fQ+8M4Ph2py\nh443H520AGlh3UOR1Yf4v6RmXWkfoJxjSZJukJUnZN3nMxWkUjI/JVa8JpEM\nSNULdnvNWeOB6Bjx78WtdMbG4SGZfYZiPcYgd3FhKwVm3yQdDNZVjWIKJ3Xx\nDWhLTcvI/V5QY+FK92uND61OPjoJTsus5XojfWyO7LITMPInt4f035y74Xa4\nqw8SKHYWkgE7uV8J7uLJJd4oom+Kim5POKvotYBFvAP30CriwmFmztQEpDMt\n9ZuHyEhG6vRDFKWskY0ko+Efyx30MuNZe8zgUMNGTlcLEKH+C6pB5HHHPQ3z\nPVF6CN95cgCBbeyEGmPiI5YTXrJsjH75R2zmn/Ymq9f9pVaAPZ56SiyU8ikz\nkRdFp4K4hpi8omKuDbjpDzL+IusK5PiTR5Z3jwaTYSeYLnhlp5XTv8E3BH/O\nWhZZ\r\n=O97C\r\n-----END PGP SIGNATURE-----\r\n",
+    "shasum": "2ad37501bfcf7444270eef0cdecca0046705fad2",
+    "tarball": "https://registry.npmjs.org/country-state-city/-/country-state-city-0.0.5.tgz",
+    "unpackedSize": 3316616
+  },
+  "gitHead": "1194ebf71d362e984fccea35d6644fbe71039400",
+  "homepage": "https://github.com/harpreetkhalsagtbit/country-state-city#readme",
+  "keywords": [
+    "City",
+    "Country",
+    "Filter",
+    "GeoLocation",
+    "Search",
+    "State"
+  ],
+  "license": "GPL-3.0",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "name": "harpreetkhalsagtbit",
+      "email": "harpreetkhalsagtbit@gmail.com"
+    }
+  ],
+  "name": "country-state-city",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harpreetkhalsagtbit/country-state-city.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.5"
+}
