@@ -15,6 +15,7 @@ import { DataService } from '../services/data.service';
 export class LoginComponent implements OnInit {
   err:boolean;
   previousUrl: string;
+  loading = false;
 
   constructor(private auth:AuthService,private router:Router, private dataservice: DataService) {
    this.err  = true;
@@ -41,6 +42,7 @@ export class LoginComponent implements OnInit {
   onSubmit(form:NgForm){
     if(!form.invalid){
     let login_data = {'email':form.value.email,'password':form.value.password}
+    this.loading = true;
     this.auth.doLogin(login_data).subscribe((res)=>{
 
       sessionStorage.setItem('currentUser',JSON.stringify(res));
@@ -65,7 +67,9 @@ export class LoginComponent implements OnInit {
       }else if(res['error_code'] ===200 && res['message']==='Invalid input'){
         window.location.reload();
       }
+      this.loading = false;
     },(error)=>{
+      this.loading = false;
       this.err = false;
     })
     // console.log('form')

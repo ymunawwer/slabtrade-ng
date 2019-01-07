@@ -1,10 +1,12 @@
+<ngx-loading [show]="loading"></ngx-loading>
 <div id="page-container">
         <app-sidebar></app-sidebar>
         <div class="page-wrapper">
           <app-navbar></app-navbar>
 
           <div *ngIf="true">
-                <section class="sub-menu">
+                <section style="    top: 74px;
+                left: 70px;" class="sub-menu">
                         <ul>
                             <ul>
                                 <li>
@@ -312,7 +314,7 @@
                                     <form>
                                         <div class="form-group">
                                             <label for="portInputEmail1">Add Port Name</label>
-      
+
       <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Port Name" name = "port-name" [(ngModel)] = "new_port_name">
                                         </div>
                                         <div class="form-group">
@@ -320,7 +322,7 @@
                                             <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Enter Port Cost"  name = "port-cost" [(ngModel)] = "new_port_cost">
                                         </div>
                                     </form>
-                
+
                                     <div class="add-port-btn text-right mt-4">
                                         <a class="btn btn-primary btn-sm" (click) = "onStep2()">Next</a>
                                     </div>
@@ -962,7 +964,7 @@
                             </script>
 
 
-                  
+
                 </div>
 
                 <div *ngIf="step4">
@@ -1227,7 +1229,7 @@
                                                 <option value="Western Sahara">Western Sahara</option>
                                                 <option value="Yemen">Yemen</option>
                                                 <option value="Zambia">Zambia</option>
-                                                <option value="Zimbabwe">Zimbabwe</option>   
+                                                <option value="Zimbabwe">Zimbabwe</option>
                                              </select>
                                         </div>
                                         <div class="shipping-cost tax-percentage mt-3">
@@ -1253,11 +1255,11 @@
                                     });
                                 });
                                 </script>
-                  
+
                     </div>
 
 
-                   
+
 
               </div>
               </div>

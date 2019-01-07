@@ -4,6 +4,7 @@ import {ViewChild, ElementRef} from '@angular/core';
 import { AuthService } from '../../auth.service';
 import {NodeapiService} from '../../nodeapi.service'
 import { Router } from '@angular/router'
+import Swal from 'sweetalert2';
 declare var $:any;
 declare var feather:any;
 @Component({
@@ -12,6 +13,7 @@ declare var feather:any;
   styleUrls: ['./create-bundle.component.sass']
 })
 export class CreateBundleComponent implements OnInit {
+  loading = false;
   globalInstance: any;
   unit:String;
   dimension:any;
@@ -152,13 +154,30 @@ new_color = {
       formData.append("image", file[i][0], file[i][0]['name']);
   }
 
+  this.loading = true;
+
+
     // console.log("bundle",this.bundle)
     this.node.createBundle(formData).subscribe((res)=>{
       // console.log("success")
-      alert("Success");
+    this.loading = false;
+
+      Swal({
+        text: 'Success',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       this.route.navigate(['/supplier/products'])
     },(err)=>{
-      alert("Please try again.")
+    this.loading = false;
+
+      Swal({
+        text: 'Please try again.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     })
   }
 

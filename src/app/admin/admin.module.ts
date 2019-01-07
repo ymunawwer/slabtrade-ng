@@ -17,6 +17,7 @@ import { MapComponent } from './map/map.component';
 import { SalesReportComponent } from './sales-report/sales-report.component';
 import { DealsComponent } from './deals/deals.component';
 import { CreateDealComponent } from './create-deal/create-deal.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [    HomeComponent,
@@ -49,8 +50,9 @@ import { CreateDealComponent } from './create-deal/create-deal.component';
     CommonModule,
     AdminRoutingModule,
     FormsModule,
-   
-    BsDatepickerModule.forRoot()
+
+    BsDatepickerModule.forRoot(),
+    NgxLoadingModule
   ]
 })
 export class AdminModule { }

@@ -3,6 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 declare var $: any;
 declare var feather: any;
 @Component({
@@ -12,6 +13,7 @@ declare var feather: any;
 })
 export class EditProductComponent implements OnInit {
 
+  loading = false;
   file = [];
   images = [];
   dummyArray = [];
@@ -146,7 +148,12 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
 
     } else {
-      alert('Error ocuured');
+      Swal({
+        text: 'Error ocuured',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     }
 
 });
@@ -425,12 +432,32 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   console.log('this.bundle', this.bundle);
 
+  this.loading = true;
+
+
     this.apiService.updateProduct(this.bundle).subscribe((update_result) => {
-      alert('Bundle Updated.');
+
+    this.loading = false;
+
+
+      Swal({
+        text: 'Bundle Updated.',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
       this.router.navigate(['supplier/products']);
       console.log(update_result);
     }, (err) => {
-      alert('Failed to update.Please try again.');
+    this.loading = false;
+
+      Swal({
+        text: 'Failed to update.Please try again.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       console.log(err);
     });
   }
@@ -442,7 +469,7 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
 
   }
- 
+
 onDimensionChange(form:NgForm){
 }
   getBackground(image) {

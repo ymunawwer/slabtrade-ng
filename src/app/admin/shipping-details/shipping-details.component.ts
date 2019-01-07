@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 // import { NgForm} from '@angular/forms'
 import {NodeapiService} from '../../nodeapi.service'
 import { AdminApiService } from '../../admin-api.service';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 declare var feather:any;
 @Component({
   selector: 'app-shipping-details',
@@ -10,6 +11,7 @@ declare var feather:any;
   styleUrls: ['./shipping-details.component.sass']
 })
 export class ShippingDetailsComponent implements OnInit {
+  loading = false;
   country:String;
   port_arr:any;
   port_name:String;
@@ -24,11 +26,11 @@ export class ShippingDetailsComponent implements OnInit {
   step1:boolean;
   step2:boolean;
   step3:boolean;
-  
+
   step4:boolean;
   selectedport:any;
 
-  
+
   constructor(private nodeapi:NodeapiService,private adminapi:AdminApiService,private router:Router) {
     this.country = 'india'
     this.port_arr = [];
@@ -49,14 +51,16 @@ export class ShippingDetailsComponent implements OnInit {
     this.getPort();
     console.log(this.selectedport)
     feather.replace();
-    
+
   }
   getPort(){
     console.log(this.country)
     this.shipping_cost = 0
       this.tax_percentage = 0
+  this.loading = true;
+
     this.adminapi.getPortByCountry(this.country).subscribe((res)=>{
-      
+
       this.port_arr = res['data'];
       console.log(res)
       this.shipping_cost = res['data'][0]['shipping_cost'];
@@ -66,16 +70,19 @@ export class ShippingDetailsComponent implements OnInit {
       res['data'].forEach(element => {
         console.log(element['port_name'])
 
-        
+
       });
       console.log(this.new_port_cost)
       console.log(this.new_port_name)
       console.log(this.tax_percentage)
-    
+      this.loading = false;
+
     })
-  
+
   }
   addPort(){
+  this.loading = true;
+
     let data = {
       'port_name':this.new_port_name,
       'country':this.country,
@@ -85,10 +92,24 @@ export class ShippingDetailsComponent implements OnInit {
       'facilities_cost':this.facility_cost
     }
     this.adminapi.addPort(data).subscribe((res)=>{
-      alert("Port added succesfuly");
+  this.loading = false;
+
+      Swal({
+        text: 'Port added succesfuly',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       this.router.navigate(['/admin'])
     },(err)=>{
-      alert("Something went Wrong Please try again.")
+  this.loading = false;
+
+      Swal({
+        text: 'Something went Wrong Please try again.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     })
   }
   onStep1(){
@@ -127,23 +148,34 @@ export class ShippingDetailsComponent implements OnInit {
     let port = this.port_arr.filter((name)=>{
       return name['port_name'] === this.selectedport
     })
-    
+
     this.adminapi.removePort(port[0]['port_id']).subscribe((res)=>{
-      alert("Port removed Succesfully");
+
+      Swal({
+        text: 'Port removed Succesfully',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       window.location.reload();
 
     },(err)=>{
-      alert("please try again");
+      Swal({
+        text: 'please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       window.location.reload();
     })
   }
   onUpdate(){
-    
-   
+
+
     let port = this.port_arr.filter((name)=>{
       return name['port_name'] === this.selectedport
     })
-  
+
     let data = {
       "port_id":port['port_id'],
       'port_name':this.update_port_name,
@@ -155,14 +187,24 @@ export class ShippingDetailsComponent implements OnInit {
     }
 
     this.adminapi.updatePort(data).subscribe((res)=>{
-      alert("Port Updated Succesfully");
+      Swal({
+        text: 'Port Updated Succesfully',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       window.location.reload();
 
     },(err)=>{
-      alert("please try again");
+      Swal({
+        text: 'please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
       window.location.reload();
     })
-    
+
   }
 
 }

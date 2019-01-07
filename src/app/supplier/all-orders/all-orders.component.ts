@@ -3,6 +3,7 @@ import {NodeapiService} from '../../nodeapi.service'
 // const Json2csvParser = require('json2csv').Parser;
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import Swal from 'sweetalert2';
 
 declare var feather:any;
 @Component({
@@ -11,7 +12,8 @@ declare var feather:any;
   styleUrls: ['./all-orders.component.sass']
 })
 export class AllOrdersComponent implements OnInit {
-  orders:any;
+  loading = false;
+  orders: any;
   name:any;
   wired_doc_arr:any;
   purchase_order:any;
@@ -28,7 +30,7 @@ export class AllOrdersComponent implements OnInit {
   payment_mode:String;
   isOrderClicked:boolean;
 
-  constructor(private node:NodeapiService,private route:Router,private auth:AuthService) { 
+  constructor(private node:NodeapiService,private route:Router,private auth:AuthService) {
     this.isorderdetail=false;
     this.ispaymentdetails=false
     this.ispurchaseorder=false
@@ -44,9 +46,16 @@ export class AllOrdersComponent implements OnInit {
 
   ngOnInit() {
     feather.replace();
+    this.loading = true;
+
     this.node.getOrder().subscribe((result)=>{
       if(result['error_code']===401){
-        alert("please login");
+        Swal({
+          text: 'please login',
+          type: 'info',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
         this.route.navigate(['/login'])
       }
       else if(result['error_code']===200){
@@ -56,24 +65,37 @@ export class AllOrdersComponent implements OnInit {
             console.log('item',item);
             this.node.getCustomerName(item.user_id).subscribe((res)=>{
               this.name.push(res['data'])
-              
-              
+
+
             })
           }console.log('name',this.name)
           console.log(result)
   }else if(result['message']==="No order"){
-    alert("Order list is empty.");
+
+    Swal({
+      text: 'Order list is empty.',
+      type: 'info',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
 
 
   }else{
-    alert("Please try again");
+
+    Swal({
+      text: 'Please try again',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
   }
 
 
 
 
       }
-     
+      this.loading = false;
+
     })
     console.log(this.orders)
   }
@@ -105,7 +127,7 @@ export class AllOrdersComponent implements OnInit {
     this.isupload = false
     this.isorderlist =false
     this.getWiredDoc();
-    
+
   }
 
   shippingDetailUploadTab(){
@@ -131,7 +153,7 @@ export class AllOrdersComponent implements OnInit {
     }else{
       this.cancel_status = true
     }
-    
+
     console.log(this.orders)
     this.isOrderClicked = true;
 
@@ -149,30 +171,65 @@ export class AllOrdersComponent implements OnInit {
   }
 
   acceptOrder(element){
+
+    this.loading = true;
+
     this.node.changeOrderStatus(this.order._id,"Accepted").subscribe((result)=>{
-      alert("Order Accepted")
+      Swal({
+        text: 'Order Accepted',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
       element.disabled = true;
       this.bool = false;
-      window.location.reload();
+      this.route.navigate(['/supplier']);
     },(err)=>{
-      alert("Please try again.")
+      Swal({
+        text: 'Please try again.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
     })
   }
 
   rejectOrder(element){
+    this.loading = true;
+
     this.node.changeOrderStatus(this.order._id,"Reject").subscribe((result)=>{
-      alert("Order Rejected")
+      Swal({
+        text: 'Order Rejected',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
       element.disabled = true;
       this.bool =false;
-      window.location.reload();
+      this.route.navigate(['/supplier']);
+
     },(err)=>{
-      alert("Please try again")
+      Swal({
+        text: 'Please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
     })
   }
 
 
 
   uploadShippingDoc(){
+
     const formData:any = new FormData();
     // formData.append('shipping_file', this.files);
     formData.append( "_id",this.order._id)
@@ -181,7 +238,7 @@ export class AllOrdersComponent implements OnInit {
     console.log("shipping",this.order)
     if(file.length>0){
     for(let i =0; i < file.length; i++){
-      
+
       formData.append("shipping_file", file[i][0], file[i][0]['name']);
   }
 
@@ -194,38 +251,72 @@ export class AllOrdersComponent implements OnInit {
       "shipping_doc":this.files
 
     }
+    this.loading = true;
     this.node.uploadShippingDoc(formData).subscribe((res)=>{
       console.log(res);
-      alert(res['message'])
+      Swal({
+        text: res['message'],
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
     })
   }else{
-    alert("Please select the shipment document.before uploading.")
+    Swal({
+      text: 'Please select the shipment document.before uploading.',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
   }
 }
 
 
 getWiredDoc(){
+
+  this.loading = true;
+
+
   this.node.downloadWiredDoc(this.order._id).subscribe((res)=>{
     console.log('zz',res['data'])
     this.payment_status = res['data']['payment_status'];
     this.wired_doc_arr = res['data']['docs'];
     this.payment_mode = res['data']['payment_mode'];
-    
+    this.loading = false;
+
   },(err)=>{
-    alert("Please try again later.")
+    Swal({
+      text: 'Please try again later',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
+    this.loading = true;
+
   })
   console.log(this.payment_status)
 }
 
 getPurchaseOrder(){
+  this.loading = true;
   this.node.downloadPurchaseOrder(this.order._id).subscribe((res)=>{
     console.log('zz',res)
     // this.payment_status = res['data']['payment_status'];
-    this.purchase_order = res['data'][0]['path'];
+    this.purchase_order = res['data'].length > 0 ? res['data'][0]['path'] : undefined;
     // this.payment_mode = res['data']['payment_mode'];
-    
+    this.loading = false;
+
   },(err)=>{
-    alert("Please try again later.")
+    Swal({
+      text: 'Please try again later.',
+      type: 'error',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
+    this.loading = false;
+
   })
   console.log("purchase_order",this.purchase_order)
 }

@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 declare var feather:any;
 import { NodeapiService } from '../../nodeapi.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-order',
   templateUrl: './order.component.html',
   styleUrls: ['./order.component.sass']
 })
 export class OrderComponent implements OnInit {
+  loading = false;
   order:any;
   doc_arr:any;
   street:String;
@@ -20,12 +22,12 @@ export class OrderComponent implements OnInit {
   isthird:boolean;
   status:string;
   live_status:number;
-  constructor(private node:NodeapiService) { 
+  constructor(private node:NodeapiService) {
     this.getOrderList();
     this.stepFirst();
     this.orderDetail = {};
     this.status='pending';
-   
+
   }
 
   ngOnInit() {
@@ -35,10 +37,12 @@ export class OrderComponent implements OnInit {
 
 
   getOrderList(){
-    
+
+    this.loading = true;
     this.node.getAllOrder().subscribe((result)=>{
       this.order = result.data;
       console.log(this.order);
+      this.loading = false;
     })
 
   }
@@ -55,23 +59,24 @@ export class OrderComponent implements OnInit {
     this.isfirst=false;
     this.issecond=true;
     this.isthird = false;
-    
+
   }
 
   stepThird(){
     this.isfirst=false;
     this.issecond=false;
     this.isthird = true;
-    
+
   }
 
 
 
 
   getOrderDetail(doc){
-    
+
     this.stepSecond();
     console.log('order',doc)
+    this.loading = true;
     this.node.getOrderByCustomer(doc._id).subscribe((res)=>{
       if(res['error_code']===200){
         this.getShippingDoc(doc['_id'])
@@ -102,9 +107,15 @@ export class OrderComponent implements OnInit {
 
       }
       else{
-        alert("Please try again later.")
+        Swal({
+          text: 'Please try again later.',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
       }
-    
+
+      this.loading = false;
 
     })
 
@@ -113,9 +124,11 @@ export class OrderComponent implements OnInit {
 
 
   getShippingDoc(id){
+    this.loading = true;
     this.node.getShippingDoc(id).subscribe((res)=>{
       this.doc_arr = res['data'];
       console.log(res)
+      this.loading = false;
 
     })
   }

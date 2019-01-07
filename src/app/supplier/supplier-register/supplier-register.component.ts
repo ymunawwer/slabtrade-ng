@@ -3,6 +3,7 @@ import {AuthService} from '../../auth.service'
 import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 declare var $: any;
 
@@ -48,18 +49,38 @@ export class SupplierRegisterComponent implements OnInit {
       console.log(res)
       if(res['error_code']===200){
         if(res['message']==='Supplier register Succesfully'){
-          alert('Thank you for registering with us.');
+          Swal({
+            text: 'Thank you for registering with us.',
+            type: 'success',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
           this.router.navigate(['/login']);
 
         }else{
-          alert("Email or cell phone already register please try with different.")
+          Swal({
+            text: 'Email or cell phone already register please try with different.',
+            type: 'error',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
         }
         }else if(res['error_code']===500){
-          alert("Please try with different email or try after some time.")
+          Swal({
+            text: 'Please try with different email or try after some time.',
+            type: 'error',
+            confirmButtonText: 'ok',
+            confirmButtonColor: '#0a3163'
+          });
 
         }
     },(err)=>{
-      alert("Please try with different email or try after some time.")
+      Swal({
+        text: 'Please try with different email or try after some time.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
     })
 
 

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   err:boolean;
+  loading = false;
 
   constructor(private auth:AuthService,private router:Router) {
    this.err  = true;
@@ -37,6 +38,9 @@ export class LoginComponent implements OnInit {
   onSubmit(form:NgForm){
     if(!form.invalid){
     let login_data = {'email':form.value.email,'password':form.value.password}
+
+    this.loading = true;
+
     this.auth.doAdminLogin(login_data).subscribe((res)=>{
 
       sessionStorage.setItem('currentUser',JSON.stringify(res));
@@ -59,8 +63,13 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/admin/home']);
       console.log(JSON.stringify(res))
       }
+    this.loading = false;
+
     },(error)=>{
+    this.loading = false;
+
       this.err = false;
+
     })
     // console.log('form')
   }

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as html2canvas from 'html2canvas';
 import { DataService } from '../../services/data.service';
 import * as jsPDF from 'jspdf';
+import Swal from 'sweetalert2';
 declare var feather:any;
 @Component({
   selector: 'app-orders',
@@ -13,6 +14,7 @@ declare var feather:any;
 
 })
 export class OrdersComponent implements OnInit {
+  loading = false;
   ishome:boolean;
   payment;
   isorderstatus:boolean;
@@ -141,10 +143,13 @@ export class OrdersComponent implements OnInit {
     this.purchase_order['extended'] = this.order['total']
     this.purchase_order['tax'] = this.order['tax']
 
+    this.loading = true;
     // this.createPurchaseOrder();
     this.adminApi.getShippingDoc(this.order['_id']).subscribe((res)=>{
       this.doc_arr = res['data'];
       console.log(this.doc_arr)
+
+      this.loading = false;
 
     })
   }
@@ -159,11 +164,21 @@ export class OrdersComponent implements OnInit {
     this.oderDetail();
   }
   async getOrder(){
+    this.loading = true;
     await this.adminApi.getOrdes().subscribe((res)=>{
       this.orders = res['data'];
       console.log(this.orders)
+      this.loading = false;
 
-    },(err)=>{alert(err)
+    },(err)=>{
+      Swal({
+        text: err,
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+      this.loading = false;
+
     console.log(err)
     })
 
@@ -192,21 +207,48 @@ export class OrdersComponent implements OnInit {
     console.log(this.order._id)
     console.log(this.order.cancel_status)
     let self = this;
+    // this.loading = true;
     this.adminApi.updateStatus(this.order._id,this.order_status).subscribe(function(result){
       console.log(result)
+
       if(result['error_code']===200 && result['Message']!=='invalid order id'){
-        alert(result['Message']);
+        // this.loading = false;
+        Swal({
+          text: result['Message'],
+          type: 'success',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
         self.checking_order_status = self.order_status;
+
       }else if(result['error_code']===200 && result['Message']==='invalid order id'){
-        alert(result['Message'])
+    // this.loading = false;
+        Swal({
+          text: result['Message'],
+          type: 'success',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
+
       }else{
-        alert("Please try again");
-      }
+    // this.loading = false;
+
+        Swal({
+          text: 'please try again.',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
+
+            }
+
     })
 
   }
 
   oderDetail(){
+
+    this.loading = true;
 
     // this.doc_arr =
     for(let product of this.products){
@@ -217,14 +259,32 @@ export class OrdersComponent implements OnInit {
       })
     }
     console.log(this.bundle_arr)
+    this.loading = false;
+
   }
   rejectOrder(element){
+    this.loading = true;
+
     this.node.changeOrderStatus(element,"Reject").subscribe((result)=>{
-      alert("Order Rejected")
+      Swal({
+        text: 'Order Rejected.',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
+    this.loading = false;
 
       window.location.reload();
     },(err)=>{
-      alert("Please try again")
+      Swal({
+        text: 'Please try again',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
     })
   }
 
@@ -242,13 +302,31 @@ export class OrdersComponent implements OnInit {
         formData.append("wired_file", file[i][0], file[i][0]['name']);
     }
 
+    this.loading = true;
+
       // console.log("bundle",this.bundle)
       this.adminApi.uploadWiredDoc(this.order['_id'],formData).subscribe((res)=>{
         // console.log("success")
-        alert("Successfully Uploaded");
+        Swal({
+          text: 'Successfully Uploaded',
+          type: 'success',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
+
+    this.loading = false;
+
 
       },(err)=>{
-        alert('Upload Failed.Please try again.');
+
+        Swal({
+          text: 'Upload Failed.Please try again.',
+          type: 'error',
+          confirmButtonText: 'ok',
+          confirmButtonColor: '#0a3163'
+        });
+    this.loading = false;
+
       })
     }
 
@@ -273,15 +351,33 @@ export class OrdersComponent implements OnInit {
 
     let self = this;
 
+    this.loading = true;
+
+
     this.adminApi.statusPaymentUpdate(this.order['_id'],this.paymentstatus,this.payment).subscribe((res)=>{
       // console.log("success")
-      alert("Successfully Updated");
+      Swal({
+        text: 'Successfully Updated',
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
 
       self.checking_payment_status = self.paymentstatus;
 
+    this.loading = false;
+
 
     },(err)=>{
-      alert('Upload Failed.Please try again.');
+
+      Swal({
+        text: 'Upload Failed.Please try again.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
     })
 
 
@@ -305,9 +401,19 @@ export class OrdersComponent implements OnInit {
 
   console.log('order',this.order)
 
+  this.loading = true;
+
+
     this.adminApi.uploadPurchaseOrder(formData).subscribe((res)=>{
       console.log(res);
-      alert(res['message'])
+      Swal({
+        text: res['message'],
+        type: 'success',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    this.loading = false;
+
     })
   // }else{
   //   alert("Please select the shipment document.before uploading.")

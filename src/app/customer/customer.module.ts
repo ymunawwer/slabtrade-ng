@@ -10,13 +10,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { OrderComponent } from './order/order.component';
+import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [CartCustomerComponent,customerHomeCumponent,CustomerDashboardComponent,SettingsComponent,RegisterCustomerComponent,SidebarComponent,NavbarComponent, OrderComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    FormsModule
+    FormsModule,
+    NgxLoadingModule
   ]
 })
 export class CustomerModule { }
