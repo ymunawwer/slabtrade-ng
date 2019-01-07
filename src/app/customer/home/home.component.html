@@ -26,18 +26,18 @@ input[type=number]::-webkit-outer-spin-button {
             <div class="carousel-inner">
                     <!-- <ng-template ngFor let-slider [ngForOf]= "slider_image" let-i="index"> -->
                 <div class="carousel-item active">
-                    <div class="img-slider" style="background-image: url(https://slab-trade-upload.s3.amazonaws.com/image-1545917792075-a1.jpg)">
+                    <div class="img-slider" style="background-image: url(../../../assets/img/slab1.jpg)">
                      <!-- [style.background-image] = "getBackground(slider_image[0])" -->
 
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="img-slider" style="background-image: url(https://slab-trade-upload.s3.amazonaws.com/image-1545921911268-a.jpg)">
+                    <div class="img-slider" style="background-image: url(../../../assets/img/slab2.jpg)">
                        <!-- [style.background-image] = "getBackground(slider_image[1])" -->
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <div class="img-slider" style="background-image: url(https://slab-trade-upload.s3.amazonaws.com/image-1545839646846-1.jpg)" >
+                    <div class="img-slider" style="background-image: url(../../../assets/img/slab3.jpg)" >
                     <!-- [style.background-image] = "getBackground(slider_image[2])" -->
                     </div>
                 </div>
@@ -313,7 +313,7 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option col-md-8">Price</td>
                                             <td class="table-option1 col-md-4">
                                                 <ul>
-                                                   <li style="width: max-content" class="item">
+                                                   <li style="width: max-content; font-size: 1em" class="item">
                                                     <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
                                                     <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px;" class="price">
                                                       {{doc.price===undefined?'':'$'+doc.price}}</span>
@@ -479,46 +479,5 @@ input[type=number]::-webkit-outer-spin-button {
     <!-- footer -->
 
 
-    <div class="footer">
-        <div class="container">
-            <div class="row row-col">
-                <div class="col-md-3">
-                    <h1 class="footer-title">Slab Trade</h1>
-                    <p>Lorem Ipsum, giving information on its origins, Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins. Lorem Ipsum, giving information on its origins.</p>
-                </div>
-                <div class="col-md-3">
-                    <h5>Company</h5>
-                    <ul class="company-links">
-                        <li><a class="about-company" href="#">Help</a></li>
-                        <li><a class="about-company" href="#">Careers</a></li>
-                        <li><a class="about-company" href="#">News</a></li>
-                        <li><a class="about-company" href="#">Insurance</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>About</h5>
-                    <ul class="company-links">
-                        <li><a class="about-company" href="#">Help</a></li>
-                        <li><a class="about-company" href="#">Careers</a></li>
-                        <li><a class="about-company" href="#">News</a></li>
-                        <li><a class="about-company" href="#">Insurance</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Company</h5>
-                    <ul class="company-links">
-                        <li><a class="about-company" href="#">Help</a></li>
-                        <li><a class="about-company" href="#">Careers</a></li>
-                        <li><a class="about-company" href="#">News</a></li>
-                        <li><a class="about-company" href="#">Insurance</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <p class="company-links">&copy 2018 Slab Trad</p>
-              </div>
-            </div>
-        </div>
-    </div>
+    <app-footer></app-footer>
 
