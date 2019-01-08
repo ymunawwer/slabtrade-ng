@@ -43,6 +43,12 @@ export class EditProductComponent implements OnInit {
 
      }],
 
+     'net_dimension': [{
+      'width': 0,
+      'height': 0,
+      'unit': 'cm'
+    }],
+
        'width':0,
        'height':0,
        'thickness':0,
@@ -157,6 +163,17 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
       this.images = this.bundle['images'];
 
+      this.thickness_new = this.bundle.dimension[0].thickness;
+
+      this.bundle.width = this.bundle.net_dimension[0].width;
+
+      this.bundle.height = this.bundle.net_dimension[0].height;
+
+
+
+      this.aray = this.bundle.dimension;
+
+      // this.bundle.net_dimension
 
     } else {
       Swal({
@@ -243,29 +260,55 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     // })
   }
 
+  // createRange(number) {
+  //   this.dummyArray = [];
+  //   this.aray = [];
+  //   console.log('number', number);
+  //   for(let i = 1; i <= number; i++) {
+
+  //      this.dummyArray.push(i);
+  //      this.aray.push(new Object());
+
+  //   }
+  //   this.aray = this.bundle.dimension;
+
+  //   if(this.dummyArray.length != this.aray.length) {
+  //     for (let i =this.aray.length; i <= this.dummyArray.length; i++) {
+
+  //               this.aray[i] = { width: 0, height: 0, thickness: 0};
+
+
+  //     }
+  //   }
+
+  //   return this.dummyArray;
+  // }
+
   createRange(number) {
-    this.dummyArray = [];
+    console.log('called');
+
     this.aray = [];
-    console.log('number', number);
-    for(let i = 1; i <= number; i++) {
 
-       this.dummyArray.push(i);
-       this.aray.push(new Object());
-
-    }
-    this.aray = this.bundle.dimension;
-
-    if(this.dummyArray.length != this.aray.length) {
-      for (let i =this.aray.length; i <= this.dummyArray.length; i++) {
-
-                this.aray[i] = { width: 0, height: 0, thickness: 0};
-
-
+  for (let i = 0; i < number; i++) {
+         this.aray.push({'width': this.bundle.width, 'height': this.bundle.width,
+          thickness: this.thickness_new});
       }
-    }
 
-    return this.dummyArray;
+  let area = 0;
+
+    this.dimension = this.aray;
+    this.dimension.forEach((el)=>{
+      area = area+(el['width']*el['height'])
+      console.log(area)
+    })
+    this.bundle.net_area = area;
+    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+
+    this.bundle.dimension = this.dimension;
+
+
   }
+
 
 
   onUnitChange(event){
@@ -410,8 +453,9 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     })
     this.bundle.net_area = area;
     console.log('weight', this.bundle.net_area*this.thickness_new);
-    // this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
-       this.bundle.bundle_weight = this.bundle.net_weight * this.bundle.no_of_slabs;
+    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+
+      //  this.bundle.bundle_weight = this.bundle.net_weight * this.bundle.no_of_slabs;
   }
   // console.log(this.dimension)
   this.bundle.dimension=this.dimension;

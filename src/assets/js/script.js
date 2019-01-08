@@ -11,7 +11,7 @@ $(document).ready(function() {
 
   $('#smartwizard3').smartWizard({
     selected: 0, // Initial selected step, 0 = first step
-    keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+    keyNavigation: false, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
     autoAdjustHeight: true, // Automatically adjust content height
     cycleSteps: false, // Allows to cycle the navigation of steps
     backButtonSupport: true, // Enable the back button support
@@ -33,7 +33,7 @@ $(document).ready(function() {
     // Smart Wizard
     $('#smartwizard').smartWizard({
         selected: 0, // Initial selected step, 0 = first step
-        keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+        keyNavigation: false, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
         autoAdjustHeight: true, // Automatically adjust content height
         cycleSteps: false, // Allows to cycle the navigation of steps
         backButtonSupport: true, // Enable the back button support
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
     $('#smartwizard1').smartWizard({
         selected: 0, // Initial selected step, 0 = first step
-        keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+        keyNavigation: false, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
         autoAdjustHeight: true, // Automatically adjust content height
         cycleSteps: false, // Allows to cycle the navigation of steps
         backButtonSupport: true, // Enable the back button support

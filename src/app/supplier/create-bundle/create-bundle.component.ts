@@ -49,6 +49,7 @@ export class CreateBundleComponent implements OnInit {
 
     }],
 
+
       'width':0,
       'height':0,
       'thickness':0,
@@ -120,13 +121,39 @@ new_color = {
 
   }
   createRange(number) {
-    var items: number[] = [];
-    for(var i = 1; i <= number; i++){
-       items.push(i);
-      //  console.log(i);
-       this.aray.push(new Object())
-    }
-    return items;
+    console.log('called');
+
+    this.aray = [];
+
+  //   if(this.aray.length < number) {
+  //   for (let i = this.aray.length; i < number; i++) {
+  //      this.aray.push({'width': this.bundle.width, 'height': this.bundle.height, thickness: this.thickness_new});
+  //   }
+  // } else if (this.aray.length > number) {
+
+  //   for (let i= number; i< this.aray.length; i++) {
+  //     this.aray.pop();
+  //   }
+
+  // }
+
+  for (let i = 0; i < number; i++) {
+         this.aray.push({'width': this.bundle.width, 'height': this.bundle.height, thickness: this.thickness_new});
+      }
+
+  let area = 0;
+
+    this.dimension = this.aray;
+    this.dimension.forEach((el)=>{
+      area = area+(el['width']*el['height'])
+      console.log(area)
+    })
+    this.bundle.net_area = area;
+    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+
+    this.bundle.dimension = this.dimension;
+
+
   }
 
   allFilesToUpload(event){
@@ -142,6 +169,7 @@ new_color = {
 
 
   onCreateBundle(){
+    console.log('this.bundle', this.bundle);
     this.bundle.thickness = this.thickness_new
     this.bundle.dimension[0].thickness = this.thickness_new;
     this.bundle.unit = <string>this.unit;
@@ -348,7 +376,7 @@ new_color = {
     let x = form.value
 
 
-
+console.log('form.value', form.value);
 
 
   for(let i =0;i<this.bundle.no_of_slabs;i++){
@@ -376,6 +404,7 @@ new_color = {
     })
     this.bundle.net_area = area;
     this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+    console.log('this.dimension', this.dimension);
   }
   // console.log(this.dimension)
   this.bundle.dimension=this.dimension;
