@@ -3,6 +3,8 @@ import {AuthService} from '../../auth.service'
 import { FormsModule,NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { CountryService } from '../../country.service'
+import { timeout } from 'q';
 import Swal from 'sweetalert2';
 
 declare var $: any;
@@ -13,14 +15,30 @@ declare var $: any;
   styleUrls: ['./register-customer.component.sass']
 })
 export class RegisterCustomerComponent implements OnInit {
+  stateInfo: any;
+  countryInfo: any;
+  cityInfo: any;
+  mailingStateInfo: any;
+  mailingCountryInfo: any;
+  mailingCityInfo: any;
+
+
+  constructor(private auth:AuthService,private route:Router,private country:CountryService) {
+    this.getCountries();
+    this.countryInfo = []
+    this.stateInfo = []
+    this.mailingStateInfo = []
+    this.mailingCountryInfo = [] 
+    this.mailingCityInfo= []
+   }
 
   loading = false;
 
-  constructor(private auth:AuthService,private route:Router) { }
 
   @ViewChild('f') formRef;
 
   ngOnInit() {
+    
   }
 
 
@@ -99,5 +117,51 @@ export class RegisterCustomerComponent implements OnInit {
 
 
   }
+
+  getCountries(){
+        setTimeout(()=>{
+          this.countryInfo=this.country.getAllCountry();
+          console.log('Data:', this.countryInfo);
+        },300)
+       
+   
+  }
+
+  onChangeCountry(countryValue) {
+    console.log('country',countryValue)
+    // countryValue = JSON.parse(countryValue)+1;
+    this.stateInfo=this.country.filterState(countryValue);
+    console.log('state',this.stateInfo)
+    // this.cityInfo=this.stateInfo[0].Cities;
+    console.log(this.cityInfo);
+  }
+
+  onChangeState(stateValue) {
+    console.log('state',stateValue)
+    // stateValue = JSON.parse(stateValue)+1;
+    this.cityInfo=this.country.filterCity(stateValue);
+    console.log('city',this.cityInfo)
+    //console.log(this.cityInfo);
+  }
+
+
+  onChangeMailingCountry(countryValue) {
+    console.log('country',countryValue)
+    // countryValue = JSON.parse(countryValue)+1;
+    this.mailingStateInfo=this.country.filterState(countryValue);
+    console.log('state',this.stateInfo)
+    // this.cityInfo=this.stateInfo[0].Cities;
+    console.log(this.cityInfo);
+  }
+
+  onChangeMailingState(stateValue) {
+    console.log('state',stateValue)
+    // stateValue = JSON.parse(stateValue)+1;
+    this.mailingCityInfo=this.country.filterCity(stateValue);
+    console.log('city',this.cityInfo)
+    //console.log(this.cityInfo);
+  }
+
+  
 
 }

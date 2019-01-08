@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Inject } from '@angular/core';
 import {NgbModule,NgbCarousel,NgbCollapse} from '@ng-bootstrap/ng-bootstrap';
 import { NodeapiService } from '../../nodeapi.service';
 import { PlatformLocation } from '@angular/common';
@@ -7,6 +7,8 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { ENV } from 'src/app/core/env.config';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+
 import Swal from 'sweetalert2';
 declare var feather:any;
 declare var jquery:any;
@@ -41,7 +43,7 @@ export class HomeComponent implements OnInit {
   image:any;
   slider_image:any;
   issearched = false
-  constructor(private nodeapi:NodeapiService,private sanitizer: DomSanitizer,private location: PlatformLocation,private _sanitizer: DomSanitizer,private auth:AuthService,private route:Router) {
+  constructor(private nodeapi:NodeapiService,private sanitizer: DomSanitizer,private location: PlatformLocation,private _sanitizer: DomSanitizer,private auth:AuthService,private route:Router,public dialog: MatDialog) {
     this.trustedUrl = this._sanitizer.bypassSecurityTrustUrl("http://localhost:4200/");
     this.items = []
 
@@ -943,4 +945,11 @@ console.log('data', data);
 
 
 
+
+ 
+}
+
+export interface DialogData {
+  animal: string;
+  name: string;
 }
