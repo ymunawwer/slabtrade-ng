@@ -13,6 +13,10 @@ declare var feather: any;
 })
 export class EditProductComponent implements OnInit {
 
+  deal_data = {
+
+  };
+
   loading = false;
   file = [];
   images = [];
@@ -54,6 +58,13 @@ export class EditProductComponent implements OnInit {
      'inspection_report':'',
      'bundle_weight': 0.0,
 
+     'slab_preference': '',
+
+     'dateRange': '',
+    'start_date': '',
+    'end_date': '',
+    'offer_value': '',
+    'deal_product_type': ''
 
 
   };
@@ -432,7 +443,17 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   console.log('this.bundle', this.bundle);
 
-  this.loading = true;
+  const data = this.bundle;
+
+    this.bundle.start_date = data.dateRange ?
+     new Date(data.dateRange[0]).getFullYear() + '-' + (new Date(data.dateRange[0]).getMonth() + 1) +
+    '-' + new Date(data.dateRange[0]).getDate() : '';
+
+    this.bundle.end_date = data.dateRange ?
+    new Date(data.dateRange[1]).getFullYear() + '-' + (new Date(data.dateRange[1]).getMonth() + 1) +
+    '-' + new Date(data.dateRange[1]).getDate() : '';
+
+    this.loading = true;
 
 
     this.apiService.updateProduct(this.bundle).subscribe((update_result) => {

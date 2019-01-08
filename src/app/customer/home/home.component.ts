@@ -31,6 +31,8 @@ export class HomeComponent implements OnInit {
   isviewmore = false;
   number = 0;
   searchcolor;
+  searchCountry;
+  thirdSearchBox;
   trustedUrl;
   isnull;
   item_image = [];
@@ -841,6 +843,16 @@ console.log('data', data);
       )
 
     }
+  }
+
+  searchByCountry() {
+
+
+
+  }
+
+  searchThirdBox() {
+
   }
 
 

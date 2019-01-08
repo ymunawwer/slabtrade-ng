@@ -13,6 +13,15 @@ declare var feather:any;
   styleUrls: ['./create-bundle.component.sass']
 })
 export class CreateBundleComponent implements OnInit {
+
+  deal_data = {
+    'dateRange': '',
+    'start_date': '',
+    'end_date': '',
+    'offer_value': '',
+  };
+
+
   loading = false;
   globalInstance: any;
   unit:String;
@@ -53,8 +62,9 @@ export class CreateBundleComponent implements OnInit {
     'net_weight':0.0,
     'product_description':'',
     'bundle_description':'',
-    'inspection_report':''
+    'inspection_report':'',
 
+    'slab_preference': ''
 
 
  }
@@ -146,6 +156,23 @@ new_color = {
       else if(key!=="dimension"){
       formData.append(key,value)
       }
+    }
+
+    const data = this.deal_data;
+
+    this.deal_data.start_date = data.dateRange ?
+     new Date(data.dateRange[0]).getFullYear() + '-' + (new Date(data.dateRange[0]).getMonth() + 1) +
+    '-' + new Date(data.dateRange[0]).getDate() : '';
+
+    this.deal_data.end_date = data.dateRange ?
+    new Date(data.dateRange[1]).getFullYear() + '-' + (new Date(data.dateRange[1]).getMonth() + 1) +
+    '-' + new Date(data.dateRange[1]).getDate() : '';
+
+    for (let [key, value] of Object.entries(this.deal_data)) {
+
+
+      formData.append(key, value);
+
     }
 
     // formData.append("bundle_data",this.bundle)

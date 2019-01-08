@@ -2,6 +2,7 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 
@@ -24,7 +25,8 @@ import { EditProductComponent } from './edit-product/edit-product.component'
     SupplierRoutingModule,
     FormsModule,
     HttpModule,
-    NgxLoadingModule
+    NgxLoadingModule,
+    BsDatepickerModule.forRoot()
   ]
 })
 export class SupplierModule { }

@@ -27,11 +27,15 @@
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Product Type</label>
                                 <select class="form-control" #g id="exampleFormControlSelect1" (change)="setType(g.value)" required>
-                                        <option>Type</option>
-                                    <option value="granite">Granite</option>
+                                        <option>Type</option><option value="granite">Granite</option>
                                         <option value="marble">Marble</option>
                                         <option value="quartzite">Quartzite</option>
                                         <option value="quartz">Quartz</option>
+                                        <option value="soapstone">Soapstone</option>
+                                        <option value="limestone">Limestone</option>
+                                        <option value="onyx">Onyx</option>
+                                        <option value="travertine">Travertine</option>
+                                        <option value="slate">Slate</option>
 
                                     </select>
                             </div>
@@ -182,6 +186,27 @@
                             </div>
                         </div>
                     </div>
+
+
+                  <div class="row padding">
+
+                    <div class="col-md-12">
+                        <p style="font-weight: bold; font-size: 0.76em;">slab Preference</p>
+                    </div>
+
+                    <div class="col-md-6 form-check-inline">
+                        <label class="radio-button">Cut to Size
+                            <input type="radio" name="radio" value='cut_to_size' [(ngModel)]="bundle.slab_preference">
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-button">Pre Fabricated
+                            <input type="radio" name="radio" value='pre_fabricated' [(ngModel)]="bundle.slab_preference">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+
+                  </div>
+
                 </form>
             </div>
             <div id="step-2" class="page-content">
@@ -399,6 +424,34 @@
                     </div>
                     <button type="button" class="btn btn-primary btn-sm create-bdl-btn" (click)="onCreateBundle()">Create Bundle</button>
                 </form>
+
+                <div class="row">
+                  <div class="col-md-12">
+                      <div style="box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0);" class="filter-box row">
+                          <div class="form-group col-md-6 mb-3">
+                              <label>Selected Product Type</label><br>
+                              <label>{{bundle.product_type}}</label>
+                          </div>
+                          <div class="form-group col-md-6 mb-3">
+                              <label>Select Offer Date</label>
+                              <!-- <input type="text" class="daterange form-control" name=""> -->
+                              <input type="text"
+                            placeholder="Daterangepicker"
+                            class="daterange form-control"
+                            [(ngModel)]="deal_data.dateRange"
+                            bsDaterangepicker>
+                          </div>
+                          <div class="col-md-6 mb-3">
+                              <label><strong>Offer Value (in %)</strong></label>
+                              <div class="input-group ip-with-select">
+                                  <input [(ngModel)]="deal_data.offer_value" type="text" class="form-control" aria-label="Text input with dropdown button">
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
             </div>
         </div>
 

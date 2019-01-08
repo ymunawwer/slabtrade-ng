@@ -60,7 +60,7 @@ input[type=number]::-webkit-outer-spin-button {
                   <div class="row">
                       <div class="col-md-3 left-card" *ngIf = "!isitemclicked">
                           <div class="inner-bar">
-                              <div class="side-bar">
+                              <!-- <div class="side-bar">
                                   <div class="input-group mb-3">
                                       <input type="text" class="form-control" placeholder="Search By Color" aria-label="Recipient's username" aria-describedby="basic-addon2" (keydown)="searchByColor($event)">
                                       <div class="input-group-append">
@@ -80,7 +80,30 @@ input[type=number]::-webkit-outer-spin-button {
                                       <span class="checkmark"></span>
                                   </label>
 
-                              </div>
+                              </div> -->
+
+                              <div class="side-bar">
+                                <div class="input-group mb-3">
+                                    <input type="text" class="form-control" placeholder="Search By Country" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                                <label class="box" >India
+                                    <input type="radio" name = "color" value="india" [(ngModel)] = "searchCountry" (change) = "searchByCountry()" (click) = "searchByCountry()">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="box" >USA
+                                    <input type="radio" name = "color" value="usa" [(ngModel)] = "searchCountry" (change) = "searchByCountry()" (click) = "searchByCountry()">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="box" >China
+                                    <input type="radio" name = "color" value="china" [(ngModel)] = "searchCountry" (change) = "searchByCountry()" (click) = "searchByCountry()">
+                                    <span class="checkmark"></span>
+                                </label>
+
+                            </div>
+
                               <div class="inner-bar">
                                   <div class="side-bar">
                                       <div class="input-group mb-3">
@@ -105,8 +128,56 @@ input[type=number]::-webkit-outer-spin-button {
                                           <input type="radio" value="quartz" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
                                           <span class="checkmark" ></span>
                                       </label>
+                                      <label class="box" >Soapstone
+                                        <input type="radio" value="soapstone" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
+                                        <span class="checkmark" ></span>
+                                      </label>
+                                      <label class="box" >Limestone
+                                        <input type="radio" value="limestone" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
+                                        <span class="checkmark" ></span>
+                                      </label>
+                                      <label class="box" >Onyx
+                                        <input type="radio" value="onyx" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
+                                        <span class="checkmark" ></span>
+                                      </label>
+                                      <label class="box" >Travertine
+                                        <input type="radio" value="travertine" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
+                                        <span class="checkmark" ></span>
+                                      </label>
+                                      <label class="box" >Slate
+                                        <input type="radio" value="slate" name = "type" [(ngModel)] = "searchtype" (change) = "searchType()" (click) = "searchType()">
+                                        <span class="checkmark" ></span>
+                                      </label>
                                   </div>
+
+
+
                               </div>
+
+                              <div class="inner-bar">
+                                <div class="side-bar">
+                                  <div class="input-group mb-3">
+                                      <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                      <div class="input-group-append">
+                                          <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+                                      </div>
+                                  </div>
+                                  <label class="box" >New Arrivals
+                                      <input type="radio" name = "color" value="new_arrivals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "searchThirdBox()">
+                                      <span class="checkmark"></span>
+                                  </label>
+                                  <label class="box" >Mostly Viewed
+                                      <input type="radio" name = "color" value="mostly_viewed" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "searchThirdBox()">
+                                      <span class="checkmark"></span>
+                                  </label>
+                                  <label class="box" >Deals
+                                      <input type="radio" name = "color" value="deals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "searchThirdBox()">
+                                      <span class="checkmark"></span>
+                                  </label>
+
+                              </div>
+                              </div>
+
                           </div>
                       </div>
 
