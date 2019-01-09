@@ -162,11 +162,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                                <select class="form-control"  name = "city" required minlength="3" #city="ngModel" ngModel>
+                                <!-- <select class="form-control"  name = "city" required minlength="3" #city="ngModel" ngModel>
                                         <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
                                       <option *ngFor="let city of cityInfo; let k = index" value="{{city.name}}">{{city.name}}</option>
-                                    </select>  
-                            <!-- <input class="form-control" type="text" placeholder="City" name = "city" required minlength="3" #city="ngModel" ngModel> -->
+                                    </select>   -->
+                            <input class="form-control" type="text" placeholder="City" name = "city" required minlength="3" #city="ngModel" ngModel>
                             <div *ngIf="city.invalid && (city.dirty || city.touched)"
                             class="alert alert-danger">
 
@@ -181,11 +181,11 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                                <select class="form-control" (change)="onChangeState($event.target.value)"  name = "state" required minlength="3" #state1="ngModel" ngModel>
+                                <!-- <select class="form-control" (change)="onChangeState($event.target.value)"  name = "state" required minlength="3" #state1="ngModel" ngModel>
                                         <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
                                         <option *ngFor="let state of stateInfo; let j = index" value="{{state.name}}">{{state.name}}</option>
-                                      </select>  
-                            <!-- <input class="form-control" type="text" placeholder="State" name = "state" required minlength="3" #state1="ngModel" ngModel> -->
+                                      </select> -->
+                            <input class="form-control" type="text" placeholder="State" name = "state" required minlength="3" #state1="ngModel" ngModel>
                             <div *ngIf="state1.invalid && (state1.dirty||state1.touched)" class="alert alert-danger">
                                     <div *ngIf="state1.errors.required">
                                             State is required.
@@ -200,9 +200,9 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <!-- <input class="form-control" type="text" placeholder="Country"> -->
+                            <input class="form-control" type="text" placeholder="Country" name = "country" required ngModel #country="ngModel">
                             <!--  <select class="form-control" name = "country" required ngModel #country="ngModel">
-                                
+
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
                                 <option value="Albania">Albania</option>
@@ -453,12 +453,12 @@
                                 <option value="Zambia">Zambia</option>
                                 <option value="Zimbabwe">Zimbabwe</option>
                             </select> -->
-                            
-                            <select class="form-control" (change)="onChangeCountry($event.target.value)" name = "country" required ngModel #country="ngModel">
-                                
+
+                            <!-- <select class="form-control" (change)="onChangeCountry($event.target.value)" name = "country" required ngModel #country="ngModel">
+
                                     <option *ngFor="let country of countryInfo; let i = index" value="{{country.name}}">{{country.name}}</option>
-                                  </select>  
-                            <div *ngIf="country.invalid && (country.dirty||country.touched)" class="alert alert-danger"> 
+                                  </select> -->
+                            <div *ngIf="country.invalid && (country.dirty||country.touched)" class="alert alert-danger">
                                     <div *ngIf="country.errors.required">
                                             Country is required.
                                            </div>
@@ -502,11 +502,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <!-- <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel"> -->
-                            <select class="form-control"   name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
+                            <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
+                            <!-- <select class="form-control"   name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
                                 <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
                               <option *ngFor="let city of mailingCityInfo; let k = index" value="{{city.name}}">{{city.name}}</option>
-                            </select>  
+                            </select> -->
                             <div *ngIf="mailing_city.invalid && (mailing_city.dirty || mailing_city.touched)"
                             class="alert alert-danger">
 
@@ -521,11 +521,11 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            <!-- <input class="form-control" type="text" placeholder="State" name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel"> -->
-                            <select class="form-control" (change)="onChangeMailingState($event.target.value)"  name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel">
+                            <input class="form-control" type="text" placeholder="State" name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel">
+                            <!-- <select class="form-control" (change)="onChangeMailingState($event.target.value)"  name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel">
                                 <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
                                 <option *ngFor="let state of mailingStateInfo; let j = index" value="{{state.name}}">{{state.name}}</option>
-                              </select> 
+                              </select> -->
                             <div *ngIf="mailing_state.invalid && (mailing_state.dirty || mailing_state.touched)"
                             class="alert alert-danger">
 
@@ -541,7 +541,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <!-- <select class="form-control" name = "mailing_country" ngModel  #mailing_country="ngModel">
-                             
+
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
                                 <option value="Albania">Albania</option>
@@ -790,12 +790,14 @@
                                 <option value="Western Sahara">Western Sahara</option>
                                 <option value="Yemen">Yemen</option>
                                 <option value="Zambia">Zambia</option>
-                                <option value="Zimbabwe">Zimbabwe</option> 
+                                <option value="Zimbabwe">Zimbabwe</option>
                                                        </select> -->
-                             <select class="form-control" (change)="onChangeMailingCountry($event.target.value)" name = "mailing_country" ngModel  #mailing_country="ngModel">
-                              
+                             <!-- <select class="form-control" (change)="onChangeMailingCountry($event.target.value)" name = "mailing_country" ngModel  #mailing_country="ngModel">
+
                              <option *ngFor="let country of countryInfo; let i = index" value="{{country.name}}">{{country.name}}</option>
-                                                      </select>  
+                                                      </select> -->
+                             <input class="form-control" type="text" placeholder="Country" name = "mailing_country" ngModel  #mailing_country="ngModel">
+
                             <div *ngIf="mailing_country.invalid && (mailing_country.dirty || mailing_country.touched)"
                             class="alert alert-danger">
 
