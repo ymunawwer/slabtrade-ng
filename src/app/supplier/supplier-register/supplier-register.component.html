@@ -174,7 +174,9 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Street" name = "address" required minlength="6" #address="ngModel" ngModel>
+                <!-- <input class="form-control" type="text" placeholder="Street" name = "address" required minlength="6" #address="ngModel" ngModel> -->
+                <input class="form-control" #address="ngModel" [(ngModel)]="data.address" ngx-google-places-autocomplete #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"  [ngModelOptions]="{standalone: true}" />
+
                 <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger" >
 
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">
@@ -198,7 +200,9 @@
                             <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
                           <option *ngFor="let city of cityInfo; let k = index" value="{{city.name}}">{{city.name}}</option>
                         </select>   -->
-                <input class="form-control" type="text" placeholder="City" name = "city" required minlength="3" #city="ngModel" ngModel>
+                        <input class="form-control" #city="ngModel" type="text" [(ngModel)]="data.city" placeholder="City" [ngModelOptions]="{standalone: true}">
+
+                <!-- <input class="form-control" type="text" placeholder="City" name = "city" required minlength="3" #city="ngModel" ngModel> -->
                 <div *ngIf="city.invalid && (city.dirty || city.touched)"
                 class="alert alert-danger">
 
@@ -217,7 +221,9 @@
                         <option  value="-1" selected>--Select State--</option>
                             <option *ngFor="let state of stateInfo; let j = index" value="{{state.name}}">{{state.name}}</option>
                           </select> -->
-                <input class="form-control" type="text" placeholder="State" name = "state" required minlength="3" #state1="ngModel" ngModel>
+                <!-- <input class="form-control" type="text" placeholder="State" name = "state" required minlength="3" #state1="ngModel" ngModel> -->
+                <input class="form-control" #state1="ngModel" type="text" [(ngModel)]="data.state" placeholder="State" [ngModelOptions]="{standalone: true}">
+
                 <div *ngIf="state1.invalid && (state1.dirty||state1.touched)" class="alert alert-danger">
                         <div *ngIf="state1.errors.required">
                                 State is required.
@@ -232,7 +238,9 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Country"  name = "country" required ngModel #country="ngModel">
+                <!-- <input class="form-control" type="text" placeholder="Country"  name = "country" required ngModel #country="ngModel"> -->
+                <input #country="ngModel" class="form-control" type="text" [(ngModel)]="data.country" placeholder="Country" [ngModelOptions]="{standalone: true}">
+
                 <!--  <select class="form-control" name = "country" required ngModel #country="ngModel">
 
                     <option value="Afghanistan">Afghanistan</option>
@@ -502,7 +510,9 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Zip" name = "zip" ngModel required minlength="6" #zip="ngModel">
+                <input #zip="ngModel" class="form-control" type="text" [(ngModel)]="data.zip" placeholder="Zip" [ngModelOptions]="{standalone: true}">
+
+                <!-- <input class="form-control" type="text" placeholder="Zip" name = "zip" ngModel required minlength="6" #zip="ngModel"> -->
                 <div *ngIf="zip.invalid && (zip.dirty || zip.touched)" class="alert alert-danger">
 
               <div *ngIf="zip.errors.required">
@@ -515,18 +525,20 @@
             </div>
         </div>
         <div class="col-md-12">
-            <p><strong>Mailing Address</strong></p>
+            <p><strong>Mailing Address</strong> <input (change)="sameAsOriginalAddress($event)" style="margin-left: 30px" type="checkbox"><span style="margin-left: 5px">check this for same as Above address</span> </p>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="3" #mailing_street="ngModel">
-                <div *ngIf="mailing_street.invalid && (mailing_street.dirty || mailing_street.touched)"
+                <!-- <input class="form-control" type="text" placeholder="Street" name = "mailing_address" ngModel required minlength="3" #mailing_street="ngModel"> -->
+                <input name = "mailing_address" #mailing_address="ngModel" class="form-control" [(ngModel)]="data.mailing_address" ngx-google-places-autocomplete #placesRef="ngx-places" (onAddressChange)="handleMailingAddressChange($event)"  [ngModelOptions]="{standalone: true}" />
+
+                <div *ngIf="mailing_address.invalid && (mailing_address.dirty || mailing_address.touched)"
                 class="alert alert-danger">
 
-              <div *ngIf="mailing_street.errors.required">
+              <div *ngIf="mailing_address.errors.required">
                Street is required.
               </div>
-              <div *ngIf="mailing_street.errors.minlength">
+              <div *ngIf="mailing_address.errors.minlength">
                 Street must be at least 6 Digit long.
               </div>
             </div>
@@ -534,7 +546,9 @@
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
+                <!-- <input class="form-control" type="text" placeholder="City" name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel"> -->
+                <input #mailing_city="ngModel" class="form-control" type="text" [(ngModel)]="data.mailing_city" placeholder="City" [ngModelOptions]="{standalone: true}">
+
                 <!-- <select class="form-control"   name = "mailing_city" ngModel required minlength="3" #mailing_city="ngModel">
                     <option *ngIf="cityInfo == ''" value="-1">--Select CIty--</option>
                   <option *ngFor="let city of mailingCityInfo; let k = index" value="{{city.name}}">{{city.name}}</option>
@@ -553,7 +567,9 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="State" name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel">
+                <!-- <input class="form-control" type="text" placeholder="State" name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel"> -->
+                <input #mailing_state="ngModel" class="form-control" type="text" [(ngModel)]="data.mailing_state" placeholder="State" [ngModelOptions]="{standalone: true}">
+
                 <!-- <select class="form-control" (change)="onChangeMailingState($event.target.value)"  name = "mailing_state" ngModel required minlength="3" #mailing_state="ngModel">
                     <option *ngIf="stateInfo == ''" value="-1">--Select State--</option>
                     <option *ngFor="let state of mailingStateInfo; let j = index" value="{{state.name}}">{{state.name}}</option>
@@ -829,7 +845,8 @@
                  <option *ngFor="let country of countryInfo; let i = index" value="{{country.name}}">{{country.name}}</option>
                                           </select> -->
 
-                 <input class="form-control" type="text" placeholder="Country"  name = "mailing_country" required ngModel #mailing_country="ngModel">
+                 <!-- <input class="form-control" type="text" placeholder="Country"  name = "mailing_country" required ngModel #mailing_country="ngModel"> -->
+                 <input #mailing_country="ngModel" class="form-control" type="text" [(ngModel)]="data.mailing_country" placeholder="Country" [ngModelOptions]="{standalone: true}">
 
                 <div *ngIf="mailing_country.invalid && (mailing_country.dirty || mailing_country.touched)"
                 class="alert alert-danger">
@@ -843,7 +860,9 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <input class="form-control" type="text" placeholder="Zip" name="mailing_zip" ngModel required minlength="6" #mailing_zip="ngModel">
+                <!-- <input class="form-control" type="text" placeholder="Zip" name="mailing_zip" ngModel required minlength="6" #mailing_zip="ngModel"> -->
+                <input #mailing_zip="ngModel" class="form-control" type="text" [(ngModel)]="data.mailing_zip" placeholder="Zip" [ngModelOptions]="{standalone: true}">
+                
                 <div *ngIf="mailing_zip.invalid && (mailing_zip.dirty || mailing_zip.touched)" class="alert alert-danger" >
 
                         <!-- <div  *ngIf="pass.errors && pass.errors.pattern">

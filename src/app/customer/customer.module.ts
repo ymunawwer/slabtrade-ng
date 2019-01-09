@@ -12,6 +12,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { OrderComponent } from './order/order.component';
 import { NgxLoadingModule } from 'ngx-loading';
 import { FooterComponent } from './footer/footer.component';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [CartCustomerComponent,customerHomeCumponent,CustomerDashboardComponent,SettingsComponent,RegisterCustomerComponent,SidebarComponent,NavbarComponent, OrderComponent, FooterComponent],
@@ -19,7 +20,8 @@ import { FooterComponent } from './footer/footer.component';
     CommonModule,
     CustomerRoutingModule,
     FormsModule,
-    NgxLoadingModule
+    NgxLoadingModule,
+    GooglePlaceModule
   ]
 })
 export class CustomerModule { }

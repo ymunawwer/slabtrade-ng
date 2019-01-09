@@ -27,6 +27,7 @@ import { MatFormFieldModule } from '@angular/material';
 import { MatInputModule } from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 // import { country_state_city } from 'country-state-city';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -40,9 +41,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SupplierRegisterComponent,
 
     LoginRegisterComponent,
-    
-    
-    
+
+
+
 
 
 
@@ -75,7 +76,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       secondaryColour: '#ffffff',
       tertiaryColour: '#ffffff',
       fullScreenBackdrop: true
-  })
+  }),
+  GooglePlaceModule
+  ],
+  exports: [
+    GooglePlaceModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

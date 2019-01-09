@@ -18,6 +18,7 @@ import { HomeComponent as supplierHomeComponent } from './home/home.component'
 import { HttpModule } from '@angular/http';
 import { FirstPageComponent } from './first-page/first-page.component';
 import { EditProductComponent } from './edit-product/edit-product.component'
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 @NgModule({
   declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent, EditProductComponent],
   imports: [
@@ -26,7 +27,8 @@ import { EditProductComponent } from './edit-product/edit-product.component'
     FormsModule,
     HttpModule,
     NgxLoadingModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    GooglePlaceModule
   ]
 })
 export class SupplierModule { }
