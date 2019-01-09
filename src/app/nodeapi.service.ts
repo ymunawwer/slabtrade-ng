@@ -90,6 +90,71 @@ export class NodeapiService {
 
   }
 
+  searchByDealsWithPrice():Observable<any>{
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer+'/getdeals',{headers:{'Auth':'Bearer ' + token}});
+
+
+
+  }
+
+  searchByDealsWithoutPrice():Observable<any>{
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer+'/getdealswithoutprice',{headers:{'Auth':'Bearer ' + token}});
+
+
+
+  }
+
+  recentlyAddedWithPrice():Observable<any>{
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer+'/recentlycreated',{headers:{'Auth':'Bearer ' + token}});
+
+
+
+  }
+
+  recentlyAddedWithoutPrice():Observable<any>{
+    
+    return this.http.get(ENV.customer+'/recentlycreatedwithoutprice');
+
+
+
+  }
+
+  mostViewedWithPrice():Observable<any>{
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer+'/mostviewed',{headers:{'Auth':'Bearer ' + token}});
+
+
+
+  }
+
+  mostViewedWithoutPrice():Observable<any>{
+    
+    return this.http.get(ENV.customer+'/mostviewedwithoutprice');
+
+
+
+  }
+
+
+  searchByCityWithPrice(city):Observable<any>{
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer+'/searchbycity?city='+city,{headers:{'Auth':'Bearer ' + token}});
+
+
+
+  }
+
+  searchByCityWithoutPrice(city):Observable<any>{
+    
+    return this.http.get(ENV.customer+'/searchbycitywithoutprice?city='+city);
+
+
+
+  }
+
 
   getSimilarProduct(id):Observable<any>{
 
