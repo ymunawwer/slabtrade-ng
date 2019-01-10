@@ -1,4 +1,4 @@
-import { Component,Renderer ,OnInit,Renderer2 } from '@angular/core';
+import { Component, Renderer, OnInit, Renderer2, AfterViewInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import {ViewChild, ElementRef} from '@angular/core';
 import { AuthService } from '../../auth.service';
@@ -12,15 +12,17 @@ declare var feather:any;
   templateUrl: './create-bundle.component.html',
   styleUrls: ['./create-bundle.component.sass']
 })
-export class CreateBundleComponent implements OnInit {
+export class CreateBundleComponent implements OnInit, AfterViewInit {
 
   deal_data = {
     'dateRange': '',
     'start_date': '',
     'end_date': '',
     'offer_value': '',
-    'isoffer':0
   };
+
+  @ViewChild('mainF') formRef;
+
 
 
   loading = false;
@@ -66,7 +68,7 @@ export class CreateBundleComponent implements OnInit {
     'bundle_description':'',
     'inspection_report':'',
 
-    'preference': ''
+    'slab_preference': ''
 
 
  }
@@ -120,6 +122,15 @@ new_color = {
   });
 
 
+  }
+
+  ngAfterViewInit() {
+    this.formRef.valueChanges.subscribe(data => {
+
+      console.log(data);
+
+
+    });
   }
   createRange(number) {
     console.log('called');
@@ -198,22 +209,58 @@ new_color = {
     '-' + new Date(data.dateRange[1]).getDate() : '';
 
     for (let [key, value] of Object.entries(this.deal_data)) {
-      if(key==='isoffer' && (this.deal_data['offer_value']!=='')){
-        formData.append(key, 1);
 
-      }else if(key ==='offer_value'){
-        formData.append(key, value);
-      }else{
+
       formData.append(key, value);
-      }
 
     }
+
+    if(file.length === 0) {
+      Swal({
+        text: 'Please select atleast one image.',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+      return;
+    } else if (this.bundle.product_description === '' || this.bundle.bundle_description === '' || this.bundle.inspection_report === '')  {
+
+      let message = '';
+
+      if(this.bundle.product_description === '') {
+
+        message = "Product description is required";
+
+      }
+
+      if(this.bundle.bundle_description === '') {
+        message = message === '' ? 'Bundle description is required' : message + ', Bundle description is required';
+      }
+
+      if(this.bundle.inspection_report === '') {
+        message = message === '' ? 'Inspection Report is required' : message + ', Inspection Report is required';
+      }
+
+      Swal({
+        text: 'Text area fields are not filled, they are required',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
+      return;
+
+    }
+
+
 
     // formData.append("bundle_data",this.bundle)
     for(let i =0; i < file.length; i++){
 
       formData.append("image", file[i][0], file[i][0]['name']);
   }
+
+  console.log('formdata', formData);
 
   this.loading = true;
 

@@ -24,7 +24,9 @@
                         <!-- <ng-template ngFor let-product [ngForOf]= "product" let-i="index" > -->
                         <tr *ngFor="let product of product">
                             <td><a class="fields">#{{product.bundle_number}}</a></td>
-                            <td><a  class="fields">{{product.product_name}} <span class="flag-icon flag-icon-us"></span></a></td>
+                            <td><a  class="fields">{{product.product_name}}
+                                 <!-- <span class="flag-icon flag-icon-us"></span> -->
+                                </a></td>
                             <td>
                               <!--(click) = "editProduct(product)"-->
                                 <a  routerLink="/supplier/editProduct/{{product._id}}"  class="btn btn-primary">Edit</a>

@@ -42,7 +42,10 @@
                         <!-- <ng-template ngFor let-order [ngForOf]= "orders" let-i="index" > -->
                        <tr *ngFor='let order of orders'>
                             <td><a (click)="orderDetail1(order)" class="fields">#{{order._id}}</a></td>
-                            <td><a class="fields">{{order.products[0].bundle_id}} <span class="flag-icon flag-icon-us"></span></a></td>
+                            <td>
+                                <a class="fields">{{order.products[0].bundle_id}} 
+                                    <!-- <span class="flag-icon flag-icon-us"></span> -->
+                                </a></td>
                             <td><a class="fields">{{order.created_at | date:'dd/MM/yyyy'}}</a></td>
                             <td><a class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
                             <td>

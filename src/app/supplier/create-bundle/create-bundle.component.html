@@ -13,13 +13,13 @@
         </ul>
         <div>
             <div id="step-1" class="page-content">
-                <form #f="ngForm">
+                <form #mainF="ngForm">
                     <div class="row form-box">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="formGroupExampleInput">Product</label>
+                                <label for="formGroupExampleInput">Product <span class="red">*</span></label>
                                 <input type="text" #productName="ngModel" class="form-control" placeholder="Product"
-                                 [(ngModel)] = "bundle.product_name" name="product_name" required [ngModelOptions]="{standalone: true}">
+                                 [(ngModel)] = "bundle.product_name" name="product_name" required>
                                 <div *ngIf="productName.invalid && (productName.dirty || productName.touched)" class="alert alert-danger" >
 
                                     <div *ngIf="productName.errors.required">
@@ -32,9 +32,9 @@
                     <div class="row form-box">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Product Type</label>
-                                <select class="form-control"  #g="ngModel" id="exampleFormControlSelect1"
-                                [(ngModel)]="bundle.product_type" required [ngModelOptions]="{standalone: true}">
+                                <label for="exampleFormControlSelect1">Product Type <span class="red">*</span></label>
+                                <select name="produt_type" class="form-control"  #g="ngModel" id="exampleFormControlSelect1"
+                                [(ngModel)]="bundle.product_type" required>
                                         <option>Type</option><option value="granite">Granite</option>
                                         <option value="marble">Marble</option>
                                         <option value="quartzite">Quartzite</option>
@@ -58,9 +58,9 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Quality</label>
-                                <select class="form-control" #quantity="ngModel" id="exampleFormControlSelect1"
-                                [(ngModel)] = "bundle.quality" [ngModelOptions]="{standalone: true}" required [ngModelOptions]="{standalone: true}">
+                                <label for="exampleFormControlSelect1">Quality <span class="red">*</span></label>
+                                <select name="quantity" class="form-control" #quantity="ngModel" id="exampleFormControlSelect1"
+                                [(ngModel)] = "bundle.quality"  required>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
@@ -79,13 +79,13 @@
                     <div class="row padding">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="formGroupExampleInput">Price</label>
+                                <label for="formGroupExampleInput">Price <span class="red">*</span></label>
                                 <div class="input-group mb-3">
-                                    <input type="text" #price="ngModel" class="form-control" placeholder="Price" [(ngModel)] = "bundle.price" [ngModelOptions]="{standalone: true}" required >                                   
+                                    <input name="price" type="text" #price="ngModel" class="form-control" placeholder="Price" [(ngModel)] = "bundle.price"  required >
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">USD</span>
                                     </div>
-                                    
+
                                 </div>
                                 <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger" >
 
@@ -99,9 +99,9 @@
                     <div class="row form-box">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Color</label>
+                                <label for="exampleFormControlSelect1">Color <span class="red">*</span></label>
                                 <!-- [(ngModel)] = "bundle.color" -->
-                                <select class="form-control" #t="ngModel" id="exampleFormControlSelect1" [(ngModel)]="bundle.color" [ngModelOptions]="{standalone: true}"  required>
+                                <select name="color" class="form-control" #t="ngModel" id="exampleFormControlSelect1" [(ngModel)]="bundle.color"   required>
                                         <option>Color</option>
                                     <option value="#000000">Black</option>
                                     <option value="#808080">Grey</option>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="row form-box">
                         <div class="col-sm-12">
-                            <label for="formGroupExampleInput">Dimension</label>
+                            <label for="formGroupExampleInput">Dimension <span class="red">*</span></label>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
@@ -198,7 +198,7 @@
                     </div>
                     <div class="row form-box">
                         <div class="col-sm-12">
-                            <label for="formGroupExampleInput">Thickness</label>
+                            <label for="formGroupExampleInput">Thickness <span class="red">*</span></label>
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group">
@@ -230,10 +230,10 @@
                     <div class="row padding">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="formGroupExampleInput">Weight</label>
+                                <label for="formGroupExampleInput">Weight <span class="red">*</span></label>
                                 <div class="input-group mb-3">
                                     <input type="text" #weight="ngModel" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.weight" name="weight" required >
-                                    
+
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">LB</span>
                                     </div>
@@ -252,12 +252,12 @@
                   <div class="row padding">
 
                     <div class="col-md-12">
-                        <p style="font-weight: bold; font-size: 0.76em;">slab Preference</p>
+                        <p style="font-weight: bold; font-size: 0.76em;">slab Preference <span class="red">*</span></p>
                     </div>
 
                     <div class="col-md-6 form-check-inline">
                         <label class="radio-button">Cut to Size
-                            <input type="radio" name="radio" value='cut_to_size' [(ngModel)]="bundle.preference">
+                            <input #preference="ngModel" type="radio" name="radio" value='cut_to_size' [(ngModel)]="bundle.preference" required>
                             <span class="checkmark"></span>
                         </label>
                         <label class="radio-button">Pre Fabricated
@@ -266,25 +266,45 @@
                         </label>
                     </div>
 
+                    <div *ngIf="preference.invalid && (preference.dirty || preference.touched)" class="alert alert-danger" >
+
+                      <div *ngIf="preference.errors.required">
+                        slab preference is required.
+                      </div>
+                   </div>
+
                   </div>
 
                 </form>
             </div>
             <div id="step-2" class="page-content">
-                <form>
+                <form #form2 = "ngForm">
                     <div class="row form-box">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="formGroupExampleInput">Block Number</label>
-                                <input type="text" class="form-control" placeholder="Block Number" [(ngModel)] = "bundle.bundle_number" name="block_number" required minlength="6">
+                                <label for="formGroupExampleInput">Block Number <span class="red">*</span></label>
+                                <input type="text" #blockNumber="ngModel" class="form-control" placeholder="Block Number" [(ngModel)] = "bundle.bundle_number" name="block_number" required>
+                                <div *ngIf="blockNumber.invalid && (blockNumber.dirty || blockNumber.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="blockNumber.errors.required">
+                                    Block number is required.
+                                  </div>
+                               </div>
+
                             </div>
                         </div>
                     </div>
                     <div class="row form-box">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">Slabs</label>
-                                <input (change)="createRange(bundle.no_of_slabs)" class="form-control" type="number" value="5" min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required minlength="1">
+                                <label for="exampleFormControlSelect1">Slabs <span class="red">*</span></label>
+                                <input #no_of_slabs="ngModel" (change)="createRange(bundle.no_of_slabs)" class="form-control" type="number" value="5" min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" name = "slab_quantity" required >
+                                <div *ngIf="no_of_slabs.invalid && (no_of_slabs.dirty || no_of_slabs.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="no_of_slabs.errors.required">
+                                    Number of slabs is required.
+                                  </div>
+                               </div>
                             </div>
                         </div>
                         <div class="col-md-6" >
@@ -382,7 +402,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" [(ngModel)] = "bundle.net_area" name = "net_area" required minlength="1">
+                                        <input type="text" class="form-control" [(ngModel)] = "bundle.net_area" style="background: #eff3f6" [disabled]="true" name = "net_area" required minlength="1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -408,7 +428,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" [(ngModel)] = "bundle.net_weight" name = "net_weight" required minlength="1">
+                                        <input style="background: #eff3f6" [disabled]="true" type="text" class="form-control" [(ngModel)] = "bundle.net_weight" name = "net_weight" required minlength="1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -491,15 +511,21 @@
                     <div class="row padding">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Product Description</label>
+                                <label for="exampleFormControlTextarea1">Product Description <span class="red">*</span></label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onProductDescriptionChange($event)" name="product_description"></textarea>
+                                <div *ngIf="preference.invalid && (preference.dirty || preference.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="preference.errors.required">
+                                    slab preference is required.
+                                  </div>
+                               </div>
                             </div>
                         </div>
                     </div>
                     <div class="row padding">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Bundle Description</label>
+                                <label for="exampleFormControlTextarea1">Bundle Description <span class="red">*</span></label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onBundleDescriptionChange($event)" name = "bundle_description"></textarea>
                             </div>
                         </div>
@@ -507,12 +533,12 @@
                     <div class="row padding">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Inspection Report</label>
+                                <label for="exampleFormControlTextarea1">Inspection Report <span class="red">*</span></label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" (change)="onInspectionReportChange($event)" name="inspection_report"></textarea>
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-primary btn-sm create-bdl-btn" (click)="onCreateBundle()">Create Bundle</button>
+                    <button type="button" class="btn btn-primary btn-sm create-bdl-btn" [disabled]="!mainF.valid || !form2.valid" (click)="onCreateBundle()">Create Bundle</button>
                 </form>
 
                 <div class="row">
