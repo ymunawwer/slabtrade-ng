@@ -1008,7 +1008,7 @@ console.log('data', data);
               "docs":data.data
             }]
           }
-        this.items = local_data.data;
+        this.items = data.data;
         console.log('item',local_data)
 
         }else{
@@ -1066,7 +1066,7 @@ mostlyViewed(){
               "docs":data.data
             }]
           }
-        this.items = local_data.data;
+        this.items = data.data;
 
         }else{
           this.items = []
@@ -1091,7 +1091,7 @@ mostlyViewed(){
             "docs":data.data
           }]
         }
-      this.items = local_data.data;
+      this.items = data.data;
       console.log('item',local_data)
 
       }else{
