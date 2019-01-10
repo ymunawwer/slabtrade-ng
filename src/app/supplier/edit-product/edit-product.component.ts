@@ -66,7 +66,7 @@ export class EditProductComponent implements OnInit {
 
      'slab_preference': '',
 
-     'dateRange': '',
+     'dateRange': [],
     'start_date': '',
     'end_date': '',
     'offer_value': '',
@@ -169,11 +169,15 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
       this.bundle.height = this.bundle.net_dimension[0].height;
 
+      this.bundle.slab_preference = this.bundle['preference'];
 
+      this.bundle.dateRange = [new Date(this.bundle.start_date), new Date(this.bundle.end_date)];
 
       this.aray = this.bundle.dimension;
 
-      // this.bundle.net_dimension
+
+
+      console.log('date range', new Date(this.bundle.start_date));
 
     } else {
       Swal({
@@ -489,7 +493,7 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   const data = this.bundle;
 
-    this.bundle.start_date = data.dateRange ?
+    this.bundle.start_date = data.dateRange.length !== 0 ?
      new Date(data.dateRange[0]).getFullYear() + '-' + (new Date(data.dateRange[0]).getMonth() + 1) +
     '-' + new Date(data.dateRange[0]).getDate() : '';
 
@@ -497,7 +501,39 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     new Date(data.dateRange[1]).getFullYear() + '-' + (new Date(data.dateRange[1]).getMonth() + 1) +
     '-' + new Date(data.dateRange[1]).getDate() : '';
 
+    if (this.bundle.product_description === '' || this.bundle.Bundle_description === '' || this.bundle.inspection_report === '')  {
+
+      let message = '';
+
+      if(this.bundle.product_description === '') {
+
+        message = "Product description is required";
+
+      }
+
+      if(this.bundle.Bundle_description === '') {
+        message = message === '' ? 'Bundle description is required' : message + ', Bundle description is required';
+      }
+
+      if(this.bundle.inspection_report === '') {
+        message = message === '' ? 'Inspection Report is required' : message + ', Inspection Report is required';
+      }
+
+
+      Swal({
+        text: message,
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
+      return;
+
+    }
+
+
     this.loading = true;
+
 
 
     this.apiService.updateProduct(this.bundle).subscribe((update_result) => {

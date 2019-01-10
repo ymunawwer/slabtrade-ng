@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 declare var feather:any;
 declare var jquery:any;
 declare var $ :any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
   constructor(private nodeapi:NodeapiService,private sanitizer: DomSanitizer,private location: PlatformLocation,private _sanitizer: DomSanitizer,private auth:AuthService,private route:Router,public dialog: MatDialog) {
     this.trustedUrl = this._sanitizer.bypassSecurityTrustUrl("http://localhost:4200/");
     this.items = []
+    this.subnumber = 0;
 
     this.number = JSON.parse(localStorage.getItem('cart'))%6;
     this.similarproduct = []
@@ -94,6 +96,7 @@ export class HomeComponent implements OnInit {
     return price - (discout_percent / 100) * price !== NaN ? price - (discout_percent / 100) * price : false;
 
   }
+
 
 
   getBackground(image) {
