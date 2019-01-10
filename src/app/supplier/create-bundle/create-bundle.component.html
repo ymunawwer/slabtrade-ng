@@ -13,12 +13,19 @@
         </ul>
         <div>
             <div id="step-1" class="page-content">
-                <form >
+                <form #f="ngForm">
                     <div class="row form-box">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="formGroupExampleInput">Product</label>
-                                <input type="text" class="form-control" placeholder="Product" [(ngModel)] = "bundle.product_name" name="product_name" required minlength="6">
+                                <input type="text" #productName="ngModel" class="form-control" placeholder="Product"
+                                 [(ngModel)] = "bundle.product_name" name="product_name" required [ngModelOptions]="{standalone: true}">
+                                <div *ngIf="productName.invalid && (productName.dirty || productName.touched)" class="alert alert-danger" >
+
+                                    <div *ngIf="productName.errors.required">
+                                      Product Name is required.
+                                    </div>
+                                 </div>
                             </div>
                         </div>
                     </div>
@@ -26,7 +33,8 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Product Type</label>
-                                <select class="form-control" #g id="exampleFormControlSelect1" (change)="setType(g.value)" required>
+                                <select class="form-control"  #g="ngModel" id="exampleFormControlSelect1"
+                                [(ngModel)]="bundle.product_type" required [ngModelOptions]="{standalone: true}">
                                         <option>Type</option><option value="granite">Granite</option>
                                         <option value="marble">Marble</option>
                                         <option value="quartzite">Quartzite</option>
@@ -38,18 +46,33 @@
                                         <option value="slate">Slate</option>
 
                                     </select>
+
+                                    <div *ngIf="g.invalid && (g.dirty || g.touched)" class="alert alert-danger" >
+
+                                      <div *ngIf="g.errors.required">
+                                        Product Type is required.
+                                      </div>
+                                   </div>
+
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Quality</label>
-                                <select class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.quality" [ngModelOptions]="{standalone: true}" required>
+                                <select class="form-control" #quantity="ngModel" id="exampleFormControlSelect1"
+                                [(ngModel)] = "bundle.quality" [ngModelOptions]="{standalone: true}" required [ngModelOptions]="{standalone: true}">
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
                                     <option>5</option>
                                 </select>
+                                <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="quantity.errors.required">
+                                    Quantity is required.
+                                  </div>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -58,11 +81,18 @@
                             <div class="form-group">
                                 <label for="formGroupExampleInput">Price</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Price" [(ngModel)] = "bundle.price" [ngModelOptions]="{standalone: true}" required minlength="6">
+                                    <input type="text" #price="ngModel" class="form-control" placeholder="Price" [(ngModel)] = "bundle.price" [ngModelOptions]="{standalone: true}" required >                                   
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">USD</span>
                                     </div>
+                                    
                                 </div>
+                                <div *ngIf="price.invalid && (price.dirty || price.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="price.errors.required">
+                                    Price is required.
+                                  </div>
+                               </div>
                             </div>
                         </div>
                     </div>
@@ -71,13 +101,19 @@
                             <div class="form-group">
                                 <label for="exampleFormControlSelect1">Color</label>
                                 <!-- [(ngModel)] = "bundle.color" -->
-                                <select class="form-control" #t id="exampleFormControlSelect1" (change)="setColor(t.value)" required>
+                                <select class="form-control" #t="ngModel" id="exampleFormControlSelect1" [(ngModel)]="bundle.color" [ngModelOptions]="{standalone: true}"  required>
                                         <option>Color</option>
                                     <option value="#000000">Black</option>
                                     <option value="#808080">Grey</option>
                                     <option value="#0000ff">Blue</option>
 
                                 </select>
+                                <div *ngIf="t.invalid && (t.dirty || t.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="t.errors.required">
+                                    Color is required.
+                                  </div>
+                               </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -124,12 +160,24 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control" placeholder="Width" [(ngModel)] = "bundle.width" name="width" required minlength="1">
+                                        <input type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control" #bundleWidth="ngModel" placeholder="Width" [(ngModel)] = "bundle.width" name="width" required >
+                                        <div *ngIf="bundleWidth.invalid && (bundleWidth.dirty || bundleWidth.touched)" class="alert alert-danger" >
+
+                                          <div *ngIf="bundleWidth.errors.required">
+                                            Width is required.
+                                          </div>
+                                       </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <input type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control" placeholder="Height" [(ngModel)] = "bundle.height" name = "height" required minlength="1">
+                                        <input type="text" #height="ngModel" (change)="createRange(bundle.no_of_slabs)" class="form-control" placeholder="Height" [(ngModel)] = "bundle.height" name = "height" required >
+                                        <div *ngIf="height.invalid && (height.dirty || height.touched)" class="alert alert-danger" >
+
+                                          <div *ngIf="height.errors.required">
+                                            Height is required.
+                                          </div>
+                                       </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -154,7 +202,13 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="form-group">
-                                        <input (change)="createRange(bundle.no_of_slabs)" type="text" class="form-control" placeholder="Thickness" [(ngModel)] = "thickness_new" name="thickness" required minlength="1">
+                                        <input #thickness="ngModel" (change)="createRange(bundle.no_of_slabs)" type="text" class="form-control" placeholder="Thickness" [(ngModel)] = "thickness_new" name="thickness" required >
+                                        <div *ngIf="thickness.invalid && (thickness.dirty || thickness.touched)" class="alert alert-danger" >
+
+                                          <div *ngIf="thickness.errors.required">
+                                            Thickness is required.
+                                          </div>
+                                       </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -178,11 +232,18 @@
                             <div class="form-group">
                                 <label for="formGroupExampleInput">Weight</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.weight" name="weight" required minlength="1">
+                                    <input type="text" #weight="ngModel" class="form-control" placeholder="Weight" [(ngModel)] = "bundle.weight" name="weight" required >
+                                    
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2">LB</span>
                                     </div>
                                 </div>
+                                <div *ngIf="weight.invalid && (weight.dirty || weight.touched)" class="alert alert-danger" >
+
+                                  <div *ngIf="weight.errors.required">
+                                    Weight is required.
+                                  </div>
+                               </div>
                             </div>
                         </div>
                     </div>
