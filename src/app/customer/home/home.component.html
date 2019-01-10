@@ -511,7 +511,8 @@ input[type=number]::-webkit-outer-spin-button {
                                         </div>
                                     </div>
                                 </div>
-                                <a  class="btn btn-secondary" (click)="toCart(doc,number)">Add To Cart</a>
+                                                <!-- (click)="toCart(doc,number)" -->
+                                <a  class="btn btn-secondary" (click)="toCart(doc,number)"  data-toggle="modal" data-target="#cart-modal">Add To Cart</a>
                                 <!-- <button mat-raised-button (click)="openDialog()">Pick one</button> -->
                             </div>
                         </div>
@@ -590,6 +591,147 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
+
+     
+    <div class="modal fade" id="cart-modal" tabindex="-1" role="dialog" aria-labelledby="cart-modalTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cart-modalTitle">Suggested Bundle From The Same Supplier and City</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                                <ng-template ngFor let-similar [ngForOf]= "similarproduct" let-i="index">
+                            <div class="carousel-item" [ngClass]="i===0 ? 'active' : ''">
+                                <div class="cart-slide-box">
+                                        
+                                    <div class="right-cart" >
+                                        <h4 class="bundle-header">Bundle Block No:#{{similar['bundle_number']}}</h4>
+                                        <table class="table-description">
+                                            <tbody>
+                                                <tr class="row-option row">
+                                                    <td class="table-option col-md-8">Type : </td>
+                                                    <td class="table-option1 col col-md-4">
+                                                        <ul>
+                                                            <li class="item">{{similar['product_type']}} </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-option row">
+                                                    <td class="table-option col-md-8">Color :</td>
+                                                    <td class="table-option1 col-md-4">
+                                                        <ul>
+                                                            <li class="item">{{similar['color']}}</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-option row"*ngIf="similar.price">
+                                                    <td class="table-option col-md-8">Price</td>
+                                                    <td class="table-option1 col-md-4">
+                                                        <ul>
+                                                            <li class="item">{{similar.price===undefined?'':'$'+similar.price}} </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-option row">
+                                                    <td class="table-option col-md-8">Bundle Count :</td>
+                                                    <td class="table-option1 col-md-4">
+                                                        <ul>
+                                                            <li class="item">{{similar['no_of_slabs']}}</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-option row">
+                                                    <td class="table-option col-md-8">Net Weight :</td>
+                                                    <td class="table-option1 col-md-4">
+                                                        <ul>
+                                                            <li class="item">{{similar['net_weight']}}lbs</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                                <tr class="row-option row">
+                                                    <td class="table-option col-md-8">Gross Weight :</td>
+                                                    <td class="table-option1 col-md-4">
+                                                        <ul>
+                                                            <li class="item">{{similar['net_weight']}}lbs</li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="range row">
+                                            <div class="form-box" id="slab-count">
+                                                <div class="form-group">
+                                                    <label for="exampleFormControlSelect1">Slabs</label>
+                                                    <div class="input-group input-group-spinner">
+                                                        <div class="input-group-prepend">
+                                                          <button (click)="decSubCount(similar.bundle_number)" style="min-width: 2.5em" class="btn btn-decrement btn-outline-secondary" type="button">
+                                                            <strong>-</strong>
+                                                          </button>
+                                                    <input class="form-control" type="number" value="5" min="0" max="6" step="1" [(ngModel)] = "counter_map[similar.bundle_number]">
+                                                    <button (click)="incSubCount(similar.bundle_number)" style="min-width: 2.5em" class="btn btn-increment btn-outline-secondary" type="button">
+                                                        <strong>+</strong>
+                                                      </button>
+                                                      </div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <a (click)="addItem(similar)" class="btn btn-primary btn-sm">Add To Cart</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </ng-template>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"><i class="fas fa-long-arrow-alt-left"></i></span>
+                <span class="sr-only">Previous</span>
+            </a>
+                        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"><i class="fas fa-long-arrow-alt-right"></i></span>
+                <span class="sr-only">Next</span>
+            </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <div class="row"> -->
+                        <div class="footer-left range">
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">{{6-number}} Remaining</label>
+                                <div class="fill-container">
+                                    <span class="fill gray"[hidden] = "number>=1" ></span>
+                                    <span class="fill red" [hidden] = "number<1"></span>
+                                    <span class="fill gray" [hidden] = "number>=2"></span>
+                                    <span class="fill red" [hidden] = "number<2"></span>
+                                    <span class="fill gray" [hidden] = "number>=3"></span>
+                                    <span class="fill red" [hidden] = "number<3"></span>
+                                    <span class="fill gray"[hidden] = "number>=4" ></span>
+                                    <span class="fill red" [hidden] = "number<4"></span>
+                                    <span class="fill gray" [hidden] = "number>=5"></span>
+                                    <span class="fill red" [hidden] = "number<5"></span>
+                                    <span class="fill gray" [hidden] = "number>=6"></span>
+                                    <span class="fill red" [hidden] = "number<6"></span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-right">
+                            <a (click)="addItem()" class="btn btn-primary btn-sm">Add To Cart</a>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

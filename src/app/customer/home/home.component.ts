@@ -34,7 +34,11 @@ export class HomeComponent implements OnInit {
   tax:number;
   isviewmore = false;
   number = 0;
+  counter_map:any;
+  subcartarray:any;
   searchcolor;
+  rem:number;
+  item_obj_array:any
   searchCountry;
   thirdSearchBox;
   trustedUrl;
@@ -54,12 +58,17 @@ export class HomeComponent implements OnInit {
     this.similarproduct = []
     this.item_image =[]
     this.image =[]
+    this.counter_map = new Map();
     this.isnull = false;
+    this.rem = 6-(JSON.parse(localStorage.getItem('cart'))%6);
     this.slider_image =[]
     this.slider_image = []
+    this.item_obj_array = []
+    this.subnumber = 0;
     this.location.onPopState(() => {
       this.issearched = false
       this.isitemclicked = false
+
 
   });
   this.getHomePage();
@@ -271,7 +280,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('top') myelement : ElementRef;
 
   viewItemDetail(doc){
-
+    
 
     // console.log(doc)
     this.doc = doc;
@@ -285,6 +294,8 @@ export class HomeComponent implements OnInit {
     if(doc){
     this.loading = true;
       this.nodeapi.getSimilarProduct(doc.supplier_id).subscribe((data)=>{
+
+        
 
         this.similarproduct = data['data'];
 
@@ -542,7 +553,9 @@ console.log('doc', this.doc);
   }
 
   async toCart(doc,number){
+  this.addItemCart();
     console.log('dimension',doc['dimension'][0]['width'],number);
+    console.log(this.similarproduct)
     let net_area = 0;
     // this.tax=1.1
     // this.shipping_cost = 1;
@@ -620,7 +633,7 @@ console.log('data', data);
               confirmButtonText: 'ok',
               confirmButtonColor: '#0a3163'
             });
-            this.route.navigate(['/customer/cart'])
+            // this.route.navigate(['/customer/cart'])
 
 
           })
@@ -686,7 +699,7 @@ console.log('data', data);
                     });
 
                     console.log(total_quantity)
-                    this.route.navigate(['/customer/cart'])
+                    // this.route.navigate(['/customer/cart'])
 
                   }
                 }
@@ -1113,6 +1126,31 @@ mostlyViewed(){
 
 }
 
+
+incSubCount(num){
+  console.log(this.counter_map[num])
+  if(this.counter_map[num]<6 && this.rem!==0){
+    this.number+=1;
+    this.rem -= 1;
+    this.counter_map[num] +=  1
+  }
+  
+
+}
+
+decSubCount(num){
+  if(this.counter_map[num]>0){
+    if(this.number>JSON.parse(localStorage.getItem('cart'))%6){
+      this.number -=1
+    }
+    this.counter_map[num] -=  1
+    this.rem += 1;
+  }
+
+  
+
+}
+
 productWithDeals(){
   console.log(this.searchtype)
   this.issearched = true;
@@ -1274,6 +1312,117 @@ searchByCity(ev){
 
 }}
 
+addItem(prod){
+  this.item_obj_array = []
+  console.log(prod);
+  // this.similarproduct.forEach(item=>{
+  //   let obj = {'key':item['bundle_number'],'count':0}
+  //   this.counter_map.push(obj);
+  // })
+
+  
+
+  // let data = {"user_id":this.auth.getUser()._id,
+  // "bundle":[
+  //   {
+  //   "cancel_status":"Pending",
+  //   "supplier_id":doc.supplier_id,
+  //   "bundle_id":doc.bundle_number,
+  //   "bundle_name":doc.product_name,
+  //   "net_area":net_area,
+  //   "thickness":doc.dimension[0].thickness,
+  //   "quantity":this.number,
+  //   "total":price,
+
+  //   "Dimension":[{
+  //     "width":doc['dimension'][0]['width'],
+  //     "height":doc['dimension'][0]['height'],
+  //     "unit":"inch"
+  //   }]}],
+  //   "total_amount":price,
+  //   "total_quantity":this.number,
+  //   "cart_total":price + this.shipping_cost + tax_amount,
+  //   "shipping_cost":this.shipping_cost,
+  //   "tax":tax_amount}
+
+for(let key in this.counter_map){
+  if(this.counter_map[key]>0){
+  var product = this.similarproduct.filter(el=>el['bundle_number']===key)
+  product = product[0]
+  console.log(product)
+  let data =     {
+    "cancel_status":"Pending",
+    "supplier_id":product['supplier_id'],
+    "bundle_id":product['bundle_number'],
+    "bundle_name":product['product_name'],
+    "net_area":product['net_area'],
+    "thickness":product.dimension[0].thickness,
+    "quantity":this.counter_map[key],
+    "total":this.counter_map[key]*product['price'],
+
+    "Dimension":[{
+      "width":product['dimension'][0]['width'],
+      "height":product['dimension'][0]['height'],
+      "unit":"inch"
+    }]
+  }
+   
+  
+  this.item_obj_array.push(data)
+}
+}
+let cart = {
+   "user_id":this.auth.getUser()._id,
+   "bundle":this.item_obj_array,
+
+    "total_amount":10,
+    "total_quantity":4,
+    "cart_total":10 + 10 + 10,
+    "shipping_cost":10,
+    "tax":10
+  }
+
+  console.log(cart)
+
+  this.nodeapi.addToCart(cart).subscribe((response)=>{
+    // localStorage.removeItem('cart')
+    localStorage.setItem('cart',JSON.stringify(this.number));
+    Swal({
+      text: 'Cart updated successfully',
+      type: 'success',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    });
+    this.route.navigate(['/customer/cart'])
+
+
+  })
+  
+}
+
+  // this.item_obj_array.push(obj)
+
+ // console.log(this.counter_map)
+
+  // this.subcartarray.push()
+  
+
+
+
+addItemCart(){
+  console.log();
+  this.similarproduct.forEach(item=>{
+    this.counter_map[item['bundle_number']] = 0
+  })
+
+
+  
+  console.log(this.counter_map)
+
+  // this.subcartarray.push()
+  
+}
+
 searchByCityradio(){
   
   console.log(this.searchtype)
@@ -1360,3 +1509,10 @@ export interface DialogData {
   animal: string;
   name: string;
 }
+
+
+
+
+
+
+
