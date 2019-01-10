@@ -474,13 +474,13 @@ input[type=number]::-webkit-outer-spin-button {
 
                                             <div class="input-group input-group-spinner">
                                               <div class="input-group-prepend">
-                                                <button (click)="decSubCount()" style="min-width: 2.5em" class="btn btn-decrement btn-outline-secondary" type="button">
+                                                <button (click)="decCount()" style="min-width: 2.5em" class="btn btn-decrement btn-outline-secondary" type="button">
                                                   <strong>-</strong>
                                                 </button>
                                               </div>
-                                              <input value="5" [min]="number" max="6" type="number" style="text-align: center; width: 180px" class="input" [(ngModel)] = "subnumber">
+                                              <input value="5" [min]="number" max="6" type="number" style="text-align: center; width: 180px" class="input" [(ngModel)] = "number">
                                               <div class="input-group-append">
-                                                <button (click)="incSubCount()" style="min-width: 2.5em" class="btn btn-increment btn-outline-secondary" type="button">
+                                                <button (click)="incCount()" style="min-width: 2.5em" class="btn btn-increment btn-outline-secondary" type="button">
                                                   <strong>+</strong>
                                                 </button>
                                               </div>

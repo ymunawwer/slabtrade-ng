@@ -57,7 +57,7 @@ export class ShippingDetailsComponent implements OnInit {
     console.log(this.country)
     this.shipping_cost = 0
       this.tax_percentage = 0
-  this.loading = true;
+  // this.loading = true;
 
     this.adminapi.getPortByCountry(this.country).subscribe((res)=>{
 
@@ -75,7 +75,7 @@ export class ShippingDetailsComponent implements OnInit {
       console.log(this.new_port_cost)
       console.log(this.new_port_name)
       console.log(this.tax_percentage)
-      this.loading = false;
+      // this.loading = false;
 
     })
 
