@@ -19,6 +19,7 @@ export class CreateBundleComponent implements OnInit {
     'start_date': '',
     'end_date': '',
     'offer_value': '',
+    'isoffer':0
   };
 
 
@@ -65,7 +66,7 @@ export class CreateBundleComponent implements OnInit {
     'bundle_description':'',
     'inspection_report':'',
 
-    'slab_preference': ''
+    'preference': ''
 
 
  }
@@ -197,9 +198,14 @@ new_color = {
     '-' + new Date(data.dateRange[1]).getDate() : '';
 
     for (let [key, value] of Object.entries(this.deal_data)) {
+      if(key==='isoffer' && (this.deal_data['offer_value']!=='')){
+        formData.append(key, 1);
 
-
+      }else if(key ==='offer_value'){
+        formData.append(key, value);
+      }else{
       formData.append(key, value);
+      }
 
     }
 

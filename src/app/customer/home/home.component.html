@@ -84,21 +84,21 @@ input[type=number]::-webkit-outer-spin-button {
 
                               <div class="side-bar">
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" placeholder="Search By Country" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <input type="text" class="form-control" placeholder="Search By City" aria-label="Recipient's username" aria-describedby="basic-addon2" (keydown)="searchByCity($event)">
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
                                     </div>
                                 </div>
-                                <label class="box" >India
-                                    <input type="radio" name = "color" value="india" [(ngModel)] = "searchCountry" (change) = "searchByCountry()" (click) = "searchByCountry()">
+                                <label class="box" >Bangalore
+                                    <input type="radio" name = "color" value="bangalore" [(ngModel)] = "searchCountry" (change) = "searchByCityradio()" (click) = "searchByCityradio()">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="box" >USA
-                                    <input type="radio" name = "color" value="usa" [(ngModel)] = "searchCountry" (change) = "searchByCountry()" (click) = "searchByCountry()">
+                                <label class="box" >RS Puram
+                                    <input type="radio" name = "color" value="rspuram" [(ngModel)] = "searchCountry" (change) = "searchByCityradio()" (click) = "searchByCityradio()">
                                     <span class="checkmark"></span>
                                 </label>
-                                <label class="box" >China
-                                    <input type="radio" name = "color" value="china" [(ngModel)] = "searchCountry" (change) = "searchByCountry()" (click) = "searchByCountry()">
+                                <label class="box" >Chennai
+                                    <input type="radio" name = "color" value="Chennai" [(ngModel)] = "searchCountry" (change) = "searchByCityradio()" (click) = "searchByCityradio()">
                                     <span class="checkmark"></span>
                                 </label>
 
@@ -163,15 +163,15 @@ input[type=number]::-webkit-outer-spin-button {
                                       </div>
                                   </div>
                                   <label class="box" >New Arrivals
-                                      <input type="radio" name = "color" value="new_arrivals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "searchThirdBox()">
+                                      <input type="radio" name = "color" value="new_arrivals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "mostRecentlyAdded()">
                                       <span class="checkmark"></span>
                                   </label>
                                   <label class="box" >Mostly Viewed
-                                      <input type="radio" name = "color" value="mostly_viewed" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "searchThirdBox()">
+                                      <input type="radio" name = "color" value="mostly_viewed" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "mostlyViewed()">
                                       <span class="checkmark"></span>
                                   </label>
                                   <label class="box" >Deals
-                                      <input type="radio" name = "color" value="deals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "searchThirdBox()">
+                                      <input type="radio" name = "color" value="deals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "productWithDeals()">
                                       <span class="checkmark"></span>
                                   </label>
 
@@ -225,6 +225,52 @@ input[type=number]::-webkit-outer-spin-button {
 
 
                         </div>
+
+                        <div [hidden]="true">
+                            <a (click)="showAllItem()" class="btn btn-secondary ml-auto back-button" *ngIf = "isnull && issearched">First Page </a>
+                    <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
+                      <div class="outer-bar">
+                        <div class="row link-button">
+                          <div class="col-md-12">
+                              <h2>{{item._id}}</h2>
+                             <a (click)="viewMore(item._id)" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
+                             <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
+                             <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
+
+                         </div>
+                       </div>
+                       <div class="row">
+                       <ng-template ngFor let-doc [ngForOf]= "item.docs" let-i="index" >
+
+
+                              <div class="col-md-4">
+                                  <div class="card-img-header">
+                                      <div class="bg-img">
+                                          <a>
+                                              <!-- [ngStyle]="{'background-image': 'url(' + photo + ')'}" -->
+                                <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
+                                </div>
+                                <h4>{{doc.product_name}}</h4>
+                                <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
+                                <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
+                                <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value)}}</span>
+
+                                   <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
+                                </a>
+                                      </div>
+                                  </div>
+                              </div></ng-template>
+                            </div>
+
+
+                          </div>
+
+                    </ng-template>
+
+
+                    </div>
+
+
 
                         <div *ngIf="false">
                             <div class="row">

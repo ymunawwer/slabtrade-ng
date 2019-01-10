@@ -943,10 +943,413 @@ console.log('data', data);
     this.issearched = false;
   }
 
+  mostRecentlyAdded(){
+
+    console.log(this.searchtype)
+    this.issearched = true;
+    this.isviewmore =false
+    if(this.auth.isAuthenticated()){
+
+      this.nodeapi.recentlyAddedWithPrice().subscribe((data)=>{
+        if(data !==null && typeof data['data'] !== 'undefined'){
+          this.isnull = false;
+          console.log(data['data'])
+          let id = data.data[0]['product_type']
+          let local_data = {
+
+            "data":[{
+              "_id":id,
+              "docs":data.data
+            }]
+          }
+        this.items = data.data;
+
+
+        }else{
+          // alert("no item to display");
+          this. items = []
+          this.isnull = true;
+          const element = document.querySelector("#top");
+        }
+      },(err)=>{
+        this.nodeapi.recentlyAddedWithoutPrice().subscribe((data)=>{
+          if(data !==null && typeof data['data'] !== 'undefined'){
+            this.isnull = false;
+            let id = data.data[0]['product_type']
+            let local_data = {
+
+              "data":[{
+                "_id":id,
+                "docs":data.data
+              }]
+            }
+          this.items = data.data;
+
+          }else{
+            this.items = []
+            this.isnull = true;
+            const element = document.querySelector("#top");
+          }
+        }
+        )
+
+      })
+    }else{
+      this.nodeapi.recentlyAddedWithoutPrice().subscribe((data)=>{
+        if(data !==null && typeof data['data'] !== 'undefined'){
+          this.isnull = false;
+          console.log("data",data)
+          let id = data.data[0]['product_type']
+          let local_data = {
+
+            "data":[{
+              "_id":id,
+
+              "docs":data.data
+            }]
+          }
+        this.items = data.data;
+        console.log('item',local_data)
+
+        }else{
+          this.items = []
+          this.isnull = true;
+          const element = document.querySelector("#top");
+        }
+      }
+      )
+
+    }
 
 
 
- 
+
+  }
+
+mostlyViewed(){
+
+  console.log(this.searchtype)
+  this.issearched = true;
+  this.isviewmore =false
+  if(this.auth.isAuthenticated()){
+
+    this.nodeapi.mostViewedWithPrice().subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log(data['data'])
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+
+
+      }else{
+        // alert("no item to display");
+        this. items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    },(err)=>{
+      this.nodeapi.mostViewedWithoutPrice().subscribe((data)=>{
+        if(data !==null && typeof data['data'] !== 'undefined'){
+          this.isnull = false;
+          let id = data.data[0]['product_type']
+          let local_data = {
+
+            "data":[{
+              "_id":id,
+              "docs":data.data
+            }]
+          }
+        this.items = data.data;
+
+        }else{
+          this.items = []
+          this.isnull = true;
+          const element = document.querySelector("#top");
+        }
+      }
+      )
+
+    })
+  }else{
+    this.nodeapi.mostViewedWithoutPrice().subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log("data",data)
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+      console.log('item',local_data)
+
+      }else{
+        this.items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    }
+    )
+
+  }
+
+
+
+
+}
+
+productWithDeals(){
+  console.log(this.searchtype)
+  this.issearched = true;
+  this.isviewmore =false
+  if(this.auth.isAuthenticated()){
+
+    this.nodeapi.searchByDealsWithPrice().subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log(data['data'])
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+
+
+      }else{
+        // alert("no item to display");
+        this. items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    },(err)=>{
+      this.nodeapi.searchByDealsWithoutPrice().subscribe((data)=>{
+        if(data !==null && typeof data['data'] !== 'undefined'){
+          this.isnull = false;
+          let id = data.data[0]['product_type']
+          let local_data = {
+
+            "data":[{
+              "_id":id,
+              "docs":data.data
+            }]
+          }
+        this.items = data.data;
+
+        }else{
+          this.items = []
+          this.isnull = true;
+          const element = document.querySelector("#top");
+        }
+      }
+      )
+
+    })
+  }else{
+    this.nodeapi.searchByDealsWithoutPrice().subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log("data",data)
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+      console.log('item',local_data)
+
+      }else{
+        this.items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    }
+    )
+
+  }
+
+
+}
+
+searchByCity(ev){
+  if(ev.keyCode == 13) {
+  console.log(this.searchtype)
+  this.issearched = true;
+  this.isviewmore =false
+  console.log(ev.target.value)
+  if(this.auth.isAuthenticated()){
+
+    this.nodeapi.searchByCityWithPrice(ev.target.value).subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log(data['data'])
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+
+
+      }else{
+        // alert("no item to display");
+        this. items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    },(err)=>{
+      this.nodeapi.searchByCityWithoutPrice(ev.target.value).subscribe((data)=>{
+        if(data !==null && typeof data['data'] !== 'undefined'){
+          this.isnull = false;
+          let id = data.data[0]['product_type']
+          let local_data = {
+
+            "data":[{
+              "_id":id,
+              "docs":data.data
+            }]
+          }
+        this.items = data.data;
+
+        }else{
+          this.items = []
+          this.isnull = true;
+          const element = document.querySelector("#top");
+        }
+      }
+      )
+
+    })
+  }else{
+    this.nodeapi.searchByCityWithoutPrice(ev.target.value).subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log("data",data)
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+      console.log('item',local_data)
+
+      }else{
+        this.items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    }
+    )
+
+  }
+
+}}
+
+searchByCityradio(){
+  
+  console.log(this.searchtype)
+  this.issearched = true;
+  this.isviewmore =false
+  if(this.auth.isAuthenticated()){
+
+    this.nodeapi.searchByCityWithPrice(this.searchCountry).subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log(data['data'])
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+          "data":[{
+            "_id":id,
+            "docs":data.data
+          }]
+        }
+      this.items = data.data;
+
+
+      }else{
+        // alert("no item to display");
+        this. items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    },(err)=>{
+      this.nodeapi.searchByCityWithoutPrice(this.searchCountry).subscribe((data)=>{
+        if(data !==null && typeof data['data'] !== 'undefined'){
+          this.isnull = false;
+          let id = data.data[0]['product_type']
+          let local_data = {
+
+            "data":[{
+              "_id":id,
+              "docs":data.data
+            }]
+          }
+        this.items = data.data;
+
+        }else{
+          this.items = []
+          this.isnull = true;
+          const element = document.querySelector("#top");
+        }
+      }
+      )
+
+    })
+  }else{
+    this.nodeapi.searchByCityWithoutPrice(this.searchCountry).subscribe((data)=>{
+      if(data !==null && typeof data['data'] !== 'undefined'){
+        this.isnull = false;
+        console.log("data",data)
+        let id = data.data[0]['product_type']
+        let local_data = {
+
+        //   "data":[{
+        //     "_id":id,
+
+        //     "docs":data.data
+        //   }]
+        }
+      this.items = data.data;
+      console.log('item',local_data)
+
+      }else{
+        this.items = []
+        this.isnull = true;
+        const element = document.querySelector("#top");
+      }
+    }
+    )
+
+  }
+
+}
+
 }
 
 export interface DialogData {
