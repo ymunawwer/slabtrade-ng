@@ -280,7 +280,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('top') myelement : ElementRef;
 
   viewItemDetail(doc){
-    
+
 
     // console.log(doc)
     this.doc = doc;
@@ -295,7 +295,7 @@ export class HomeComponent implements OnInit {
     this.loading = true;
       this.nodeapi.getSimilarProduct(doc.supplier_id).subscribe((data)=>{
 
-        
+
 
         this.similarproduct = data['data'];
 
@@ -569,7 +569,7 @@ console.log('doc', this.doc);
     if(this.auth.isAuthenticated() ){
     customer = this.auth.getUser()['country'];
     console.log(customer)
-    this.loading = true;
+    // this.loading = true;
     await this.nodeapi.getPortDetailBycountry(customer).subscribe((result)=>{
       console.log(result);
       this.port_list = result['data']
@@ -624,14 +624,23 @@ console.log('doc', this.doc);
 
 console.log('data', data);
 
+    this.loading = true;
+
+
           this.nodeapi.addToCart(data).subscribe((response)=>{
             // localStorage.removeItem('cart')
             localStorage.setItem('cart',JSON.stringify(this.number));
+                this.loading = false;
+
             Swal({
               text: 'Cart updated successfully',
               type: 'success',
               confirmButtonText: 'ok',
               confirmButtonColor: '#0a3163'
+            }).then((result) => {
+
+              $('#cart-modal').modal('show');
+
             });
             // this.route.navigate(['/customer/cart'])
 
@@ -675,9 +684,13 @@ console.log('data', data);
 
 // "error_code":200,"Message":"Please add more item to the container.","data":{"bundle_id":"987986","bundle_name":"Marble","supplier_id":"5c075eec28d89c7915c53ea9"
               // res.data[0].bundle.push(data_updated)
+    this.loading = true;
 
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
+
                 if(res["error_code"] ===200){
+                      this.loading = false;
+
                   if(res['Message'] === "Please add more item to the container."){
                     Swal({
                       text: 'please add item From similar Supplier or remove the last added item from your cart.',
@@ -696,6 +709,10 @@ console.log('data', data);
                       type: 'success',
                       confirmButtonText: 'ok',
                       confirmButtonColor: '#0a3163'
+                    }).then((result) => {
+
+                      $('#cart-modal').modal('show');
+
                     });
 
                     console.log(total_quantity)
@@ -1134,7 +1151,7 @@ incSubCount(num){
     this.rem -= 1;
     this.counter_map[num] +=  1
   }
-  
+
 
 }
 
@@ -1147,7 +1164,7 @@ decSubCount(num){
     this.rem += 1;
   }
 
-  
+
 
 }
 
@@ -1320,7 +1337,7 @@ addItem(prod){
   //   this.counter_map.push(obj);
   // })
 
-  
+
 
   // let data = {"user_id":this.auth.getUser()._id,
   // "bundle":[
@@ -1366,8 +1383,8 @@ for(let key in this.counter_map){
       "unit":"inch"
     }]
   }
-   
-  
+
+
   this.item_obj_array.push(data)
 }
 }
@@ -1397,7 +1414,7 @@ let cart = {
 
 
   })
-  
+
 }
 
   // this.item_obj_array.push(obj)
@@ -1405,7 +1422,7 @@ let cart = {
  // console.log(this.counter_map)
 
   // this.subcartarray.push()
-  
+
 
 
 
@@ -1416,15 +1433,15 @@ addItemCart(){
   })
 
 
-  
+
   console.log(this.counter_map)
 
   // this.subcartarray.push()
-  
+
 }
 
 searchByCityradio(){
-  
+
   console.log(this.searchtype)
   this.issearched = true;
   this.isviewmore =false

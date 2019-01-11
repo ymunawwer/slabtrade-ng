@@ -18,7 +18,7 @@
                       <table class="table table-bordered">
                           <thead>
                               <tr>
-                                  <!-- <th scope="col">SNO</th> -->
+                                  <th scope="col">Created by</th>
                                   <th scope="col">Product Type</th>
                                   <th scope="col">Offer %</th>
                                   <th scope="col">Offer Date</th>
@@ -27,8 +27,8 @@
                           </thead>
                           <tbody>
                               <tr *ngFor="let deal of deals; let i = index">
-                                  <!-- <td><a href="" class="fields">{{++i}}</a></td> -->
-                                  <td><a  class="fields">{{deal.product_type}}</a></td>
+                                  <td><a href="" class="fields">{{deal.supplier_id ? deal.supplier_id : 'Admin'}}</a></td>
+                                  <td><a  class="fields">{{deal.product_type ? deal.product_type : '-'}}</a></td>
                                   <td><a  class="fields">{{deal.offer_value}}%</a></td>
                                   <td><a  class="fields">{{deal.start_date | date:'shortDate'}} to {{deal.end_date | date:'shortDate'}}</a></td>
                                   <td>

@@ -113,6 +113,7 @@ export class CartCustomerComponent implements OnInit {
                if(this.map.has(sup)){
 
                this.map.set(sup,this.map.get(sup)+element['quantity']);
+               this.map.set(sup, this.map.get(sup)+element['total']);
 
                console.log(element['supplier_id'])
                }else{
@@ -150,6 +151,8 @@ export class CartCustomerComponent implements OnInit {
           });
 
         }
+
+      this.loading = false;
 
 
       }else{

@@ -512,7 +512,7 @@ input[type=number]::-webkit-outer-spin-button {
                                     </div>
                                 </div>
                                                 <!-- (click)="toCart(doc,number)" -->
-                                <a  class="btn btn-secondary" (click)="toCart(doc,number)"  data-toggle="modal" data-target="#cart-modal">Add To Cart</a>
+                                <a  class="btn btn-secondary" (click)="toCart(doc,number)">Add To Cart</a>
                                 <!-- <button mat-raised-button (click)="openDialog()">Pick one</button> -->
                             </div>
                         </div>
@@ -592,7 +592,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 
 
-     
+
     <div class="modal fade" id="cart-modal" tabindex="-1" role="dialog" aria-labelledby="cart-modalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -613,7 +613,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 <ng-template ngFor let-similar [ngForOf]= "similarproduct" let-i="index">
                             <div class="carousel-item" [ngClass]="i===0 ? 'active' : ''">
                                 <div class="cart-slide-box">
-                                        
+
                                     <div class="right-cart" >
                                         <h4 class="bundle-header">Bundle Block No:#{{similar['bundle_number']}}</h4>
                                         <table class="table-description">
@@ -688,7 +688,7 @@ input[type=number]::-webkit-outer-spin-button {
                                         <a (click)="addItem(similar)" class="btn btn-primary btn-sm">Add To Cart</a>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </ng-template>
                         </div>
@@ -706,7 +706,7 @@ input[type=number]::-webkit-outer-spin-button {
                     <!-- <div class="row"> -->
                         <div class="footer-left range">
                             <div class="form-group">
-                                <label for="exampleFormControlSelect1">{{6-number}} Remaining</label>
+                                <label for="exampleFormControlSelect1">{{number <= 6 ? 6-number : 0}} Remaining</label>
                                 <div class="fill-container">
                                     <span class="fill gray"[hidden] = "number>=1" ></span>
                                     <span class="fill red" [hidden] = "number<1"></span>
