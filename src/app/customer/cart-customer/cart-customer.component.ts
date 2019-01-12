@@ -35,6 +35,7 @@ export class CartCustomerComponent implements OnInit {
   result;
 
   map = new Map();
+  map_total = new Map();
 
 
   constructor(private nodeapi:NodeapiService,private nodeApi:NodeapiService,private location:PlatformLocation,private auth:AuthService,private router:Router) {
@@ -73,7 +74,7 @@ export class CartCustomerComponent implements OnInit {
   }
   async getPort(){
 
-    this.loading = true;
+    // this.loading = true;
 
     await this.nodeapi.getPortDetailBycountry(this.user.address1_country).subscribe((result)=>{
       console.log(result);
@@ -110,14 +111,15 @@ export class CartCustomerComponent implements OnInit {
 
                console.log("element",this.map.has(sup));
 
-               if(this.map.has(sup)){
-
+               if(this.map.has(sup) && this.map_total.has(sup)){
+                this.map_total.set(sup, this.map_total.get(sup)+element['total'])
                this.map.set(sup,this.map.get(sup)+element['quantity']);
-               this.map.set(sup, this.map.get(sup)+element['total']);
+              //  this.map.set(sup, this.map.get(sup)+element['total']);
 
                console.log(element['supplier_id'])
                }else{
                    this.map.set(sup,element['quantity'])
+                   this.map_total.set(sup, element['total'])
 
 
                } });

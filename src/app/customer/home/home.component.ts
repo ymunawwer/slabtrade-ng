@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit {
     this.image =[]
     this.counter_map = new Map();
     this.isnull = false;
-    this.rem = 6-(JSON.parse(localStorage.getItem('cart'))%6);
+    this.rem = (6- (JSON.parse(localStorage.getItem('cart'))%6));
     this.slider_image =[]
     this.slider_image = []
     this.item_obj_array = []
@@ -78,6 +78,11 @@ export class HomeComponent implements OnInit {
 
     console.log('item',this.items)
     feather.replace();
+    $('#cart-modal').on('hidden.bs.modal', function (e) {
+     window.location.reload();
+      console.log('number',this.number,this.rem)
+      
+})
 
   }
 
@@ -424,6 +429,7 @@ console.log('doc', this.doc);
     let container_count = 1;
     let prev = JSON.parse(localStorage.getItem('cart'))%6;
     if(this.number <= 5 ) {
+      this.rem-=1
     this.number += 1;
                                                                // 6 - 4%6
     this.quantity =Math.abs(prev - this.number);
@@ -452,6 +458,7 @@ console.log('doc', this.doc);
     let prev = JSON.parse(localStorage.getItem('cart'))%6;
     if(this.number >= 1 && this.number>JSON.parse(localStorage.getItem('cart'))%6) {
       this.number -= 1;
+      this.rem+=1
       this.quantity =Math.abs(prev - this.number);
       // console.log("differnce",prev - this.number)                // item in cart - count 1 - 4 |-3|
 
@@ -552,20 +559,47 @@ console.log('doc', this.doc);
 
   }
 
-  async toCart(doc,number){
-  this.addItemCart();
-    console.log('dimension',doc['dimension'][0]['width'],number);
+
+  openModal(doc,number){
+
+
+    this.addItemCart(doc.bundle_number,this.number);
+    Swal({
+      text: 'Cart updated successfully',
+      type: 'success',
+      confirmButtonText: 'ok',
+      confirmButtonColor: '#0a3163'
+    }).then((result) => {
+
+      $('#cart-modal').modal('show');
+
+    });
+  }
+
+  async toCart(){
+  // this.addItemCart(doc.bundle_number,this.number);
+  this.addItem()
+    // console.log('dimension',doc['dimension'][0]['width'],number);
     console.log(this.similarproduct)
     let net_area = 0;
     // this.tax=1.1
     // this.shipping_cost = 1;
-    // var total_quantity;
+    var total_quantity;
+    
     var cart_total;
    var tax_amount;
-    var price;
+    var price = 0;
     var customer;
+    
     var cart_amount;
     if(this.number!==0){
+      this.item_obj_array.forEach(el=>{
+        this.quantity += el['quantity']
+        price = price + el['total']
+        console.log('total',typeof el['total'])
+      
+      })
+      console.log('price',price)
     if(this.auth.isAuthenticated() ){
     customer = this.auth.getUser()['country'];
     console.log(customer)
@@ -578,13 +612,13 @@ console.log('doc', this.doc);
         // console.log('port',result['data'],tax,shipping_cost)
         console.log('port',this.tax,this.shipping_cost)
     // console.log('doc',doc)
-    const discounted_price = this.getDiscountedPrice(doc['price'], doc['offer_value']) ?
-    this.getDiscountedPrice(doc['price'], doc['offer_value']) : doc['price'];
-    price = discounted_price*<number>this.quantity;
+    // const discounted_price = this.getDiscountedPrice(doc['price'], doc['offer_value']) ?
+    // this.getDiscountedPrice(doc['price'], doc['offer_value']) : doc['price'];
+    // price = discounted_price*<number>this.quantity;
 
 
 
-    if(doc && number>0){
+    if(this.number>0){
       this.nodeapi.getCart('0').subscribe((res)=>{
 
         if(res.error_code === 401) {
@@ -597,22 +631,23 @@ console.log('doc', this.doc);
           if(res.message==="Cart is Empty"){
             tax_amount = price/(1+(this.tax/100));
           let data = {"user_id":this.auth.getUser()._id,
-          "bundle":[
-            {
-            "cancel_status":"Pending",
-            "supplier_id":doc.supplier_id,
-            "bundle_id":doc.bundle_number,
-            "bundle_name":doc.product_name,
-            "net_area":net_area,
-            "thickness":doc.dimension[0].thickness,
-            "quantity":this.number,
-            "total":price,
+          "bundle":this.item_obj_array,
+          //[
+            // {
+            // "cancel_status":"Pending",
+            // "supplier_id":doc.supplier_id,
+            // "bundle_id":doc.bundle_number,
+            // "bundle_name":doc.product_name,
+            // "net_area":net_area,
+            // "thickness":doc.dimension[0].thickness,
+            // "quantity":this.number,
+            // "total":price,
 
-            "Dimension":[{
-              "width":doc['dimension'][0]['width'],
-              "height":doc['dimension'][0]['height'],
-              "unit":"inch"
-            }]}],
+            // "Dimension":[{
+            //   "width":doc['dimension'][0]['width'],
+            //   "height":doc['dimension'][0]['height'],
+            //   "unit":"inch"
+            // }]}],
             "total_amount":price,
             "total_quantity":this.number,
             "cart_total":price + this.shipping_cost + tax_amount,
@@ -628,9 +663,11 @@ console.log('data', data);
 
 
           this.nodeapi.addToCart(data).subscribe((response)=>{
-            // localStorage.removeItem('cart')
+
+            localStorage.removeItem('cart')
             localStorage.setItem('cart',JSON.stringify(this.number));
                 this.loading = false;
+                    $('#cart-modal').modal('hide');
 
             Swal({
               text: 'Cart updated successfully',
@@ -639,35 +676,40 @@ console.log('data', data);
               confirmButtonColor: '#0a3163'
             }).then((result) => {
 
-              $('#cart-modal').modal('show');
+              // $('#cart-modal').modal('show');
 
             });
-            // this.route.navigate(['/customer/cart'])
+            this.route.navigate(['/customer/cart'])
 
 
           })
 
           }else if(res.message!=="Cart is Empty"){
             console.log("quantity",this.quantity);
-            console.log("document",doc)
+            // console.log("document",doc)
             cart_amount = res.data[0].total_amount+price;
             tax_amount = cart_amount/(1+(this.tax/100));
             let total_quantity = res.data[0].total_quantity+this.quantity;
-            let bundle={
-              "supplier_id":doc.supplier_id,
-              "bundle_id":doc.bundle_number,
-              "bundle_name":doc.product_name,
-              "net_area":net_area,
-              "thickness":doc.dimension[0].thickness,
-              "quantity":this.quantity,
-              "total":price,
-              "Dimension":[{
-                "width":doc['dimension'][0]['width'],
-                "height":doc['dimension'][0]['height'],
-                "unit":"inch"
-              }]}
+          
+            // let bundle={
+            //   "supplier_id":doc.supplier_id,
+            //   "bundle_id":doc.bundle_number,
+            //   "bundle_name":doc.product_name,
+            //   "net_area":net_area,
+            //   "thickness":doc.dimension[0].thickness,
+            //   "quantity":this.quantity,
+            //   "total":price,
+            //   "Dimension":[{
+            //     "width":doc['dimension'][0]['width'],
+            //     "height":doc['dimension'][0]['height'],
+            //     "unit":"inch"
+            //   }]}
+console.log('new added item',this.item_obj_array);
+this.item_obj_array.forEach(el=>{
+  res.data[0].bundle.push(el)
 
-              res.data[0].bundle.push(bundle)
+})
+              
             let data_updated = {"user_id":this.auth.getUser()._id,
             "bundle":res.data[0].bundle,
 
@@ -687,7 +729,7 @@ console.log('data', data);
     this.loading = true;
 
               this.nodeapi.addToCart(data_updated).subscribe((res)=>{
-
+    $('#cart-modal').modal('hide');
                 if(res["error_code"] ===200){
                       this.loading = false;
 
@@ -711,12 +753,12 @@ console.log('data', data);
                       confirmButtonColor: '#0a3163'
                     }).then((result) => {
 
-                      $('#cart-modal').modal('show');
+                      // $('#cart-modal').modal('show');
 
                     });
 
                     console.log(total_quantity)
-                    // this.route.navigate(['/customer/cart'])
+                    this.route.navigate(['/customer/cart'])
 
                   }
                 }
@@ -729,7 +771,7 @@ console.log('data', data);
         }
       })
     }
-    else if(number<1){
+    else if(this.number<1){
       Swal({
         text: 'Slab count cannot be Zero',
         type: 'error',
@@ -1145,8 +1187,9 @@ mostlyViewed(){
 
 
 incSubCount(num){
+  console.log('rem',this.rem,this.counter_map[num])
   console.log(this.counter_map[num])
-  if(this.counter_map[num]<6 && this.rem!==0){
+  if(this.counter_map[num]<=this.rem-1 || this.rem>0){
     this.number+=1;
     this.rem -= 1;
     this.counter_map[num] +=  1
@@ -1329,44 +1372,19 @@ searchByCity(ev){
 
 }}
 
-addItem(prod){
+addItem(){
   this.item_obj_array = []
-  console.log(prod);
-  // this.similarproduct.forEach(item=>{
-  //   let obj = {'key':item['bundle_number'],'count':0}
-  //   this.counter_map.push(obj);
-  // })
-
-
-
-  // let data = {"user_id":this.auth.getUser()._id,
-  // "bundle":[
-  //   {
-  //   "cancel_status":"Pending",
-  //   "supplier_id":doc.supplier_id,
-  //   "bundle_id":doc.bundle_number,
-  //   "bundle_name":doc.product_name,
-  //   "net_area":net_area,
-  //   "thickness":doc.dimension[0].thickness,
-  //   "quantity":this.number,
-  //   "total":price,
-
-  //   "Dimension":[{
-  //     "width":doc['dimension'][0]['width'],
-  //     "height":doc['dimension'][0]['height'],
-  //     "unit":"inch"
-  //   }]}],
-  //   "total_amount":price,
-  //   "total_quantity":this.number,
-  //   "cart_total":price + this.shipping_cost + tax_amount,
-  //   "shipping_cost":this.shipping_cost,
-  //   "tax":tax_amount}
-
+  // console.log(prod);
+var price;
 for(let key in this.counter_map){
   if(this.counter_map[key]>0){
   var product = this.similarproduct.filter(el=>el['bundle_number']===key)
   product = product[0]
-  console.log(product)
+  const discounted_price = this.getDiscountedPrice(product['price'], product['offer_value']) ?
+  this.getDiscountedPrice(product['price'], product['offer_value']) : product['price'];
+  price = discounted_price*<number>this.counter_map[key];
+  // console.log(product)
+  
   let data =     {
     "cancel_status":"Pending",
     "supplier_id":product['supplier_id'],
@@ -1375,7 +1393,7 @@ for(let key in this.counter_map){
     "net_area":product['net_area'],
     "thickness":product.dimension[0].thickness,
     "quantity":this.counter_map[key],
-    "total":this.counter_map[key]*product['price'],
+    "total":this.counter_map[key]*price,
 
     "Dimension":[{
       "width":product['dimension'][0]['width'],
@@ -1388,32 +1406,49 @@ for(let key in this.counter_map){
   this.item_obj_array.push(data)
 }
 }
-let cart = {
-   "user_id":this.auth.getUser()._id,
-   "bundle":this.item_obj_array,
-
-    "total_amount":10,
-    "total_quantity":4,
-    "cart_total":10 + 10 + 10,
-    "shipping_cost":10,
-    "tax":10
-  }
-
-  console.log(cart)
-
-  this.nodeapi.addToCart(cart).subscribe((response)=>{
-    // localStorage.removeItem('cart')
-    localStorage.setItem('cart',JSON.stringify(this.number));
-    Swal({
-      text: 'Cart updated successfully',
-      type: 'success',
-      confirmButtonText: 'ok',
-      confirmButtonColor: '#0a3163'
-    });
-    this.route.navigate(['/customer/cart'])
 
 
-  })
+console.log(this.item_obj_array)
+
+
+
+// let cart = {
+//    "user_id":this.auth.getUser()._id,
+//    "bundle":this.item_obj_array,
+
+//     "total_amount":10,
+//     "total_quantity":4,
+//     "cart_total":10 + 10 + 10,
+//     "shipping_cost":10,
+//     "tax":10
+//   }
+
+//   console.log(cart)
+
+//   this.nodeapi.addToCart(cart).subscribe((response)=>{
+//     // localStorage.removeItem('cart')
+//     $('#cart-modal').modal('hide');
+//     if(response["error_code"] ===200){
+//       // this.loading = false;
+//     // this.loading = false;
+//     localStorage.setItem('cart',JSON.stringify(this.number));
+//     Swal({
+//       text: 'Cart updated successfully',
+//       type: 'success',
+//       confirmButtonText: 'ok',
+//       confirmButtonColor: '#0a3163'
+//     }).then((result) => {
+
+      
+//       this.route.navigate(['/customer/cart'])
+
+
+//     });
+    
+//   }
+
+//   })
+
 
 }
 
@@ -1426,12 +1461,13 @@ let cart = {
 
 
 
-addItemCart(){
+addItemCart(bundle_number,number){
   console.log();
   this.similarproduct.forEach(item=>{
     this.counter_map[item['bundle_number']] = 0
   })
 
+  this.counter_map[bundle_number] = number - JSON.parse(localStorage.getItem('cart'))%6;
 
 
   console.log(this.counter_map)

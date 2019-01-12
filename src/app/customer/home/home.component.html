@@ -512,7 +512,7 @@ input[type=number]::-webkit-outer-spin-button {
                                     </div>
                                 </div>
                                                 <!-- (click)="toCart(doc,number)" -->
-                                <a  class="btn btn-secondary" (click)="toCart(doc,number)">Add To Cart</a>
+                                <a  class="btn btn-secondary" (click)="openModal(doc,number)">Add To Cart</a>
                                 <!-- <button mat-raised-button (click)="openDialog()">Pick one</button> -->
                             </div>
                         </div>
@@ -685,7 +685,7 @@ input[type=number]::-webkit-outer-spin-button {
                                                 </div>
                                             </div>
                                         </div>
-                                        <a (click)="addItem(similar)" class="btn btn-primary btn-sm">Add To Cart</a>
+                                        
                                     </div>
                                 </div>
 
@@ -725,7 +725,7 @@ input[type=number]::-webkit-outer-spin-button {
                             </div>
                         </div>
                         <div class="footer-right">
-                            <a class="btn btn-primary btn-sm">Add To Cart</a>
+                            <a (click)="toCart()" class="btn btn-primary btn-sm">Add To Cart</a>
                         </div>
                     <!-- </div> -->
                 </div>
