@@ -159,6 +159,10 @@ input.form-control:focus {
     /* margin-top: 2em; */
 }
 
+.card-img-header2 {
+  margin-top: 2em;
+}
+
 .bg-img a {
     display: inline-block;
     width: 100%;
