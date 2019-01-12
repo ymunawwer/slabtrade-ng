@@ -207,10 +207,9 @@ input[type=number]::-webkit-outer-spin-button {
                                     <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
                                     </div>
                                     <h4>{{doc.product_name}}</h4>
-                                    <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
-                                    <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
-                                    <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value)}}</span>
-
+                                    <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+(doc.price | number)}}</span>
+                                    <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+(doc.price | number)}}</s></span>
+                                    <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span>
                                        <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
                                     </a>
                                           </div>
@@ -251,9 +250,9 @@ input[type=number]::-webkit-outer-spin-button {
                                 <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
                                 </div>
                                 <h4>{{doc.product_name}}</h4>
-                                <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+doc.price}}</span>
-                                <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
-                                <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value)}}</span>
+                                <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+(doc.price | number)}}</span>
+                                <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+(doc.price | number)}}</s></span>
+                                <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span>
 
                                    <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
                                 </a>
@@ -431,11 +430,11 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option1 col-md-4">
                                                 <ul>
                                                    <li style="width: max-content; font-size: 1em" class="item">
-                                                    <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
+                                                    <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" style="margin-right: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+doc.price}}</s></span>
                                                     <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px;" class="price">
                                                       {{doc.price===undefined?'':'$'+doc.price}}</span>
 
-                                                    <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value)}}</span></li>
+                                                    <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span></li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -531,17 +530,17 @@ input[type=number]::-webkit-outer-spin-button {
                             <ng-template ngFor let-doc1 [ngForOf]= "similarproduct" let-i="index" >
 
                                     <div class="col-md-3">
-                                        <div class="card-img-header">
+                                        <div class="card-img-header2">
                                             <div class="bg-img">
                                                 <a>
-                                                                <div class="card-img"[style.background-image] = "getBackground(doc1.images[0].path)">
+                                                                <div class="card-img" [style.background-image] = "getBackground(doc1.images[0])">
                                                                 </div>
                                                                 <h4>{{doc1.product_name}}</h4>
 
 
                                     <span *ngIf="!getDiscountedPrice(doc1.price, doc1.offer_value) && doc1.price != undefined" class="price">{{doc1.price===undefined?'':'$'+doc1.price}}</span>
                                     <span *ngIf="getDiscountedPrice(doc1.price, doc1.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc1.price===undefined?'':'$'+doc1.price}}</s></span>
-                                    <span *ngIf="doc1.price != undefined && getDiscountedPrice(doc1.price, doc1.offer_value)" class="price">$ {{getDiscountedPrice(doc1.price, doc1.offer_value)}}</span>
+                                    <span *ngIf="doc1.price != undefined && getDiscountedPrice(doc1.price, doc1.offer_value)" class="price">$ {{getDiscountedPrice(doc1.price, doc1.offer_value) | number : '1.2-2'}}</span>
 
 
                                                                <button  type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc1)'>View Details</button>

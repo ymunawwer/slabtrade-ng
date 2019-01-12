@@ -316,7 +316,8 @@ img {
 .nav-link h2 {
     font-size: 0.95em;
     float: left;
-    margin-top: 0.8em;
+    /* margin-top: 0.8em; */
+    margin-top: 4px;
     margin-left: 1em;
     color: #303031;
 }
@@ -716,6 +717,7 @@ img {
 
 .dropdown-toggle::after {
     /* margin-top: 18px; */
+    margin-top: 8px;
 }
 
 .prev-img-blk {

@@ -43,9 +43,13 @@ body {
 .top-nav.navbar .nav-link:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
-
+/*
 .top-nav.navbar li.active .nav-link {
     background-color: rgba(0, 0, 0, 0.3);
+} */
+
+.top-nav.navbar li.active {
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .nav-link .badge {
@@ -58,7 +62,8 @@ body {
 }
 
 .img-slider {
-    height: 300px;
+    /* height: 300px; */
+    height: 355px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -69,8 +74,12 @@ body {
     padding-bottom: 3em;
 }
 
-.inner-bar {
+/* .inner-bar {
     margin-top: 4em;
+} */
+
+.inner-bar {
+  margin-top: 2em;
 }
 
 .side-bar {
@@ -132,7 +141,8 @@ input.form-control:focus {
 }
 
 .outer-bar {
-    margin-top: 4em;
+    /* margin-top: 4em; */
+    margin-top: 2em;
     position: relative;
 }
 
@@ -146,7 +156,11 @@ input.form-control:focus {
 }
 
 .card-img-header {
-    margin-top: 2em;
+    /* margin-top: 2em; */
+}
+
+.card-img-header2 {
+  margin-top: 2em;
 }
 
 .bg-img a {
@@ -173,6 +187,7 @@ input.form-control:focus {
     text-transform: uppercase;
     color: #000;
     font-weight: 700;
+    color: #0a3163;
 }
 
 .bg-img a:hover {
@@ -195,6 +210,7 @@ input.form-control:focus {
     /* background: rgba(0,0,0,0.3); */
     background-color: #0a3163;
     padding: 0.7em 1.16em;
+    font-weight: 600;
 }
 
 .bg-img .btn.btn-primary:focus {
@@ -215,7 +231,8 @@ input.form-control:focus {
     /* background: rgba(0,0,0,0.3); */
     background-color: #0a3163;
     float: right;
-    padding: 0.6em 2em
+    padding: 0.6em 2em;
+    font-weight: 600;
 }
 
 .link-button .btn.btn-primary:focus {
@@ -239,6 +256,8 @@ input.form-control:focus {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-weight: 600;
+    color: #0a3163;
 }
 
 /* Hide the browser's default checkbox */
@@ -1142,7 +1161,7 @@ h5.sub-title {
 
 
 
-.modal-dialog 
+.modal-dialog
 {
     max-width: 800px;
     margin: 1.75rem auto;

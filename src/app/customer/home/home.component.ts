@@ -303,6 +303,8 @@ export class HomeComponent implements OnInit {
 
 
         this.similarproduct = data['data'];
+      console.log('similar prodiucts', this.similarproduct);
+
 
         const element = document.querySelector("#top");
           if (element) { element.scrollIntoView(); }
