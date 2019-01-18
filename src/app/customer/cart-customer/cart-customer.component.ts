@@ -18,6 +18,7 @@ export class CartCustomerComponent implements OnInit {
   loading = false;
   cart_item:any;
   tax:number;
+  is_hover;
   amount;
   shipping:number;
   shipping_detail:any;
@@ -32,6 +33,15 @@ export class CartCustomerComponent implements OnInit {
   port:any;
   unloadRadio: any = 'yes';
 
+  bundle_info = {
+    'bundle_id':'',
+    'bundle_name':'',
+    'thickness':''
+
+  }
+
+  bundle_visual_array:any;
+
   result;
 
   map = new Map();
@@ -43,6 +53,8 @@ export class CartCustomerComponent implements OnInit {
     this.cart_item = []
     this.getCartItem();
     this.is_check_out = false;
+    this.bundle_visual_array = []
+    this.is_hover = false;
     this.user = {
       "first_name":this.auth.getUser().first_name,
       "contact":this.auth.getUser().cell_phone,
@@ -90,7 +102,7 @@ export class CartCustomerComponent implements OnInit {
   getCartItem(){
 
     this.loading = true;
-
+    this.bundle_visual_array = []
 
     this.nodeApi.getCart("0").subscribe((res)=>{
       if(res.error_code===200){
@@ -108,22 +120,29 @@ export class CartCustomerComponent implements OnInit {
 
           this.cart_item.forEach(element => {
               var sup = element['bundle_id'];
-
+              console.log('elemeent in cart',element)
                console.log("element",this.map.has(sup));
 
                if(this.map.has(sup) && this.map_total.has(sup)){
                 this.map_total.set(sup, this.map_total.get(sup)+element['total'])
                this.map.set(sup,this.map.get(sup)+element['quantity']);
+               
               //  this.map.set(sup, this.map.get(sup)+element['total']);
 
                console.log(element['supplier_id'])
                }else{
+                   this.bundle_visual_array.push(element)
                    this.map.set(sup,element['quantity'])
                    this.map_total.set(sup, element['total'])
 
 
                } });
-
+               console.log('size',7-(this.bundle_visual_array.length%7))
+               var size = 7-(this.bundle_visual_array.length%7)
+               for(let i = 0 ; i<size;i++){
+                 this.bundle_visual_array.push(0)
+                 console.log('visual',this.bundle_visual_array)
+               }
                console.log("map",this.map);
 
                console.log('value', this.map.get('31'));
@@ -144,6 +163,12 @@ export class CartCustomerComponent implements OnInit {
 
 
         }else if(res.message==="Cart is Empty"){
+          console.log('size',7-(this.bundle_visual_array.length%7))
+          var size = 7-(this.bundle_visual_array.length%7)
+          for(let i = 0 ; i<size;i++){
+            this.bundle_visual_array.push(0)
+            console.log('visual',this.bundle_visual_array)
+          }
           this.iscartempty = true;
           Swal({
             text: 'cart is empty',
@@ -369,7 +394,17 @@ confirmToCheckOut(){
     })
   }
 
+  bundleInfo(item){
+    console.log(item)
+    this.is_hover = true;
+    this.bundle_info['bundle_name'] = item['bundle_name']
+    this.bundle_info['bundle_id'] = item['bundle_id']
+    this.bundle_info['thickness'] = item['thickness']
+  }
 
+  hideBundleInfo(){
+    this.is_hover = false;
+  }
 
 
 

@@ -105,14 +105,15 @@
                     <section class="shipping-order">
                         <div class="address-details">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-8">
                                     <h3>Shipping Address:</h3>
-                                    <p>The Honorable Charles W. Anderson (Dear Mr. Ambassador:)
-                                        Department of State
-                                        2050 Bamako Place
-                                        Washington, DC 20521-2050</p>
+                                    <p style="margin-bottom:-2px">6701 Ammendale Rd, Beltsville, MD,</p>
+                                        <p style="margin-bottom:-1px">20705.</p>
+                                       <p style="margin-bottom:-2px">Phone: 301 595 7006</p>
+                                        <p style="margin-bottom:-2px">Fax: 301 595 7008</p>
+                                        <p style="margin-bottom:-2px">Email: maryland@blueplanetrocks.com</p>
                                 </div>
-                                <div class="col-md-6 text-right address-details-right" *ngIf="cancel_status">
+                                <div class="col-md-4 text-right address-details-right" *ngIf="cancel_status">
                                     <a (click)="bool ? acceptOrder($event.target): null" class="btn btn-primary" >Accept Order</a>
                                     <a (click)="bool ? rejectOrder($event.target): null" class="btn btn-secondary">Cancel Order</a>
                                 </div>

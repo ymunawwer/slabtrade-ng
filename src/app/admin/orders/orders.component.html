@@ -225,9 +225,62 @@
                                 <div class="customer-details">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <h5 class="mb-3">Lorem Ipsum is simply dummy text of the printing</h5>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                            <h5 class="mb-3">Personal Information</h5>
+                                            <table class="table-description">
+                                                <tbody>
+                                                    <tr class="row-option row">
+                                                        <td class="table-option col-md-6">Name : </td>
+                                                        <td class="table-option1 col col-md-6">
+                                                            <ul>
+                                                                <li class="item">{{customer['name']}} </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="row-option row">
+                                                        <td class="table-option col-md-6">Created At :</td>
+                                                        <td class="table-option1 col-md-6">
+                                                            <ul>
+                                                                <li class="item">{{customer['created']|date:'shortDate'}}</li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="row-option row">
+                                                        <td class="table-option col-md-6">Address :</td>
+                                                        <td class="table-option1 col-md-6">
+                                                            <ul>
+                                                                <li class="item">{{customer['street']}}</li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="row-option row">
+                                                        <td class="table-option col-md-6">City :</td>
+                                                        <td class="table-option1 col-md-6">
+                                                            <ul>
+                                                                <li class="item">{{customer['city']}}</li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="row-option row">
+                                                        <td class="table-option col-md-6">State :</td>
+                                                        <td class="table-option1 col-md-6">
+                                                            <ul>
+                                                                <li class="item">{{customer['state']}}</li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="row-option row">
+                                                        <td class="table-option col-md-6">Country :</td>
+                                                        <td class="table-option1 col-md-6">
+                                                            <ul>
+                                                                <li class="item">{{customer['country']}}</li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                 
+                                                </tbody>
+                                            </table>
+                                            
+                                            
                                         </div>
                                     </div>
                                 </div>

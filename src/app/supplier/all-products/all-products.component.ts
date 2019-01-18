@@ -5,6 +5,7 @@ import {saveAs as importedSaveAs} from "file-saver";
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 declare var $:any;
 declare var feather:any;
 @Component({
@@ -63,7 +64,7 @@ export class AllProductsComponent implements OnInit {
 
   }
 
-  constructor(private node:NodeapiService,private auth:AuthService,private router:Router) {
+  constructor(private node:NodeapiService,private auth:AuthService,private router:Router,private _sanitizer:DomSanitizer) {
     feather.replace();
     this.product = [];
     this.step1=false;
@@ -360,6 +361,17 @@ export class AllProductsComponent implements OnInit {
     };
   }
 
+
+  getBackground(image) {
+
+    // image = image.replace('home/gamasome/slabtrade/public/','');
+    if(image){
+      return this._sanitizer.bypassSecurityTrustStyle(`url(${image.path})`);
+    }else{
+      return null;
+    }
+
+}
 
 
 

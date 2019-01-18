@@ -24,6 +24,7 @@ export class CustomerDetailsComponent implements OnInit {
   country;
   zip_code;
   isClicked;
+  desc;
 
 
   constructor(private adminApi:AdminApiService) {
@@ -42,6 +43,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.state = ''
     this.country = ''
     this.zip_code = ''
+    this.desc = ''
     this.getCustomers();
 
   }
@@ -85,6 +87,7 @@ export class CustomerDetailsComponent implements OnInit {
     this.state = data['mailing_country']
     this.country = data['mailing_state']
     this.zip_code = data['mailing_zip']
+    this.desc = data['desc']
   }
 
 

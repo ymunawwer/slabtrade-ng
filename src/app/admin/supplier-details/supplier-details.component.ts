@@ -24,6 +24,7 @@ export class SupplierDetailsComponent implements OnInit {
   country;
   zip_code;
   isClicked;
+  desc;
   constructor(private adminApi:AdminApiService) {
     this.supplier_arr = [];
     this.isClicked = false;
@@ -67,6 +68,7 @@ export class SupplierDetailsComponent implements OnInit {
     this.state = data['country']
     this.country = data['state']
     this.zip_code = data['zip_code']
+    this.desc = data['desc']
   }
 
 

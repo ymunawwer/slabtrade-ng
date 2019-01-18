@@ -33,6 +33,16 @@ export class OrdersComponent implements OnInit {
   order_status:any;
   checking_order_status: any;
   selectedOrder: any;
+
+  customer = {
+    'name':'',
+    'created':'',
+    'street':'',
+    'city':'',
+    'state':'',
+    'country':'',
+
+  }
   purchase_order = {
     "invoice_date":0,
     "name":"",
@@ -187,6 +197,12 @@ export class OrdersComponent implements OnInit {
 
   isOrderClick(order){
     console.log("Order",order)
+    this.customer['name']=order['name']
+    this.customer['created']=order['created_at']
+    this.customer['street']=order['shipping_Addr'][0]['street']
+    this.customer['city']=order['shipping_Addr'][0]['city']
+    this.customer['state']=order['shipping_Addr'][0]['state']
+    this.customer['country']=order['shipping_Addr'][0]['country']
     this.isOrderStatus();
     this.order_status = order['cancel_status'];
     this.checking_order_status = order['cancel_status'];

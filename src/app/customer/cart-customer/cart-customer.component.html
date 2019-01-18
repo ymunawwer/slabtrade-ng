@@ -11,24 +11,34 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="fill-container lg">
-                            <span class="fill green"></span>
-                            <span class="fill green"></span>
+                                <ng-template ngFor let-item [ngForOf]= "bundle_visual_array" let-i="index">
+                            <span class="fill green" (mouseover)="bundleInfo(item)" (mouseout)="hideBundleInfo()" *ngIf = "item!==0"></span>
+                            <!-- <span class="fill green"></span>
                             <span class="fill red"></span>
                             <span class="fill red"></span>
                             <span class="fill yellow"></span>
-                            <span class="fill yellow"></span>
-                            <span class="fill gray"></span>
+                            <span class="fill yellow"></span> -->
+                            <span class="fill gray" *ngIf = "item===0"></span>
+                            </ng-template>
                         </div>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-8" *ngIf="is_hover">
                         <div class="row">
                             <div class="col-md-12">
-                                <h5 class="mb-3"><strong>Instruction</strong></h5>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                <h5 class="mb-3"><strong>Bundle Information</strong></h5>
+                                <p>Bundle name:{{bundle_info['bundle_name']}}</p>
+                                <p>Bundle Id:#{{bundle_info['bundle_id']}}</p>
+                                <p>Bundle thickness:{{bundle_info['thickness']}}</p>
+                              
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-8" *ngIf="!is_hover">
+                            <div class="row">
+                                <div class="col-md-12">
+                                        <h5 class="mb-3"><strong>Bundle Information</strong></h5>
+                                        <h6>Please Hover over Bundle on Left to see the bundle detail.</h6>
+                                </div></div></div>
                 </div>
                 <table class="table table-bordered table-content">
                     <thead>

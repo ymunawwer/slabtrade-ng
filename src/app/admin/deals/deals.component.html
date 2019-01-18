@@ -27,7 +27,7 @@
                           </thead>
                           <tbody>
                               <tr *ngFor="let deal of deals; let i = index">
-                                  <td><a href="" class="fields">{{deal.supplier_id ? deal.supplier_id : 'Admin'}}</a></td>
+                                  <td><a href="" class="fields">{{deal.first_name ? deal.first_name : 'Admin'}}</a></td>
                                   <td><a  class="fields">{{deal.product_type ? deal.product_type : '-'}}</a></td>
                                   <td><a  class="fields">{{deal.offer_value}}%</a></td>
                                   <td><a  class="fields">{{deal.start_date | date:'shortDate'}} to {{deal.end_date | date:'shortDate'}}</a></td>

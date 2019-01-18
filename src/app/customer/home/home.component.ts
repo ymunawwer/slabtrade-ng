@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
   searchcolor;
   rem:number;
   item_obj_array:any
+  total_suggested_item:number;
   searchCountry;
   thirdSearchBox;
   trustedUrl;
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit {
     this.trustedUrl = this._sanitizer.bypassSecurityTrustUrl("http://localhost:4200/");
     this.items = []
     this.subnumber = 0;
-
+this.total_suggested_item = 0;
     this.number = JSON.parse(localStorage.getItem('cart'))%6;
     this.similarproduct = []
     this.item_image =[]
@@ -304,7 +305,7 @@ export class HomeComponent implements OnInit {
 
         this.similarproduct = data['data'];
       console.log('similar prodiucts', this.similarproduct);
-
+        this.total_suggested_item = this.similarproduct.length;
 
         const element = document.querySelector("#top");
           if (element) { element.scrollIntoView(); }
@@ -566,16 +567,16 @@ console.log('doc', this.doc);
 
 
     this.addItemCart(doc.bundle_number,this.number);
-    Swal({
-      text: 'Cart updated successfully',
-      type: 'success',
-      confirmButtonText: 'ok',
-      confirmButtonColor: '#0a3163'
-    }).then((result) => {
+    // Swal({
+    //   text: 'Cart updated successfully',
+    //   type: 'success',
+    //   confirmButtonText: 'ok',
+    //   confirmButtonColor: '#0a3163'
+    // }).then((result) => {
 
       $('#cart-modal').modal('show');
 
-    });
+    // });
   }
 
   async toCart(){
@@ -687,11 +688,17 @@ console.log('data', data);
           })
 
           }else if(res.message!=="Cart is Empty"){
+            var quantity = 0;
+            this.item_obj_array.forEach(element => {
+              console.log(element)
+              quantity = quantity+element['quantity']
+              
+            });
             console.log("quantity",this.quantity);
             // console.log("document",doc)
             cart_amount = res.data[0].total_amount+price;
             tax_amount = cart_amount/(1+(this.tax/100));
-            let total_quantity = res.data[0].total_quantity+this.quantity;
+            let total_quantity = res.data[0].total_quantity+quantity;
           
             // let bundle={
             //   "supplier_id":doc.supplier_id,

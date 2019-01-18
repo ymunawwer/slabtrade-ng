@@ -157,8 +157,8 @@ export class NodeapiService {
 
 
   getSimilarProduct(id):Observable<any>{
-
-    return this.http.get(ENV.customer + '/getsimilarproduct?supplier_id='+id+'&limit'+4).pipe(
+    let token = this.auth.getToken();
+    return this.http.get(ENV.customer + '/getsimilarproduct?supplier_id='+id+'&limit='+4,{headers:{'Auth': token}}).pipe(
       catchError(err=>this.handleError(err))
 
     );

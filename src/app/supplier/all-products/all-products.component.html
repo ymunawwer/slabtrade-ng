@@ -10,8 +10,9 @@
             <a class="btn btn-secondary btn-sm" (click)="onBulk()">Bulk Update</a>
         </section>
         <section class="order-table">
-            <div class="table-details orders text-center">
-                <table class="table table-bordered">
+            <!-- <div class="table-details orders text-center"> -->
+                <div class="row">
+                <!-- <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Product Id</th>
@@ -20,23 +21,48 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <tbody> -->
                         <!-- <ng-template ngFor let-product [ngForOf]= "product" let-i="index" > -->
-                        <tr *ngFor="let product of product">
+                        <!-- <tr *ngFor="let product of product">
                             <td><a class="fields">#{{product.bundle_number}}</a></td>
                             <td><a  class="fields">{{product.product_name}}
-                                 <!-- <span class="flag-icon flag-icon-us"></span> -->
+                               
                                 </a></td>
                             <td>
-                              <!--(click) = "editProduct(product)"-->
+                           
                                 <a  routerLink="/supplier/editProduct/{{product._id}}"  class="btn btn-primary">Edit</a>
                                 <a href="#" class="btn btn-danger">Delete</a>
                             </td>
-                        </tr>
+                        </tr> -->
                     <!-- </ng-template> -->
+                    
+                    <ng-template ngFor let-doc [ngForOf]= "product" let-i="index" >
 
-                    </tbody>
-                </table>
+
+                            <div class="col-md-4" style="margin-bottom:25px;">
+                                  
+                                <div class="card-img-header">
+                                 
+                                    <div class="bg-img">
+                                           
+                                        <a>
+                                            <!-- [ngStyle]="{'background-image': 'url(' + photo + ')'}" -->
+                              <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  style="background-repeat: round">
+                              </div>
+                              <h4>{{doc.product_name}}</h4>
+                              <!-- <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+(doc.price | number)}}</span> -->
+                              <!-- <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+(doc.price | number)}}</s></span> -->
+                              <!-- <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span> -->
+                                 <!-- <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button> -->
+                                 <a  routerLink="/supplier/editProduct/{{doc._id}}"  class="btn btn-primary btn-block">Edit</a>
+                                 <!-- <a href="#" class="btn btn-danger">Delete</a> -->
+                              </a>
+                                    </div>
+                                </div>
+                            </div></ng-template>
+
+                    <!-- </tbody>
+                </table> -->
             </div>
         </section>
 
