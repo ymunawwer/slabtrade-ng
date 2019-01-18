@@ -33,7 +33,7 @@ export class SupplierRegisterComponent implements OnInit , AfterViewInit {
     'mailing_state': '',
     'mailing_city': '',
     'mailing_country': '',
-    'mailing_zip': ''
+    'mailing_zip': '',
   };
 
   @ViewChild('placesRef') placesRef: GooglePlaceDirective;

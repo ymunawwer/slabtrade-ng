@@ -19,8 +19,9 @@ import { HttpModule } from '@angular/http';
 import { FirstPageComponent } from './first-page/first-page.component';
 import { EditProductComponent } from './edit-product/edit-product.component'
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { NewHomeComponent } from './new-home/new-home.component';
 @NgModule({
-  declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent, EditProductComponent],
+  declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent, EditProductComponent, NewHomeComponent],
   imports: [
     CommonModule,
     SupplierRoutingModule,
