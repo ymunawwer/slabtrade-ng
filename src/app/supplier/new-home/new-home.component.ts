@@ -53,4 +53,14 @@ loading;
     })
   }
 
+   
+
+  // orderDetail1(order) {
+
+  //   this.dataservice.setOption('selectedOrder', order);
+  //   this.route.navigate(['/supplier/orders']);
+
+  // }
+
+
 }

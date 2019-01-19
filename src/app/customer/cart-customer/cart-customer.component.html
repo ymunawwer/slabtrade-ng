@@ -70,31 +70,38 @@
                         <tr>
                             <td colspan="4">Tax</td>
                             <td></td>
-                            <td colspan="2">${{tax}}</td>
+                            <td colspan="2">${{tax|number:'1.2-2'}}</td>
                         </tr>
                         <tr>
                             <td colspan="4">Shipping</td>
                             <td>-</td>
                             <td colspan="2">${{shipping}}</td>
                         </tr>
+                        <tr>
+                          <td colspan="4">Insurance</td>
+                          <td>-</td>
+                          <td colspan="2">$50</td>
+                      </tr>
                     </tbody>
                     <tfoot>
                         <tr>
                             <th colspan="4">Total</th>
                             <th>{{total_item}}</th>
-                            <th colspan="2">${{total}}</th>
+                            <th colspan="2">${{total|number:'1.2-2'}}</th>
                         </tr>
                         <tr>
                             <th colspan="4">Amount</th>
                             <th></th>
-                            <th colspan="2">${{total}}</th>
+                            <th colspan="2">${{total|number:'1.2-2'}}</th>
                         </tr>
                     </tfoot>
                 </table>
                 <div class="cart-button">
                     <div class="row">
                         <div class="col-md-4">
-                            <a (click)="clearCart()" class="btn btn-primary" [class.disabled]   ="iscartempty">Clear Container</a>
+                            <a (click)="clearCart()" class="btn btn-primary" [class.disabled]="iscartempty">Clear Container</a>
+                            <a class="btn btn-outline-primary" [class.disabled]="iscartempty">Download invoice</a>
+
                         </div>
                         <div class="col-md-8 text-right">
                             <a href="/" class="btn btn-outline-primary">Continue shopping</a>

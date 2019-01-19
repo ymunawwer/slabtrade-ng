@@ -9,7 +9,9 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
+.link{
+    cursor: pointer
+}
     </style>
 
     <div >
@@ -450,7 +452,7 @@ input[type=number]::-webkit-outer-spin-button {
                                             <td class="table-option col-md-8">Net Weight :</td>
                                             <td class="table-option1 col-md-4">
                                                 <ul>
-                                                    <li class="item">{{doc.net_weight}}lbs</li>
+                                                    <li class="item">{{doc.net_weight|number:'1.2-2'}}lbs</li>
                                                 </ul>
                                             </td>
                                         </tr>
@@ -510,8 +512,11 @@ input[type=number]::-webkit-outer-spin-button {
                                         </div>
                                     </div>
                                 </div>
-                                                <!-- (click)="toCart(doc,number)" -->
-                                <a  class="btn btn-secondary" (click)="openModal(doc,number)">Show Recommended Item</a>
+                                                <!-- (click)="toCart(doc,number)",openModal(doc,number) -->
+                                <a style="padding: 10px; font-size: 11px;" class="btn btn-secondary" (click)="toCart2(doc,number)">Add To Cart</a>
+                                <a style="padding: 10px; font-size: 11px; margin-left: 6px" class="btn btn-secondary">Add To Wish List</a>
+                                <a style="padding: 10px; font-size: 11px; margin-left: 6px" class="btn btn-secondary">Request Sample</a>
+
                                 <!-- <button mat-raised-button (click)="openDialog()">Pick one</button> -->
                             </div>
                         </div>
@@ -614,7 +619,7 @@ input[type=number]::-webkit-outer-spin-button {
                                 <div class="cart-slide-box">
 
                                     <div class="right-cart" >
-                                        <h4 class="bundle-header">Bundle Block No:#{{similar['bundle_number']}}</h4>
+                                        <!-- <h4 class="bundle-header">Bundle Block No:#{{similar['bundle_number']}}</h4>
                                         <table class="table-description">
                                             <tbody>
                                                 <tr class="row-option row">
@@ -683,8 +688,28 @@ input[type=number]::-webkit-outer-spin-button {
                                                       </div></div>
                                                 </div>
                                             </div>
+                                        </div> -->
+
+                                        <div class="card-img-header2">
+                                                <a   (click)='viewItemDetail(similar)' class = "link" >
+                                            <div class="bg-img">
+                                                <a>
+                                                                <div class="card-img" [style.background-image] = "getBackground(similar.images[0])">
+                                                                </div>
+                                                                <h4>{{similar.product_name}}</h4>
+
+
+                                    <span *ngIf="!getDiscountedPrice(similar.price, similar.offer_value) && similar.price != undefined" class="price">{{similar.price===undefined?'':'$'+similar.price}}</span>
+                                    <span *ngIf="getDiscountedPrice(similar.price, similar.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{similar.price===undefined?'':'$'+similar.price}}</s></span>
+                                    <span *ngIf="similar.price != undefined && getDiscountedPrice(similar.price, similar.offer_value)" class="price">$ {{getDiscountedPrice(similar.price, similar.offer_value) | number : '1.2-2'}}</span>
+
+
+                                                               <button  type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(similar)'>View Details</button>
+                                                            </a>
+                                            </div></a>
                                         </div>
-                                        
+
+
                                     </div>
                                 </div>
 
@@ -704,7 +729,7 @@ input[type=number]::-webkit-outer-spin-button {
                 <div class="modal-footer">
                     <!-- <div class="row"> -->
                         <div class="footer-left range">
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="exampleFormControlSelect1">{{number <= 6 ? 6-number : 0}} Remaining</label>
                                 <div class="fill-container">
                                     <span class="fill gray"[hidden] = "number>=1" ></span>
@@ -721,11 +746,11 @@ input[type=number]::-webkit-outer-spin-button {
                                     <span class="fill red" [hidden] = "number<6"></span>
 
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="footer-right">
+                        <!-- <div class="footer-right">
                             <a (click)="toCart()" class="btn btn-primary btn-sm">Add To Cart</a>
-                        </div>
+                        </div> -->
                     <!-- </div> -->
                 </div>
             </div>

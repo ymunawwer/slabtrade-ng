@@ -18,6 +18,7 @@ import { SalesReportComponent } from './sales-report/sales-report.component';
 import { DealsComponent } from './deals/deals.component';
 import { CreateDealComponent } from './create-deal/create-deal.component';
 import { NgxLoadingModule } from 'ngx-loading';
+import { SampleRequestComponent } from './sample-request/sample-request.component';
 
 @NgModule({
   declarations: [    HomeComponent,
@@ -43,7 +44,9 @@ import { NgxLoadingModule } from 'ngx-loading';
 
     DealsComponent,
 
-    CreateDealComponent
+    CreateDealComponent,
+
+    SampleRequestComponent
 
     ],
   imports: [

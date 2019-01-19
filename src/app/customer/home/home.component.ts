@@ -79,11 +79,11 @@ this.total_suggested_item = 0;
 
     console.log('item',this.items)
     feather.replace();
-    $('#cart-modal').on('hidden.bs.modal', function (e) {
-     window.location.reload();
-      console.log('number',this.number,this.rem)
+//     $('#cart-modal').on('hidden.bs.modal', function (e) {
+//      window.location.reload();
+//       console.log('number',this.number,this.rem)
       
-})
+// })
 
   }
 
@@ -287,8 +287,9 @@ this.total_suggested_item = 0;
 
   viewItemDetail(doc){
 
-
+    $('#cart-modal').modal('hide');
     // console.log(doc)
+    this.item_image = []
     this.doc = doc;
     this.doc.images.forEach(element => {
       this.item_image.push(element.path)
@@ -308,7 +309,9 @@ this.total_suggested_item = 0;
         this.total_suggested_item = this.similarproduct.length;
 
         const element = document.querySelector("#top");
-          if (element) { element.scrollIntoView(); }
+          if (element) { 
+            
+            element.scrollIntoView(); }
 
     this.loading = false;
 
@@ -1564,6 +1567,251 @@ searchByCityradio(){
   }
 
 }
+
+
+
+async toCart2(doc,number){
+  // this.addItemCart(doc.bundle_number,this.number);
+  this.addItem()
+    // console.log('dimension',doc['dimension'][0]['width'],number);
+    console.log(this.similarproduct)
+    let net_area = 0;
+    // this.tax=1.1
+    // this.shipping_cost = 1;
+    var total_quantity;
+    
+    var cart_total;
+   var tax_amount;
+    var price = 0;
+    var customer;
+    
+    var cart_amount;
+    if(this.number!==0){
+      this.item_obj_array.forEach(el=>{
+        this.quantity += el['quantity']
+        price = price + el['total']
+        console.log('total',typeof el['total'])
+      
+      })
+      console.log('price',price)
+    if(this.auth.isAuthenticated() ){
+    customer = this.auth.getUser()['country'];
+    console.log(customer)
+    // this.loading = true;
+    await this.nodeapi.getPortDetailBycountry(customer).subscribe((result)=>{
+      console.log(result);
+      this.port_list = result['data']
+        this.tax = result['data'][0]['tax_percentage'];
+        this.shipping_cost = result['data'][0]['shipping_cost'];
+        // console.log('port',result['data'],tax,shipping_cost)
+        console.log('port',this.tax,this.shipping_cost)
+    console.log('doc',doc)
+    const discounted_price = this.getDiscountedPrice(doc['price'], doc['offer_value']) ?
+    this.getDiscountedPrice(doc['price'], doc['offer_value']) : doc['price'];
+    price = discounted_price*<number>this.quantity;
+
+
+
+    if(this.number>0){
+      this.nodeapi.getCart('0').subscribe((res)=>{
+
+        if(res.error_code === 401) {
+
+          this.route.navigate(['/login']);
+
+        } else if(res.error_code === 200) {
+
+
+          if(res.message==="Cart is Empty"){
+            tax_amount = price/(1+(this.tax/100));
+          let data = {"user_id":this.auth.getUser()._id,
+          "bundle":
+          [
+            {
+            "cancel_status":"Pending",
+            "supplier_id":doc.supplier_id,
+            "bundle_id":doc.bundle_number,
+            "bundle_name":doc.product_name,
+            "net_area":net_area,
+            "thickness":doc.dimension[0].thickness,
+            "quantity":this.number,
+            "total":price,
+
+            "Dimension":[{
+              "width":doc['dimension'][0]['width'],
+              "height":doc['dimension'][0]['height'],
+              "unit":"inch"
+            }]}],
+            "total_amount":price,
+            "total_quantity":this.number,
+            "cart_total":price + this.shipping_cost + tax_amount,
+            "shipping_cost":this.shipping_cost,
+            "tax":tax_amount}
+
+
+
+
+console.log('data', data);
+
+    this.loading = true;
+
+
+          this.nodeapi.addToCart(data).subscribe((response)=>{
+
+            localStorage.removeItem('cart')
+            localStorage.setItem('cart',JSON.stringify(this.number));
+                this.loading = false;
+                    $('#cart-modal').modal('hide');
+
+            Swal({
+              text: 'Cart updated successfully',
+              type: 'success',
+              confirmButtonText: 'ok',
+              confirmButtonColor: '#0a3163'
+            }).then((result) => {
+
+              $('#cart-modal').modal('show');
+
+            });
+            // this.route.navigate(['/customer/cart'])
+
+
+          })
+
+          }else if(res.message!=="Cart is Empty"){
+            var quantity = 0;
+            this.item_obj_array.forEach(element => {
+              console.log(element)
+              quantity = quantity+element['quantity']
+              
+            });
+            console.log("quantity",this.quantity);
+            // console.log("document",doc)
+            cart_amount = res.data[0].total_amount+price;
+            tax_amount = cart_amount/(1+(this.tax/100));
+            let total_quantity = res.data[0].total_quantity+this.quantity;
+          
+            let bundle={
+              "supplier_id":doc.supplier_id,
+              "bundle_id":doc.bundle_number,
+              "bundle_name":doc.product_name,
+              "net_area":net_area,
+              "thickness":doc.dimension[0].thickness,
+              "quantity":this.quantity,
+              "total":price,
+              "Dimension":[{
+                "width":doc['dimension'][0]['width'],
+                "height":doc['dimension'][0]['height'],
+                "unit":"inch"
+              }]}
+// console.log('new added item',this.item_obj_array);
+// this.item_obj_array.forEach(el=>{
+//   res.data[0].bundle.push(el)
+
+// })
+res.data[0].bundle.push(bundle)
+            let data_updated = {"user_id":this.auth.getUser()._id,
+            "bundle":res.data[0].bundle,
+
+            "total_quantity":total_quantity,
+
+            "total_amount":price,
+
+            "cart_total":cart_amount+this.shipping_cost+tax_amount,
+
+            "shipping_cost":this.shipping_cost,
+
+            "tax":tax_amount
+          }
+
+// "error_code":200,"Message":"Please add more item to the container.","data":{"bundle_id":"987986","bundle_name":"Marble","supplier_id":"5c075eec28d89c7915c53ea9"
+              // res.data[0].bundle.push(data_updated)
+    this.loading = true;
+
+              this.nodeapi.addToCart(data_updated).subscribe((res)=>{
+    $('#cart-modal').modal('hide');
+                if(res["error_code"] ===200){
+                      this.loading = false;
+
+                  if(res['Message'] === "Please add more item to the container."){
+                    Swal({
+                      text: 'please add item From similar Supplier or remove the last added item from your cart.',
+                      type: 'warning',
+                      confirmButtonText: 'ok',
+                      confirmButtonColor: '#0a3163'
+                    });
+
+                  }else{
+                    console.log("updated cart",res)
+                    localStorage.removeItem('cart')
+                    localStorage.setItem('cart',total_quantity)
+
+                    Swal({
+                      text: 'Cart updated successfully',
+                      type: 'success',
+                      confirmButtonText: 'ok',
+                      confirmButtonColor: '#0a3163'
+                    }).then((result) => {
+
+                      $('#cart-modal').modal('show');
+
+                    });
+
+                    console.log(total_quantity)
+                    // this.route.navigate(['/customer/cart'])
+
+                  }
+                }
+
+              })
+
+
+          }
+
+        }
+      })
+    }
+    else if(this.number<1){
+      Swal({
+        text: 'Slab count cannot be Zero',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    }
+
+    this.loading = false;
+
+
+  },(err)=>{
+    this.loading = false;
+
+      console.log(err);
+      Swal({
+        text: 'Fail to get port detail',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+
+    })} else {
+      Swal({
+        text: 'Please login to continue',
+        type: 'info',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+      this.route.navigate(['/login']);
+    }} else if(this.number===0) {
+      Swal({
+        text: 'Please add item to the cart',
+        type: 'error',
+        confirmButtonText: 'ok',
+        confirmButtonColor: '#0a3163'
+      });
+    }
+
+  }
 
 }
 

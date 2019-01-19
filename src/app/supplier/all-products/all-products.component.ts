@@ -92,7 +92,7 @@ export class AllProductsComponent implements OnInit {
     this.loading = false;
 
 
-    })
+    });
 
 
     $('#smartwizard3').smartWizard({

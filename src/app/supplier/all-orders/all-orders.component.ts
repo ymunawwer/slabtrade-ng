@@ -1,3 +1,4 @@
+import { DataService } from './../../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import {NodeapiService} from '../../nodeapi.service'
 // const Json2csvParser = require('json2csv').Parser;
@@ -29,8 +30,9 @@ export class AllOrdersComponent implements OnInit {
   payment_status:String;
   payment_mode:String;
   isOrderClicked:boolean;
+  selectedOrder;
 
-  constructor(private node:NodeapiService,private route:Router,private auth:AuthService) {
+  constructor(private node:NodeapiService,private route:Router,private auth:AuthService, dataservice: DataService) {
     this.isorderdetail=false;
     this.ispaymentdetails=false
     this.ispurchaseorder=false
@@ -42,6 +44,15 @@ export class AllOrdersComponent implements OnInit {
     this.files = []
     this.bool = true
     this.isOrderClicked = false;
+
+    if (dataservice.getOption()) {
+
+      this.selectedOrder = dataservice.getOption()['selectedOrder'];
+
+      this.orderDetail1(this.selectedOrder);
+
+    }
+
   }
 
   ngOnInit() {
