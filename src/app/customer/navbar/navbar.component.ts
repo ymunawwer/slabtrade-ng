@@ -1,4 +1,4 @@
-import { Component, OnInit,ViewChild } from '@angular/core';
+import { Component, OnInit,ViewChild,Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 
@@ -9,7 +9,7 @@ import { HomeComponent } from '../home/home.component';
 })
 export class NavbarComponent implements OnInit {
   flag=0;
-  cart_count:number;
+  @Input() cart_count:number;
   session;
   first_name:string;
   is_authenticated =false;

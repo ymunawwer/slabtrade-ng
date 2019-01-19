@@ -21,6 +21,7 @@ declare var $ :any;
 })
 export class HomeComponent implements OnInit {
   loading = false;
+  cart_count = localStorage.getItem('cart');
   quantity = 0;
   url = ENV.server;
   viewItemClickCount = 0;
@@ -1660,6 +1661,7 @@ console.log('data', data);
 
             localStorage.removeItem('cart')
             localStorage.setItem('cart',JSON.stringify(this.number));
+            this.cart_count = JSON.stringify(this.number)
                 this.loading = false;
                     $('#cart-modal').modal('hide');
 
@@ -1745,6 +1747,7 @@ res.data[0].bundle.push(bundle)
                     console.log("updated cart",res)
                     localStorage.removeItem('cart')
                     localStorage.setItem('cart',total_quantity)
+                    this.cart_count = total_quantity
 
                     Swal({
                       text: 'Cart updated successfully',
