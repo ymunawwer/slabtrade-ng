@@ -80,49 +80,17 @@
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
+                              <tr *ngFor="let product of products">
+                                <td><a class="fields">#{{product.bundle_number}}</a></td>
+                                <td><a  class="fields">{{product.product_name}}
+                                     <!-- <span class="flag-icon flag-icon-us"></span> -->
                                     </a></td>
-                                    <td>
-                                        <a class="btn btn-primary">Edit</a>
-                                        <a class="btn btn-danger">Delete</a>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
-                                    </a></td>
-                                    <td>
-                                      <a class="btn btn-primary">Edit</a>
-                                      <a class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
-
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
-                                    </a></td>
-                                    <td>
-                                      <a class="btn btn-primary">Edit</a>
-                                      <a class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
-
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
-                                    </a></td>
-                                    <td>
-                                      <a class="btn btn-primary">Edit</a>
-                                      <a class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
+                                <td>
+                                  <!--(click) = "editProduct(product)"-->
+                                    <a  routerLink="/supplier/editProduct/{{product._id}}"  class="btn btn-primary">Edit</a>
+                                    <a href="#" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
 
                             </tbody>
                         </table>
@@ -137,49 +105,27 @@
                         <table class="table data-table table-bordered text-center">
                             <thead>
                                 <tr>
-                                    <th scope="col">Order Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Status</th>
+                                  <th scope="col">Order Id</th>
+                                  <th scope="col">Bundle Name</th>
+                                  <th scope="col">Date</th>
+                                  <th scope="col">Status</th>
+                                  <!-- <th scope="col">Action</th> -->
                                 </tr>
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
-
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
-
-                                </tr>
-
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
-
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
-
-                                </tr>
-
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
-
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
-
-                                </tr>
-
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
-
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
-
-                                </tr>
+                              <tr *ngFor='let order of orders'>
+                                <td><a (click)="orderDetail1(order)" class="fields">#{{order._id}}</a></td>
+                                <td>
+                                    <a class="fields">{{order.products[0].bundle_id}}
+                                    </a></td>
+                                <td><a class="fields">{{order.created_at | date:'dd/MM/yyyy'}}</a></td>
+                                <td><a class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
+                                <!-- <td>
+                                    <a (click)="orderDetail1(order)" class="btn btn-primary">Edit</a>
+                                    <a href="#" class="btn btn-danger">Delete</a>
+                                </td> -->
+                            </tr>
 
                             </tbody>
                         </table>

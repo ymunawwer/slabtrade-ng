@@ -13,6 +13,7 @@ import { AuthGuard } from '../auth-guard.service';
 import { SalesReportComponent } from './sales-report/sales-report.component';
 import { CreateDealComponent } from './create-deal/create-deal.component';
 import { DealsComponent } from './deals/deals.component';
+import { SampleRequestComponent } from './sample-request/sample-request.component';
 const routes: Routes =
 
 [
@@ -25,7 +26,9 @@ const routes: Routes =
   {path: 'admin/sales-report', component: SalesReportComponent, canActivate: [AuthGuard, IsAdminGuard]},
   {path: 'admin/createDeal', component: CreateDealComponent, canActivate: [AuthGuard, IsAdminGuard]},
   {path: 'admin/deals', component: DealsComponent, canActivate: [AuthGuard, IsAdminGuard]},
-  {path:'admin/map',component:MapComponent,canActivate:[AuthGuard,IsAdminGuard]}
+  {path:'admin/map',component:MapComponent,canActivate:[AuthGuard,IsAdminGuard]},
+  {path:'admin/sampleRequest',component:SampleRequestComponent,canActivate:[AuthGuard,IsAdminGuard]}
+
 ];
 
 @NgModule({
