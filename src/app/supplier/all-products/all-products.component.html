@@ -16,6 +16,7 @@
                         <tr>
                             <th scope="col">Product Id</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Qualified status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                             <td><a  class="fields">{{product.product_name}}
                                  <!-- <span class="flag-icon flag-icon-us"></span> -->
                                 </a></td>
+                                <td><a class="fields">Qualified</a></td>
                             <td>
                               <!--(click) = "editProduct(product)"-->
                                 <a  routerLink="/supplier/editProduct/{{product._id}}"  class="btn btn-primary">Edit</a>
