@@ -18,10 +18,12 @@ import { HomeComponent as supplierHomeComponent } from './home/home.component'
 import { HttpModule } from '@angular/http';
 import { FirstPageComponent } from './first-page/first-page.component';
 import { EditProductComponent } from './edit-product/edit-product.component'
+
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { NewHomeComponent } from './new-home/new-home.component';
+import { OrderDetailComponent } from './order-detail/order-detail.component';
 @NgModule({
-  declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent, EditProductComponent, NewHomeComponent],
+  declarations: [SidebarComponent,supplierHomeComponent,NavbarComponent,FirstPageComponent,CreateBundleComponent,AllOrdersComponent,AllProductsComponent,SettingsComponent, EditProductComponent, NewHomeComponent, OrderDetailComponent],
   imports: [
     CommonModule,
     SupplierRoutingModule,

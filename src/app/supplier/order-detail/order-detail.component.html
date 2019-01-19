@@ -1,0 +1,379 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div >
+        <app-sidebar></app-sidebar>
+        <div>
+          <app-navbar></app-navbar>
+
+<div class="page-inner sub-menu-inner">
+        <div >
+   <section style="
+   top: 75px;
+   left: 70px;" class="sub-menu">
+        <ul>
+            <li>
+                <a [ngClass]="{'active': isorderdetail === true }" (click)="orderDetailTab()">Order Details</a>
+            </li>
+            <li>
+                <a  [ngClass]="{'active': ispurchaseorder === true }" (click)="purchaseOrderTab()">Purchase Order</a>
+            </li>
+            <li>
+                <a  [ngClass]="{'active': ispaymentdetails === true }" (click)="paymentDetailTab()">Payment Details</a>
+            </li>
+            <li>
+                <a  [ngClass]="{'active': isupload === true }" (click)="shippingDetailUploadTab()">Upload</a>
+            </li>
+        </ul>
+    </section></div>
+<div >
+    <div class = "container">
+        <section class="order-table" *ngIf="false">
+            <div class="table-details orders text-center">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Order Id</th>
+                            <th scope="col">Bundle Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <ng-template ngFor let-order [ngForOf]= "orders" let-i="index" > -->
+                       <tr *ngFor='let order of orders'>
+                            <td><a (click)="orderDetail1(order)" class="fields">#{{order._id}}</a></td>
+                            <td>
+                                <a class="fields">{{order.products[0].bundle_id}} 
+                                    <!-- <span class="flag-icon flag-icon-us"></span> -->
+                                </a></td>
+                            <td><a class="fields">{{order.created_at | date:'dd/MM/yyyy'}}</a></td>
+                            <td><a class="fields"><span class="badge badge-warning">{{order.cancel_status}}</span></a></td>
+                            <td>
+                                <a (click)="orderDetail1(order)" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                        <!-- </ng-template> -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <div *ngIf="isorderdetail">
+
+
+
+            <div >
+                <div >
+                    <section class="order-table">
+                        <div class="table-details">
+                            <table class="table table-bordered table-content">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th rowspan="2">Block number</th>
+                                        <th colspan="3">Info</th>
+                                        <th rowspan="2">Quantity</th>
+                                        <!-- <th rowspan="2">Toatal</th> -->
+                                    </tr>
+                                    <tr class="text-center">
+                                        <th>Sqft</th>
+                                        <th>Thickness</th>
+                                        <th>Dimension</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-template ngFor let-item [ngForOf]= "order.products" let-i="index" >
+                                    <tr>
+                                        <td>{{item.bundle_id}}</td>
+                                        <td>{{item.dimension[0].width*item.dimension[0].height}}</td>
+                                        <td>{{item.dimension[0].thickness}}</td>
+                                        <td>{{item.dimension[0].width}}X{{item.dimension[0].height}}</td>
+                                        <td>{{item.quantity}}</td>
+                                        <!-- <td>{{order.total}}</td> -->
+                                    </tr>
+                                  </ng-template>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="right-button">
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    <button  class="btn btn-light" [disabled] = "true" >Download Order List</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="shipping-order">
+                        <div class="address-details">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h3>Shipping Address:</h3>
+                                    <p style="margin-bottom:-2px">6701 Ammendale Rd, Beltsville, MD,</p>
+                                        <p style="margin-bottom:-1px">20705.</p>
+                                       <p style="margin-bottom:-2px">Phone: 301 595 7006</p>
+                                        <p style="margin-bottom:-2px">Fax: 301 595 7008</p>
+                                        <p style="margin-bottom:-2px">Email: maryland@blueplanetrocks.com</p>
+                                </div>
+                                <div class="col-md-4 text-right address-details-right" *ngIf="cancel_status">
+                                    <a (click)="bool ? acceptOrder($event.target): null" class="btn btn-primary" >Accept Order</a>
+                                    <a (click)="bool ? rejectOrder($event.target): null" class="btn btn-secondary">Cancel Order</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+
+    </div>
+
+    <div *ngIf="ispurchaseorder">
+
+
+
+
+
+        <div >
+            <div >
+                <!-- <section class="purchase-detail">
+                    <div class="purchase-doc">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Purchase Order</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="#" class="btn btn-primary btn-sm">Request Slab Trade</a>
+                            </div>
+                          </div></div>
+                </section> -->
+                <section class="purchase-detail">
+                    <div class="purchase-doc">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>View Create Purchase Order</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <a href="{{purchase_order}}" class="btn btn-primary btn-sm">View</a>
+                                <a href="{{purchase_order}}" class="btn btn-secondary btn-sm">Download</a>
+                            </div>
+                        </div></div>
+                </section>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <div *ngIf="ispaymentdetails">
+
+        <div >
+            <div >
+                <section class="supplier-status">
+                    <div class="supplier-details">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h3>Payment Status</h3>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <span href="#" class="badge badge-warning custom-process">{{payment_status}}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+
+                <section class="supplier-status">
+                  <div class="supplier-details">
+
+                    <div class="row">
+                      <div class="col-md-6">
+                          <h3>Payment Mode</h3>
+                      </div>
+                      <div class="col-md-6 text-right">
+                          <span href="#" class="badge badge-warning custom-process">{{payment_mode}}</span>
+                      </div>
+                  </div>
+                  </div>
+              </section>
+
+                <section class="supplier-verification">
+                    <div class="supplier-doc">
+                        <h4 class="sub-title">Wire Instruction</h4>
+                        <div class="documet-box">
+                                <ng-template ngFor let-doc [ngForOf]= "wired_doc_arr" let-i="index" >
+                            <div class="row document-list">
+<!-- wired_doc_arr -->
+                                <div class="col-md-6">
+                                    <h4>Document {{i+1}}</h4>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <a href={{doc}} class="btn btn-primary btn-sm">view</a>
+                                    <a href={{doc}} class="btn btn-secondary btn-sm">Download</a>
+                                </div>
+                            </div></ng-template>
+
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+
+
+
+
+
+
+</div>
+    </div>
+
+
+
+
+    <div *ngIf="isupload">
+
+
+
+
+
+
+        <div >
+            <div >
+                <div class="page-content">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="prev-img-blk-outer">
+                                <div class="prev-img-blk">
+                                    <div class="img_outer" id="prev_image_preview" style="background-image: url(https://via.placeholder.com/500x500?text=Select+Preview+Image);">
+                                    </div>
+                                    <div class="fileUpload up-btn prev-up-btn">
+                                        <input type="file" name="image[0]" id="prev_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-12 form-box">
+                                    <h6 class="mb-2"><strong>Instruction</strong></h6>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <section class="upload-details">
+                    <div class="upload-doc">
+                            <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input-group mb-3">
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="inputGroupFile01" (change)="allFilesToUpload($event)" accept="application/pdf">
+                                                <label class="custom-file-label" for="inputGroupFile01" >Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile02" (change)="allFilesToUpload($event)" accept="application/pdf">
+                                        <label class="custom-file-label" for="inputGroupFile02" >Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile03"  (change)="allFilesToUpload($event)" accept="application/pdf">
+                                        <label class="custom-file-label" for="inputGroupFile03">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile04" (change)="allFilesToUpload($event)" accept="application/pdf">
+                                        <label class="custom-file-label" for="inputGroupFile04" >Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile05" (change)="allFilesToUpload($event)" accept="application/pdf">
+                                        <label class="custom-file-label" for="inputGroupFile05">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile06" (change)="allFilesToUpload($event)" accept="application/pdf">
+                                        <label class="custom-file-label" for="inputGroupFile06">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="inputGroupFile07" (change)="allFilesToUpload($event)" accept="application/pdf">
+                                        <label class="custom-file-label" for="inputGroupFile07">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 text-right upload-padding">
+                                <a  class="btn btn-secondary" (click)="uploadShippingDoc()">Update To Shipped</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
+</div></div>

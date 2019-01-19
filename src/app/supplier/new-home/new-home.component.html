@@ -19,7 +19,7 @@
                             <i class="fas fa-square"></i>
                         </div>
                         <div class="scheme-title">
-                            <h4>2</h4>
+                            <h4>{{total_slabs}}</h4>
                             <p>Total Slabs</p>
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                             <i class="fas fa-th"></i>
                         </div>
                         <div class="scheme-title">
-                            <h4>23</h4>
+                            <h4>{{total_bundles}}</h4>
                             <p>Total Bundles</p>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                             <i class="fas fa-shopping-bag"></i>
                         </div>
                         <div class="scheme-title">
-                            <h4>345</h4>
+                            <h4>{{total_orders}}</h4>
                             <p>Total Orders</p>
                         </div>
                     </div>
@@ -80,49 +80,19 @@
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
+                                <tr *ngFor="let item of products_arr; let i = index" class="col-sm-12">
+                                    <td><a class="fields">#{{item['bundle_number']}}</a></td>
+                                    <td><a class="fields">{{item['product_name']}}
                                       <span class="flag-icon flag-icon-us"></span>
                                     </a></td>
                                     <td>
-                                        <a class="btn btn-primary">Edit</a>
-                                        <a class="btn btn-danger">Delete</a>
+                                        <a  routerLink="/supplier/editProduct/{{item._id}}"  class="btn btn-primary">Edit</a>
+                                        <a class="btn btn-danger" (click)="removeProduct(item['bundle_number'])">Delete</a>
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
-                                    </a></td>
-                                    <td>
-                                      <a class="btn btn-primary">Edit</a>
-                                      <a class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
+                              
 
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
-                                    </a></td>
-                                    <td>
-                                      <a class="btn btn-primary">Edit</a>
-                                      <a class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
-
-                                <tr>
-                                    <td><a class="fields">#1</a></td>
-                                    <td><a class="fields">Asdf
-                                      <span class="flag-icon flag-icon-us"></span>
-                                    </a></td>
-                                    <td>
-                                      <a class="btn btn-primary">Edit</a>
-                                      <a class="btn btn-danger">Delete</a>
-                                  </td>
-                                </tr>
 
                             </tbody>
                         </table>
@@ -145,41 +115,19 @@
                             </thead>
                             <tbody>
 
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
+                                <tr *ngFor="let item of orders_arr; let i = index">
+                                    <td><a routerLink="/supplier/OrderDetailComponent/{{item._id}}"  class="fields">#{{item['_id']}}</a></td>
+                                    <td><a routerLink="/supplier/OrderDetailComponent/{{item._id}}" class="fields">{{item['name']}}<span class="flag-icon flag-icon-us"></span></a></td>
+                                    <td><a routerLink="/supplier/OrderDetailComponent/{{item._id}}" class="fields">{{item['created_at'] | date:shortDate}}</a></td>
 
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
-
-                                </tr>
-
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
-
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
+                                    <td><a routerLink="/supplier/OrderDetailComponent/{{item._id}}" class="fields"><span class="badge badge-success">{{item['cancel_status']}}</span></a></td>
 
                                 </tr>
 
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
 
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
+                         
 
-                                </tr>
-
-                                <tr>
-                                    <td><a  class="fields">#23</a></td>
-                                    <td><a  class="fields">Something<span class="flag-icon flag-icon-us"></span></a></td>
-                                    <td><a  class="fields">New UI</a></td>
-
-                                    <td><a class="fields"><span class="badge badge-success">Approved</span></a></td>
-
-                                </tr>
+                           
 
                             </tbody>
                         </table>

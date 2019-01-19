@@ -300,6 +300,15 @@ uploadShippingDoc(data){
 
 }
 
+removeProduct(bundle_number){
+  let token = this.auth.getToken();
+  
+  return this.http.get(ENV.supplier +'/removeproduct?supplier_id='+this.auth.getUser()._id+'&bundle_number='+bundle_number,{headers:{'Auth':'Bearer ' + token}});
+
+
+
+}
+
 
 
 
@@ -430,6 +439,16 @@ getProductDetail(id) {
 
   );
 
+}
+
+
+getSupplierDashboardData(){
+  const token = this.auth.getToken();
+
+  return this.http.get(ENV.supplier + '/dashboard?id=' + this.auth.getUser()._id, {headers:{'Auth':'Bearer ' + token,'role':this.auth.getUser().roles[0]}}).pipe(
+    catchError(err=>this.handleError(err))
+
+  );
 }
 
 
