@@ -61,11 +61,9 @@
                               <label for="exampleFormControlSelect1">Quality <span class="red">*</span></label>
                               <select name="quantity" #quantity="ngModel" class="form-control" id="exampleFormControlSelect1" [(ngModel)] = "bundle.quality"
                                 required>
-                                  <option>1</option>
-                                  <option>2</option>
-                                  <option>3</option>
-                                  <option>4</option>
-                                  <option>5</option>
+                                <option>Premium</option>
+                                <option>High-standard</option>
+                                <option>Commercial</option>
                               </select>
                               <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="alert alert-danger" >
 
@@ -76,6 +74,29 @@
                           </div>
                       </div>
                   </div>
+
+                  <div class="row padding">
+
+                    <div class="col-md-12">
+                        <p style="font-weight: bold; font-size: 0.76em;">slab Preference </p>
+                    </div>
+
+                    <div class="col-md-6 form-check-inline">
+                        <label class="radio-button">Cut to Size
+                            <input #preference="ngModel" type="radio" name="radio" value='cut_to_size' [(ngModel)]="bundle.slab_preference" >
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="radio-button">Pre Fabricated
+                            <input type="radio" name="radio" value='pre_fabricated' [(ngModel)]="bundle.slab_preference">
+                            <span class="checkmark"></span>
+                        </label>
+                    </div>
+
+                 
+
+                  </div>
+
+
                   <div class="row padding">
                       <div class="col-sm-12">
                           <div class="form-group">
@@ -97,7 +118,7 @@
                       </div>
                   </div>
                   <div class="row form-box">
-                      <div class="col-md-6">
+                      <!-- <div class="col-md-6">
                           <div class="form-group">
                               <label for="exampleFormControlSelect1">Color <span class="red">*</span></label>
                               <select name="color" #t="ngModel" class="form-control" id="exampleFormControlSelect1"
@@ -114,8 +135,8 @@
                                 </div>
                              </div>
                           </div>
-                      </div>
-                      <div class="col-md-6">
+                      </div> -->
+                      <!-- <div class="col-md-6">
                           <button type="button" class="btn btn-light btn-block" data-toggle="modal" data-target="#requestNew">
                               Request For New
                           </button>
@@ -151,128 +172,9 @@
                                   </div>
                               </div>
                           </div>
-                      </div>
+                      </div> -->
                   </div>
-                  <div class="row form-box">
-                      <div class="col-sm-12">
-                          <label for="formGroupExampleInput">Dimension <span class="red">*</span></label>
-                          <div class="row">
-                              <div class="col-md-4">
-                                  <div class="form-group">
-                                      <input #bundleWidth="ngModel" type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control"
-                                      placeholder="Width" [(ngModel)] = "bundle.width" name="width"  required >
-                                      <div *ngIf="bundleWidth.invalid && (bundleWidth.dirty || bundleWidth.touched)" class="alert alert-danger" >
-
-                                        <div *ngIf="bundleWidth.errors.required">
-                                          Width is required.
-                                        </div>
-                                     </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-4">
-                                  <div class="form-group">
-                                      <input #height type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control"
-                                       placeholder="Height" [(ngModel)] = "bundle.height" name = "height" required minlength="1">
-                                       <div *ngIf="height.invalid && (height.dirty || height.touched)" class="alert alert-danger" >
-
-                                        <div *ngIf="height.errors.required">
-                                          Height is required.
-                                        </div>
-                                     </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-4">
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                      <label class="btn btn-primary active" [ngClass]="{'active': unit=='inch'}" (click)="onUnitChange($event)" value="inch" >
-                                          <input type="radio" name="options" ng-control="options" id="option10" autocomplete="off" value="inch" > inch
-                                      </label>
-                                      <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
-                                          <input type="radio" name="options" ng-control="options" id="option20" autocomplete="off" value="cm" > cm
-                                      </label>
-                                      <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='m'}">
-                                          <input type="radio" name="options" ng-control="options" id="option30" autocomplete="off" value="m"  > m
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row form-box">
-                      <div class="col-sm-12">
-                          <label for="formGroupExampleInput">Thickness <span class="red">*</span></label>
-                          <div class="row">
-                              <div class="col-md-8">
-                                  <div class="form-group">
-                                      <input #thickness="ngModel" type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control" placeholder="Thickness" [(ngModel)] = "thickness_new" name="thickness" required>
-                                      <div *ngIf="thickness.invalid && (thickness.dirty || thickness.touched)" class="alert alert-danger" >
-
-                                        <div *ngIf="thickness.errors.required">
-                                          Thickness is required.
-                                        </div>
-                                     </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-4">
-                                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                      <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='inch'}">
-                                          <input type="radio" name="options" id="option1" autocomplete="off" value="inch" checked  (click)="onUnitChange($event)" name="t_inch"> inch
-                                      </label>
-                                      <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
-                                          <input type="radio" name="options" id="option2" autocomplete="off" value="cm" (click)="onUnitChange($event)" name="t_cm"> cm
-                                      </label>
-                                      <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='m'}">
-                                          <input type="radio" name="options" id="option3" autocomplete="off" value="m" (click)="onUnitChange($event)" name = "t_m"> m
-                                      </label>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row padding">
-                      <div class="col-sm-12">
-                          <div class="form-group">
-                              <label for="formGroupExampleInput">Weight <span class="red">*</span></label>
-                              <div class="input-group mb-3">
-                                  <input #weight="ngModel" type="text" class="form-control" (change)="netWeightChanged($event)" placeholder="Weight" [(ngModel)] = "bundle.bundle_weight" name="weight" required>
-                                  <div class="input-group-append">
-                                      <span class="input-group-text" id="basic-addon2">LB</span>
-                                  </div>
-                              </div>
-                              <div *ngIf="weight.invalid && (weight.dirty || weight.touched)" class="alert alert-danger" >
-
-                                <div *ngIf="weight.errors.required">
-                                  Weight is required.
-                                </div>
-                             </div>
-                                                      </div>
-                      </div>
-                  </div>
-
-                  <div class="row padding">
-
-                      <div class="col-md-12">
-                          <p style="font-weight: bold; font-size: 0.76em;">slab Preference <span class="red">*</span></p>
-                      </div>
-
-                      <div class="col-md-6 form-check-inline">
-                          <label class="radio-button">Cut to Size
-                              <input #preference="ngModel" type="radio" name="radio" value='cut_to_size' [(ngModel)]="bundle.slab_preference" required>
-                              <span class="checkmark"></span>
-                          </label>
-                          <label class="radio-button">Pre Fabricated
-                              <input type="radio" name="radio" value='pre_fabricated' [(ngModel)]="bundle.slab_preference">
-                              <span class="checkmark"></span>
-                          </label>
-                      </div>
-
-                      <div *ngIf="preference.invalid && (preference.dirty || preference.touched)" class="alert alert-danger" >
-
-                        <div *ngIf="preference.errors.required">
-                          slab preference is required.
-                        </div>
-                     </div>
-
-                    </div>
+                          
 
               </form>
             </div>
@@ -294,9 +196,103 @@
                       </div>
                   </div>
                   <div class="row form-box">
+                    <div class="col-sm-12">
+                        <label for="formGroupExampleInput">Dimension <span class="red">*</span></label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input #bundleWidth="ngModel" type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control"
+                                    placeholder="Width" [(ngModel)] = "bundle.width" name="width"  required >
+                                    <div *ngIf="bundleWidth.invalid && (bundleWidth.dirty || bundleWidth.touched)" class="alert alert-danger" >
+
+                                      <div *ngIf="bundleWidth.errors.required">
+                                        Width is required.
+                                      </div>
+                                   </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input #height type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control"
+                                     placeholder="Height" [(ngModel)] = "bundle.height" name = "height" required minlength="1">
+                                     <div *ngIf="height.invalid && (height.dirty || height.touched)" class="alert alert-danger" >
+
+                                      <div *ngIf="height.errors.required">
+                                        Height is required.
+                                      </div>
+                                   </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-primary active" [ngClass]="{'active': unit=='inch'}" (click)="onUnitChange($event)" value="inch" >
+                                        <input type="radio" name="options" ng-control="options" id="option10" autocomplete="off" value="inch" > inch
+                                    </label>
+                                    <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
+                                        <input type="radio" name="options" ng-control="options" id="option20" autocomplete="off" value="cm" > cm
+                                    </label>
+                                    <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='m'}">
+                                        <input type="radio" name="options" ng-control="options" id="option30" autocomplete="off" value="m"  > m
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-box">
+                    <div class="col-sm-12">
+                        <label for="formGroupExampleInput">Thickness <span class="red">*</span></label>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input #thickness="ngModel" type="text" (change)="createRange(bundle.no_of_slabs)" class="form-control" placeholder="Thickness" [(ngModel)] = "thickness_new" name="thickness" required>
+                                    <div *ngIf="thickness.invalid && (thickness.dirty || thickness.touched)" class="alert alert-danger" >
+
+                                      <div *ngIf="thickness.errors.required">
+                                        Thickness is required.
+                                      </div>
+                                   </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                   
+                                    <label class="btn btn-primary" (click)="onUnitChange($event)" [ngClass]="{'active': unit=='cm'}">
+                                        <input type="radio" name="options" id="option2" autocomplete="off" value="cm" name="t_cm"> cm
+                                    </label>
+                                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row padding">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Weight <span class="red">*</span></label>
+                            <div class="input-group mb-3">
+                                <input #weight="ngModel" type="text" class="form-control" (change)="weightChange($event)" placeholder="Weight" [(ngModel)] = "bundle.bundle_weight" name="weight" required>
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="basic-addon2">LB</span>
+                                </div>
+                            </div>
+                            <div *ngIf="weight.invalid && (weight.dirty || weight.touched)" class="alert alert-danger" >
+
+                              <div *ngIf="weight.errors.required">
+                                Weight is required.
+                              </div>
+                           </div>
+                                                    </div>
+                    </div>
+                </div>
+
+
+
+
+                  <div class="row form-box">
                       <div class="col-md-6">
                           <div class="form-group">
-                              <label for="exampleFormControlSelect1">Slabs <span class="red">*</span></label>
+                              <label for="exampleFormControlSelect1">Number of Bundles <span class="red">*</span></label>
                               <input #no_of_slabs="ngModel" class="form-control" type="number"  min="1" max="100" step="1" [(ngModel)] = "bundle.no_of_slabs" (change)="createRange(bundle.no_of_slabs)" name = "slab_quantity" required>
                               <div *ngIf="no_of_slabs.invalid && (no_of_slabs.dirty || no_of_slabs.touched)" class="alert alert-danger" >
 
@@ -444,11 +440,12 @@
               <div class="row">
                   <div class="col-md-4">
                       <div class="prev-img-blk-outer">
+                            <button type="button" id="close0"  (click)="removeImage('key0')" aria-label="Close" class="close" style="position:absolute;z-index: 100;    margin-left: 3px; margin-top: 1px;" > <span aria-hidden="true">&times;</span></button>
                           <div class="prev-img-blk">
                               <div class="img_outer" id="prev_image_preview" [style.background-image] = "images[0] ? getBackground(images[0].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn prev-up-btn">
-                                  <input type="file" name="image[0]" id="prev_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 0)" />
+                                  <input type="file" name="image[0]" id="prev_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event,0,'key0')" />
                               </div>
                           </div>
                       </div>
@@ -469,38 +466,42 @@
                   </div>
                   <div class="col-md-12">
                       <div class="other-img-blk-outer">
+                            <button type="button" id="close1"  (click)="removeImage('key1')" aria-label="Close" class="close" style="position:absolute;z-index: 100;    margin-left: 3px; margin-top: 1px;" > <span aria-hidden="true">&times;</span></button>
                           <div class="other-img-blk">
                               <div class="img_outer" id="other_image_preview"  [style.background-image] = "images[1] ? getBackground(images[1].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 1)" />
+                                  <input type="file" name="image[0]" id="other_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event,1,'key1')" />
                               </div>
                           </div>
                       </div>
                       <div class="other-img-blk-outer">
+                            <button type="button" id="close2"  (click)="removeImage('key2')" aria-label="Close" class="close" style="position:absolute;z-index: 100;    margin-left: 3px; margin-top: 1px;" > <span aria-hidden="true">&times;</span></button>
                           <div class="other-img-blk">
                               <div class="img_outer" id="other2_image_preview" [style.background-image] = "images[2] ? getBackground(images[2].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other2_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 2)" />
+                                  <input type="file" name="image[0]" id="other2_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event,2,'key2')" />
                               </div>
                           </div>
                       </div>
                       <div class="other-img-blk-outer">
+                            <button type="button" id="close3"  (click)="removeImage('key3')" aria-label="Close" class="close" style="position:absolute;z-index: 100;    margin-left: 3px; margin-top: 1px;" > <span aria-hidden="true">&times;</span></button>
                           <div class="other-img-blk">
                               <div class="img_outer" id="other3_image_preview" [style.background-image] = "images[3] ? getBackground(images[3].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other3_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 3)" />
+                                  <input type="file" name="image[0]" id="other3_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event,3,'key3')" />
                               </div>
                           </div>
                       </div>
                       <div class="other-img-blk-outer">
+                            <button type="button" id="close4"  (click)="removeImage('key4')" aria-label="Close" class="close" style="position:absolute;z-index: 100;    margin-left: 3px; margin-top: 1px;" > <span aria-hidden="true">&times;</span></button>
                           <div class="other-img-blk">
                               <div class="img_outer" id="other4_image_preview" [style.background-image] = "images[4] ? getBackground(images[4].path) : getBackground('https://via.placeholder.com/500x500?text=Select+Other+Image')">
                               </div>
                               <div class="fileUpload up-btn other-up-btn">
-                                  <input type="file" name="image[0]" id="other4_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event, 4)" />
+                                  <input type="file" name="image[0]" id="other4_img_upload_btn" class="upload" accept="image/x-png, image/jpeg" (change)="allFilesToUpload($event,4,'key4')" />
                               </div>
                           </div>
                       </div>
@@ -512,32 +513,21 @@
 
           <div id="step-4" class="page-content">
               <form>
+                  
+                 
                   <div class="row padding">
-                      <div class="col-sm-12">
-                          <div class="form-group">
-                              <label for="exampleFormControlTextarea1">Product Description <span class="red">*</span></label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)] = "bundle.product_description" name="product_description"></textarea>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row padding">
-                      <div class="col-sm-12">
-                          <div class="form-group">
-                              <label for="exampleFormControlTextarea1">Bundle Description <span class="red">*</span></label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="bundle.Bundle_description" name = "bundle_description"></textarea>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row padding">
-                      <div class="col-sm-12">
-                          <div class="form-group">
-                              <label for="exampleFormControlTextarea1">Inspection Report <span class="red">*</span></label>
-                              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="inspection_report" [(ngModel)]="bundle.inspection_report"></textarea>
-                          </div>
-                      </div>
+                    
+                        <div class="col-sm-12" *ngFor="let data of inspection_report; let i =index" >
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Inspection Report(bundle-{{i+1}}) <span class="red">*</span></label>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="bundle.inspection_report" name="inspection_report"></textarea>
+                            </div>
+                        </div>
+                  
                   </div>
                   <button type="button" class="btn btn-primary create-bdl-btn" [disabled]="!updateForm.valid || !form2.valid" (click)="onUpdate()">Update Bundle</button>
               </form>
+
 
               <div class="row">
                 <div class="col-md-12">
