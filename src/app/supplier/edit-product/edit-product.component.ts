@@ -43,6 +43,8 @@ inspection_report;
 
      }],
 
+     'images': [],
+
      'net_dimension': [{
       'width': 0,
       'height': 0,
@@ -164,11 +166,12 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
       this.images = this.bundle['images'];
       this.bundle['quality'] = this.bundle['quality']
       console.log(this.images)
-      this.file.push({"key":'key0',"value":this.images[0]})
-      this.file.push({"key":'key1',"value":this.images[1]})
-      this.file.push({"key":'key2',"value":this.images[2]})
-      this.file.push({"key":'key3',"value":this.images[3]})
-      this.file.push({"key":'key4',"value":this.images[4]})
+      this.file.push({"key":'key0',"value":this.images[0] ? this.images[0] : null});
+      this.file.push({"key":'key1',"value":this.images[1] ? this.images[1] : null});
+      this.file.push({"key":'key2',"value":this.images[2] ? this.images[2] : null});
+      this.file.push({"key":'key3',"value":this.images[3] ? this.images[3] : null});
+      this.file.push({"key":'key4',"value":this.images[4] ? this.images[4] : null});
+      console.log('files',this.images);
 
       this.thickness_new = this.bundle.dimension[0].thickness;
 
@@ -488,7 +491,7 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
   weightChange(event){
     console.log("hello",event.target.value,this.aray.length)
     this.length_of_aray = this.aray.length===0?1:this.aray.length;
-    
+
     this.bundle.net_weight = JSON.parse((this.bundle['bundle_weight']*this.length_of_aray).toFixed(2));
   }
 
@@ -510,17 +513,19 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     // this.file = []
     this.file.forEach(element => {
       console.log(typeof element['value'])
-      
-      
+
+
     });
     const formData:any = new FormData();
     const file: Array<File> = file_array;
 
-    for (let i = 0; i < file.length; i++) {
-      if(typeof file['value']===undefined){
-      formData.append('image', file[i][0], file[i][0]['name']);
+    for (let i = 0; i < this.file.length; i++) {
+       console.log('type', typeof this.file[i].value);
+      if(this.file[i]['value'] != null){
+      formData.append('image', this.file[i]['value'], this.file[i]['value']['name']);
       }
   }
+
 
   console.log('this.bundle', this.bundle);
 
@@ -567,9 +572,20 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
     this.loading = true;
 
+    for (let [key, value] of Object.entries(this.bundle)) {
+      if(key==="dimension"){
+        formData.append(key,JSON.stringify(value));
+      }
+      else if(key!=="dimension"){
+      formData.append(key,value);
+      }
+    }
 
 
-    this.apiService.updateProduct(this.bundle).subscribe((update_result) => {
+    // const finalData = {data: this.bundle, files: formData};
+
+
+    this.apiService.updateProduct(formData).subscribe((update_result) => {
 
     this.loading = false;
 
@@ -596,8 +612,9 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     });
   }
 
-  allFilesToUpload(event,index, key) {
-    this.file.push({"key":key,"value":<File>event.target.files})
+  allFilesToUpload(event, index, key) {
+    const index2 = JSON.parse(key.substr(3, 4));
+    this.file[index2].value =  event.target.files[0];
     $('#close'+key.substr(3,4)).css('visibility', 'visible');
     this.images[index] =  event.target.files[0];
     // this.file.push(<File>event.target.files);
@@ -624,7 +641,7 @@ dimensionKeyUp(event){
 removeImage(key){
   console.log(this.file)
   if(key==='key0'){
-  
+
       $('#prev_image_preview').css('background-image', 'url(https://via.placeholder.com/500x500?text=Select+Preview+Image)');
       $('#close0').css('visibility', 'hidden');
 
@@ -645,12 +662,12 @@ removeImage(key){
   }
   let index = JSON.parse(key.substr(3, 4))
   this.images[index] = null
-  this.file = this.file.filter(function(item){
-    
-    // console.log(item['key'],key)
-    // console.log(item['value'])
-    return item['key']!==key
-  })
+  this.file = this.file.map(function(item){
+
+    item[index]['value'] = null;
+
+    return item;
+  });
   console.log(this.file)
 }
 
