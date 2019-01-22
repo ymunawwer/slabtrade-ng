@@ -12,11 +12,11 @@ declare var feather: any;
   styleUrls: ['./edit-product.component.sass']
 })
 export class EditProductComponent implements OnInit {
-
+inspection_report;
   deal_data = {
 
   };
-
+  length_of_aray;
   loading = false;
   file = [];
   images = [];
@@ -81,7 +81,7 @@ export class EditProductComponent implements OnInit {
   inspectionReport;
 
   constructor(private apiService: NodeapiService, private router: Router, private route: ActivatedRoute, private _sanitizer: DomSanitizer) {
-
+this.inspection_report = []
 this.aray = [];
 this.unit = 'cm';
 
@@ -162,6 +162,13 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
       this.bundle.bundle_weight = this.bundle.no_of_slabs * this.bundle.net_weight;
 
       this.images = this.bundle['images'];
+      this.bundle['quality'] = this.bundle['quality']
+      console.log(this.images)
+      this.file.push({"key":'key0',"value":this.images[0]})
+      this.file.push({"key":'key1',"value":this.images[1]})
+      this.file.push({"key":'key2',"value":this.images[2]})
+      this.file.push({"key":'key3',"value":this.images[3]})
+      this.file.push({"key":'key4',"value":this.images[4]})
 
       this.thickness_new = this.bundle.dimension[0].thickness;
 
@@ -175,7 +182,7 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
       this.aray = this.bundle.dimension;
 
-
+      this.createRange(this.bundle.no_of_slabs)
 
       console.log('date range', new Date(this.bundle.start_date));
 
@@ -290,24 +297,32 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
   createRange(number) {
     console.log('called');
-
+    this.inspection_report = []
     this.aray = [];
 
-  for (let i = 0; i < number; i++) {
-         this.aray.push({'width': this.bundle.width, 'height': this.bundle.width,
-          thickness: this.thickness_new});
-      }
+    for (let i = 0; i < number*6; i++) {
+      this.aray.push({'width': this.bundle.width, 'height': this.bundle.height, thickness: this.thickness_new});
+   //    if(i/6===0){
+   //    this.inspection_report.push({'key': 'key-'+i, 'value': ''});
+   // }
+ }
+ for (let i = 0; i < number; i++) {
+   // this.aray.push({'width': this.bundle.width, 'height': this.bundle.height, thickness: this.thickness_new});
+//    if(i/6===0){
+   this.inspection_report.push({'key': 'key-'+i, 'value': ''});
+// }
+}
 
   let area = 0;
 
     this.dimension = this.aray;
     this.dimension.forEach((el)=>{
-      area = area+(el['width']*el['height'])
+      area = area+(el['width']*el['height'])/144
       console.log(area)
     })
-    this.bundle.net_area = area;
-    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
-
+    this.bundle.net_area = JSON.parse(area.toFixed(2));
+    // this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+    this.bundle.net_weight = JSON.parse((this.bundle.net_weight*this.aray.length).toFixed(2));
     this.bundle.dimension = this.dimension;
 
 
@@ -325,27 +340,27 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
       if(prev_unit==='cm'){
         if(this.unit==='inch'){
           this.bundle.dimension.forEach((item,index)=>{
-            this.bundle.dimension[index].height = item.height/2.54;
-            this.bundle.dimension[index].width = item.width/2.54;
-            this.bundle.dimension[index].thickness = item.thickness/2.54;
+            this.bundle.dimension[index].height = JSON.parse((item.height/2.54).toFixed(2));
+            this.bundle.dimension[index].width = JSON.parse((item.width/2.54).toFixed(2));
+            // this.bundle.dimension[index].thickness = JSON.parse((item.thickness/2.54).toFixed(2));
 
           })
-          this.bundle.net_area = this.bundle.net_area/6.452;
-          this.bundle.height = this.bundle.height/2.54;
-            this.bundle.width = this.bundle.width/2.54;
+          this.bundle.net_area = JSON.parse((this.bundle.net_area/6.452).toFixed(2));
+          this.bundle.height = JSON.parse((this.bundle.height/2.54).toFixed(2));
+            this.bundle.width = JSON.parse((this.bundle.width/2.54).toFixed(2));
 
 
 
         }else if(this.unit==='m'){
           this.bundle.dimension.forEach((item,index)=>{
-            this.bundle.dimension[index].height = item.height/100;
-            this.bundle.dimension[index].width = item.width/100;
-            this.bundle.dimension[index].thickness = item.thickness/100;
+            this.bundle.dimension[index].height = JSON.parse((item.height/100).toFixed(2));
+            this.bundle.dimension[index].width = JSON.parse((item.width/100).toFixed(2));
+            // this.bundle.dimension[index].thickness = JSON.parse((item.thickness/100).toFixed(2));
 
           })
-          this.bundle.net_area = this.bundle.net_area/10000;
-          this.bundle.height = this.bundle.height/100;
-            this.bundle.width = this.bundle.width/100;
+          this.bundle.net_area = JSON.parse((this.bundle.net_area/10000).toFixed(2));
+          this.bundle.height = JSON.parse((this.bundle.height/100).toFixed(2));
+            this.bundle.width = JSON.parse((this.bundle.width/100).toFixed(2));
 
 
 
@@ -357,27 +372,28 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
       }else if(prev_unit==='m'){
         if(this.unit==='inch'){
           this.bundle.dimension.forEach((item,index)=>{
-            this.bundle.dimension[index].height = item.height*39.37;
-            this.bundle.dimension[index].width = item.width*39.37;
-            this.bundle.dimension[index].thickness = item.thickness*39.37;
+            console.log(item.height*39.37)
+            this.bundle.dimension[index].height = JSON.parse((item.height*39.37).toFixed(2));
+            this.bundle.dimension[index].width = JSON.parse((item.width*39.37).toFixed(2));
+            // this.bundle.dimension[index].thickness = JSON.parse((item.thickness*39.37).toFixed(2));
 
           })
-          this.bundle.net_area = this.bundle.net_area*1550.003;
-          this.bundle.height = this.bundle.height*39.37;
-            this.bundle.width = this.bundle.width*39.37;
+          this.bundle.net_area = JSON.parse((this.bundle.net_area*1550.003).toFixed(2));
+          this.bundle.height = JSON.parse((this.bundle.height*39.37).toFixed(2));
+            this.bundle.width = JSON.parse((this.bundle.width*39.37).toFixed(2));
 
 
 
         }else if(this.unit==='cm'){
           this.bundle.dimension.forEach((item,index)=>{
-            this.bundle.dimension[index].height = item.height*100;
-            this.bundle.dimension[index].width = item.width*100;
-            this.bundle.dimension[index].thickness = item.thickness*100;
+            this.bundle.dimension[index].height = JSON.parse((item.height*100).toFixed(2));
+            this.bundle.dimension[index].width = JSON.parse((item.width*100).toFixed(2));
+            // this.bundle.dimension[index].thickness = JSON.parse((item.thickness*100).toFixed(2));
 
           })
-          this.bundle.net_area = this.bundle.net_area*10000;
-          this.bundle.height = this.bundle.height*100;
-            this.bundle.width = this.bundle.width*100;
+          this.bundle.net_area = JSON.parse((this.bundle.net_area*10000).toFixed(2));
+          this.bundle.height = JSON.parse((this.bundle.height*100).toFixed(2));
+            this.bundle.width = JSON.parse((this.bundle.width*100).toFixed(2));
 
 
 
@@ -388,27 +404,28 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
       }else if(prev_unit==='inch'){
         if(this.unit==='m'){
           this.bundle.dimension.forEach((item,index)=>{
-            this.bundle.dimension[index].height = item.height/39.37;
-            this.bundle.dimension[index].width = item.width/39.37;
-            this.bundle.dimension[index].thickness = item.thickness/39.37;
+            console.log(item.height/39.37)
+            this.bundle.dimension[index].height = JSON.parse((item.height/39.37).toFixed(2));
+            this.bundle.dimension[index].width = JSON.parse((item.width/39.37).toFixed(2));
+            // this.bundle.dimension[index].thickness = JSON.parse((item.thickness/39.37).toFixed(2));
 
           })
-          this.bundle.net_area = this.bundle.net_area/1550.003;
-          this.bundle.height = this.bundle.height/39.37;
-            this.bundle.width = this.bundle.width/39.37;
+          this.bundle.net_area = JSON.parse((this.bundle.net_area/1550.003).toFixed(2));
+          this.bundle.height = JSON.parse((this.bundle.height/39.37).toFixed(2));
+            this.bundle.width = JSON.parse((this.bundle.width/39.37).toFixed(2));
 
 
 
         }else if(this.unit==='cm'){
           this.bundle.dimension.forEach((item,index)=>{
-            this.bundle.dimension[index].height = item.height*2.54;
-            this.bundle.dimension[index].width = item.width*2.54;
-            this.bundle.dimension[index].thickness = item.thickness*2.54;
+            this.bundle.dimension[index].height = JSON.parse((item.height*2.54).toFixed(2));
+            this.bundle.dimension[index].width = JSON.parse((item.width*2.54).toFixed(2));
+            // this.bundle.dimension[index].thickness = JSON.parse((item.thickness*2.54).toFixed(2));
 
           })
-          this.bundle.net_area = this.bundle.net_area*6.452;
-          this.bundle.height = this.bundle.height*2.54;
-            this.bundle.width = this.bundle.width*2.54;
+          this.bundle.net_area = JSON.parse((this.bundle.net_area*6.452).toFixed(2));
+          this.bundle.height = JSON.parse((this.bundle.height*2.54).toFixed(2));
+            this.bundle.width = JSON.parse((this.bundle.width*2.54).toFixed(2));
 
 
 
@@ -451,13 +468,14 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
     this.dimension.push(obj);
     this.dimension.forEach((el)=>{
-      area = area+(el['width']*el['height']);
+      area = area+(el['width']*el['height'])/144;
       el['thickness'] = this.bundle.dimension[0].thickness;
-      console.log(area)
+      // console.log(area)
     })
     this.bundle.net_area = area;
     console.log('weight', this.bundle.net_area*this.thickness_new);
-    this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+    // this.bundle.net_weight = (this.bundle.net_area*this.thickness_new) / 166;
+    this.bundle.net_weight = JSON.parse((this.bundle['weight']*this.aray.length).toFixed(2));
 
       //  this.bundle.bundle_weight = this.bundle.net_weight * this.bundle.no_of_slabs;
   }
@@ -466,6 +484,14 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
 
 
   }
+
+  weightChange(event){
+    console.log("hello",event.target.value,this.aray.length)
+    this.length_of_aray = this.aray.length===0?1:this.aray.length;
+    
+    this.bundle.net_weight = JSON.parse((this.bundle['bundle_weight']*this.length_of_aray).toFixed(2));
+  }
+
 
   netWeightChanged(value) {
 
@@ -480,13 +506,20 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
   onUpdate() {
     // this.bundle['net_weight'] =
     // (this.bundle['dimension'][0]['width'] * this.bundle['dimension'][0]['height'] * this.bundle['dimension'][0]['thickness']) / 166;
-
+    var file_array = []
+    // this.file = []
+    this.file.forEach(element => {
+      console.log(typeof element['value'])
+      
+      
+    });
     const formData:any = new FormData();
-    const file: Array<File> = this.file;
+    const file: Array<File> = file_array;
 
     for (let i = 0; i < file.length; i++) {
-
+      if(typeof file['value']===undefined){
       formData.append('image', file[i][0], file[i][0]['name']);
+      }
   }
 
   console.log('this.bundle', this.bundle);
@@ -501,19 +534,19 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     new Date(data.dateRange[1]).getFullYear() + '-' + (new Date(data.dateRange[1]).getMonth() + 1) +
     '-' + new Date(data.dateRange[1]).getDate() : '';
 
-    if (this.bundle.product_description === '' || this.bundle.Bundle_description === '' || this.bundle.inspection_report === '')  {
+    if (this.bundle.inspection_report === '')  {
 
       let message = '';
 
-      if(this.bundle.product_description === '') {
+      // if(this.bundle.product_description === '') {
 
-        message = "Product description is required";
+      //   message = "Product description is required";
 
-      }
+      // }
 
-      if(this.bundle.Bundle_description === '') {
-        message = message === '' ? 'Bundle description is required' : message + ', Bundle description is required';
-      }
+      // if(this.bundle.Bundle_description === '') {
+      //   message = message === '' ? 'Bundle description is required' : message + ', Bundle description is required';
+      // }
 
       if(this.bundle.inspection_report === '') {
         message = message === '' ? 'Inspection Report is required' : message + ', Inspection Report is required';
@@ -563,10 +596,11 @@ this.apiService.getProductDetail(this.productId).subscribe(data => {
     });
   }
 
-  allFilesToUpload(event, index) {
-
+  allFilesToUpload(event,index, key) {
+    this.file.push({"key":key,"value":<File>event.target.files})
+    $('#close'+key.substr(3,4)).css('visibility', 'visible');
     this.images[index] =  event.target.files[0];
-    this.file.push(<File>event.target.files);
+    // this.file.push(<File>event.target.files);
 
 
   }
@@ -586,6 +620,42 @@ dimensionKeyUp(event){
 
   console.log(this.aray);
 }
+
+removeImage(key){
+  console.log(this.file)
+  if(key==='key0'){
+  
+      $('#prev_image_preview').css('background-image', 'url(https://via.placeholder.com/500x500?text=Select+Preview+Image)');
+      $('#close0').css('visibility', 'hidden');
+
+
+
+  }else if(key==='key1'){
+    $('#other_image_preview').css('background-image', 'url(https://via.placeholder.com/500x500?text=Select+Other+Image)');
+    $('#close1').css('visibility', 'hidden');
+  }else if(key==='key2'){
+    $('#other2_image_preview').css('background-image', 'url(https://via.placeholder.com/500x500?text=Select+Other+Image)');
+    $('#close2').css('visibility', 'hidden');
+  }else if(key==='key3'){
+    $('#other3_image_preview').css('background-image', 'url(https://via.placeholder.com/500x500?text=Select+Other+Image)');
+    $('#close3').css('visibility', 'hidden');
+  }else if(key==='key4'){
+    $('#other4_image_preview').css('background-image', 'url(https://via.placeholder.com/500x500?text=Select+Other+Image)');
+    $('#close4').css('visibility', 'hidden');
+  }
+  let index = JSON.parse(key.substr(3, 4))
+  this.images[index] = null
+  this.file = this.file.filter(function(item){
+    
+    // console.log(item['key'],key)
+    // console.log(item['value'])
+    return item['key']!==key
+  })
+  console.log(this.file)
+}
+
+
+
 
 
 }
