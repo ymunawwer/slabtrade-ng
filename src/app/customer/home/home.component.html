@@ -62,29 +62,9 @@ input[type=number]::-webkit-outer-spin-button {
                   <div class="row">
                       <div class="col-md-3 left-card" *ngIf = "!isitemclicked">
                           <div class="inner-bar">
+
+
                               <!-- <div class="side-bar">
-                                  <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder="Search By Color" aria-label="Recipient's username" aria-describedby="basic-addon2" (keydown)="searchByColor($event)">
-                                      <div class="input-group-append">
-                                          <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
-                                      </div>
-                                  </div>
-                                  <label class="box" >Black
-                                      <input type="radio" name = "color" value="000000" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
-                                      <span class="checkmark"></span>
-                                  </label>
-                                  <label class="box" >Blue
-                                      <input type="radio" name = "color" value="0000ff" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
-                                      <span class="checkmark"></span>
-                                  </label>
-                                  <label class="box" >Grey
-                                      <input type="radio" name = "color" value="808080" [(ngModel)] = "searchcolor" (change) = "search()" (click) = "search()">
-                                      <span class="checkmark"></span>
-                                  </label>
-
-                              </div> -->
-
-                              <div class="side-bar">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Search By City" aria-label="Recipient's username" aria-describedby="basic-addon2" (keydown)="searchByCity($event)">
                                     <div class="input-group-append">
@@ -104,7 +84,7 @@ input[type=number]::-webkit-outer-spin-button {
                                     <span class="checkmark"></span>
                                 </label>
 
-                            </div>
+                            </div> -->
 
                               <div class="inner-bar">
                                   <div class="side-bar">
@@ -156,14 +136,9 @@ input[type=number]::-webkit-outer-spin-button {
 
                               </div>
 
-                              <div class="inner-bar">
+                              <!-- <div class="inner-bar">
                                 <div class="side-bar">
-                                  <!-- <div class="input-group mb-3">
-                                      <input type="text" class="form-control" placeholder="Search" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                      <div class="input-group-append">
-                                          <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
-                                      </div>
-                                  </div> -->
+
                                   <label class="box" style="margin-top: -2px" >New Arrivals
                                       <input type="radio" name = "color" value="new_arrivals" [(ngModel)] = "thirdSearchBox" (change) = "searchThirdBox()" (click) = "mostRecentlyAdded()">
                                       <span class="checkmark"></span>
@@ -178,7 +153,7 @@ input[type=number]::-webkit-outer-spin-button {
                                   </label>
 
                               </div>
-                              </div>
+                              </div> -->
 
                           </div>
                       </div>
@@ -186,13 +161,135 @@ input[type=number]::-webkit-outer-spin-button {
                       <div class="col-md-9 right-card">
                         <div [hidden]="isitemclicked">
                                 <a (click)="showAllItem()" class="btn btn-secondary ml-auto back-button" *ngIf = "isnull && issearched">First Page </a>
-                        <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
+
+                                <!-- Added  most recently used items -->
+
+                            <div *ngIf="mostRecentlyAddedItems.length != 0 && (showThis === 'All' || showThis === 'recentlyAdded')" class="outer-bar">
+                                <div class="row link-button">
+                                  <div class="col-md-12">
+                                      <h2>Most Recently added</h2>
+                                     <a style="margin-bottom: 1em" (click)="viewMore2('recentlyAdded')" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
+                                     <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
+                                     <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
+
+                                 </div>
+                               </div>
+                               <div class="row">
+                               <ng-template ngFor let-doc [ngForOf]= "mostRecentlyAddedItems" let-i="index" >
+
+
+                                      <div *ngIf="i<showmore" style="margin-bottom: 2em" class="col-md-4">
+                                          <div class="card-img-header">
+                                              <div class="bg-img">
+                                                  <a>
+                                                      <!-- [ngStyle]="{'background-image': 'url(' + photo + ')'}" -->
+                                        <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
+                                        </div>
+                                        <h4>{{doc.product_name}}</h4>
+                                        <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+(doc.price | number)}}</span>
+                                        <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+(doc.price | number)}}</s></span>
+                                        <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span>
+
+                                           <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
+                                        </a>
+                                              </div>
+                                          </div>
+                                      </div></ng-template>
+                                    </div>
+
+
+                                  </div>
+
+                                  <!-- End -->
+
+                                  <!-- Most Viewed Items -->
+
+
+                                  <div *ngIf="mostViewedItems.length != 0 && (showThis === 'All' || showThis === 'mostViewed')" class="outer-bar">
+                                      <div class="row link-button">
+                                        <div class="col-md-12">
+                                            <h2>Most Viewed</h2>
+                                           <a style="margin-bottom: 1em" (click)="viewMore2('mostViewed')" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
+                                           <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
+                                           <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
+
+                                       </div>
+                                     </div>
+                                     <div class="row">
+                                     <ng-template ngFor let-doc [ngForOf]= "mostViewedItems" let-i="index" >
+
+
+                                            <div *ngIf="i<showmore" style="margin-bottom: 2em" class="col-md-4">
+                                                <div class="card-img-header">
+                                                    <div class="bg-img">
+                                                        <a>
+                                                            <!-- [ngStyle]="{'background-image': 'url(' + photo + ')'}" -->
+                                              <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
+                                              </div>
+                                              <h4>{{doc.product_name}}</h4>
+                                              <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+(doc.price | number)}}</span>
+                                              <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+(doc.price | number)}}</s></span>
+                                              <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span>
+
+                                                 <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
+                                              </a>
+                                                    </div>
+                                                </div>
+                                            </div></ng-template>
+                                          </div>
+
+
+                                        </div>
+
+                                  <!-- End -->
+
+                                  <!-- Deal Items -->
+
+                                  <div *ngIf="dealItems.length != 0 && (showThis === 'All' || showThis === 'deals')" class="outer-bar">
+                                      <div class="row link-button">
+                                        <div class="col-md-12">
+                                            <h2>Deals</h2>
+                                           <a style="margin-bottom: 1em" (click)="viewMore2('deals')" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
+                                           <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
+                                           <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
+
+                                       </div>
+                                     </div>
+                                     <div class="row">
+                                     <ng-template ngFor let-doc [ngForOf]= "dealItems" let-i="index" >
+
+
+                                            <div *ngIf="i<showmore" style="margin-bottom: 2em" class="col-md-4">
+                                                <div class="card-img-header">
+                                                    <div class="bg-img">
+                                                        <a>
+                                                            <!-- [ngStyle]="{'background-image': 'url(' + photo + ')'}" -->
+                                              <div class="card-img" [style.background-image] = "getBackground(doc.images[0])"  >
+                                              </div>
+                                              <h4>{{doc.product_name}}</h4>
+                                              <span *ngIf="!getDiscountedPrice(doc.price, doc.offer_value) && doc.price != undefined" class="price">{{doc.price===undefined?'':'$'+(doc.price | number)}}</span>
+                                              <span *ngIf="getDiscountedPrice(doc.price, doc.offer_value)" style="margin: 10px; opacity: 0.4;" class="price"><s>{{doc.price===undefined?'':'$'+(doc.price | number)}}</s></span>
+                                              <span *ngIf="doc.price != undefined && getDiscountedPrice(doc.price, doc.offer_value)" class="price">$ {{getDiscountedPrice(doc.price, doc.offer_value) | number : '1.2-2'}}</span>
+
+                                                 <button type="button" class="btn btn-primary btn-block" (click)='viewItemDetail(doc)'>View Details</button>
+                                              </a>
+                                                    </div>
+                                                </div>
+                                            </div></ng-template>
+                                          </div>
+
+
+                                        </div>
+
+                                  <!-- End -->
+
+                                <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
                           <div class="outer-bar">
                             <div class="row link-button">
                               <div class="col-md-12">
                                   <h2>{{item._id}}</h2>
-                                 <a (click)="viewMore(item._id)" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
-                                 <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
+                                 <a style="margin-bottom: 1em" (click)="viewMore(item._id)" class="btn btn-secondary ml-auto" *ngIf = "!isviewmore">View More</a>
+                                 <a style="margin-bottom: 1em" (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "isviewmore">Show all items </a>
                                  <a (click)="showAllItem()" class="btn btn-secondary ml-auto" *ngIf = "issearched && !isnull && !isviewmore">Show all items </a>
 
                              </div>
@@ -229,6 +326,8 @@ input[type=number]::-webkit-outer-spin-button {
 
                         <div [hidden]="true">
                             <a (click)="showAllItem()" class="btn btn-secondary ml-auto back-button" *ngIf = "isnull && issearched">First Page </a>
+
+
                     <ng-template ngFor let-item [ngForOf]= "items" let-i="index">
                       <div class="outer-bar">
                         <div class="row link-button">
@@ -275,6 +374,8 @@ input[type=number]::-webkit-outer-spin-button {
 
                         <div *ngIf="false">
                             <div class="row">
+
+
 
                             <ng-template ngFor let-docsearch [ngForOf]= "items" let-i="index" >
 

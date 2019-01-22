@@ -7,8 +7,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="/customer">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" [routerLink]="['/customer']">Home <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link">About Us</a>
+                  </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="#">Slab</a>
                     </li> -->
@@ -28,6 +31,15 @@
                     <li class="nav-item">
                         <a class="nav-link" [routerLink]="['cart']"><i data-feather="shopping-cart"></i><span class="badge badge-light">{{cart_count}}</span></a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Seller</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link">Buyer</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link">Contact Us</a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="is_authenticated">
           <img src="../../../assets/img/avatar.png"><h2 style="color: white">{{first_name}}</h2>
@@ -38,12 +50,16 @@
 
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                             <a class="nav-link" href="/login" *ngIf="!is_authenticated">Customer Login</a>
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="/login" *ngIf="!is_authenticated">Supplier Login</a>
-                    </li>
+                    </li> -->
+
+                  <li class="nav-item">
+                    <a [routerLink]="['/login']" *ngIf="!is_authenticated" class="nav-link">SignIn/SignUp</a>
+                  </li>
                 </ul>
             </div></div>
     </nav>

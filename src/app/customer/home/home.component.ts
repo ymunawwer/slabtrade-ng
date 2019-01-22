@@ -31,6 +31,9 @@ export class HomeComponent implements OnInit {
   subnumber:number;
   port_list:any;
   items:any;
+  mostRecentlyAddedItems = [];
+  mostViewedItems = [];
+  dealItems = [];
   shipping_cost:number;
   tax:number;
   isviewmore = false;
@@ -50,7 +53,9 @@ export class HomeComponent implements OnInit {
   similarproduct:any;
   image:any;
   slider_image:any;
-  issearched = false
+  issearched = false;
+  showmore = 3;
+  showThis = 'All';
   constructor(private nodeapi:NodeapiService,private sanitizer: DomSanitizer,private location: PlatformLocation,private _sanitizer: DomSanitizer,private auth:AuthService,private route:Router,public dialog: MatDialog) {
     this.trustedUrl = this._sanitizer.bypassSecurityTrustUrl("http://localhost:4200/");
     this.items = []
@@ -83,8 +88,12 @@ this.total_suggested_item = 0;
 //     $('#cart-modal').on('hidden.bs.modal', function (e) {
 //      window.location.reload();
 //       console.log('number',this.number,this.rem)
-      
+
 // })
+
+this.mostRecentlyAdded();
+this.mostlyViewed();
+this.productWithDeals();
 
   }
 
@@ -310,8 +319,8 @@ this.total_suggested_item = 0;
         this.total_suggested_item = this.similarproduct.length;
 
         const element = document.querySelector("#top");
-          if (element) { 
-            
+          if (element) {
+
             element.scrollIntoView(); }
 
     this.loading = false;
@@ -592,19 +601,19 @@ console.log('doc', this.doc);
     // this.tax=1.1
     // this.shipping_cost = 1;
     var total_quantity;
-    
+
     var cart_total;
    var tax_amount;
     var price = 0;
     var customer;
-    
+
     var cart_amount;
     if(this.number!==0){
       this.item_obj_array.forEach(el=>{
         this.quantity += el['quantity']
         price = price + el['total']
         console.log('total',typeof el['total'])
-      
+
       })
       console.log('price',price)
     if(this.auth.isAuthenticated() ){
@@ -696,14 +705,14 @@ console.log('data', data);
             this.item_obj_array.forEach(element => {
               console.log(element)
               quantity = quantity+element['quantity']
-              
+
             });
             console.log("quantity",this.quantity);
             // console.log("document",doc)
             cart_amount = res.data[0].total_amount+price;
             tax_amount = cart_amount/(1+(this.tax/100));
             let total_quantity = res.data[0].total_quantity+quantity;
-          
+
             // let bundle={
             //   "supplier_id":doc.supplier_id,
             //   "bundle_id":doc.bundle_number,
@@ -722,7 +731,7 @@ this.item_obj_array.forEach(el=>{
   res.data[0].bundle.push(el)
 
 })
-              
+
             let data_updated = {"user_id":this.auth.getUser()._id,
             "bundle":res.data[0].bundle,
 
@@ -851,6 +860,22 @@ this.item_obj_array.forEach(el=>{
     })
   }
 
+  viewMore2(type){
+    this.isviewmore = true;
+    this.isnull = false;
+    this.items = [];
+    if(type == 'mostViewed') {
+        this.showThis = 'mostViewed';
+        this.showmore = this.mostViewedItems.length;
+    } else if(type == 'recentlyAdded') {
+      this.showThis = 'recentlyAdded';
+      this.showmore = this.mostRecentlyAddedItems.length;
+    } else {
+      this.showThis = 'deals';
+      this.showmore = this.dealItems.length;
+    }
+  }
+
   search(){
     this.issearched = true;
     this.isviewmore =false
@@ -950,7 +975,8 @@ this.item_obj_array.forEach(el=>{
   searchType(){
     console.log(this.searchtype)
     this.issearched = true;
-    this.isviewmore =false
+    this.isviewmore =true;
+    this.showThis = 'None';
     if(this.auth.isAuthenticated()){
 
       this.nodeapi.searchByTypeWithPrice(this.searchtype,0).subscribe((data)=>{
@@ -1030,13 +1056,16 @@ this.item_obj_array.forEach(el=>{
     this.getHomePage();
     this.isviewmore = false;
     this.issearched = false;
+    this.showmore = 3;
+    this.showThis = 'All';
+    this.searchtype = '';
   }
 
   mostRecentlyAdded(){
 
     console.log(this.searchtype)
-    this.issearched = true;
-    this.isviewmore =false
+    // this.issearched = true;
+    // this.isviewmore =false
     if(this.auth.isAuthenticated()){
 
       this.nodeapi.recentlyAddedWithPrice().subscribe((data)=>{
@@ -1051,12 +1080,19 @@ this.item_obj_array.forEach(el=>{
               "docs":data.data
             }]
           }
-        this.items = data.data;
+        this.mostRecentlyAddedItems = data.data;
+        this.mostRecentlyAddedItems = this.mostRecentlyAddedItems.map(function(item) {
+          return item.docs;
+        });
+
+
+        this.mostRecentlyAddedItems = [].concat.apply([], this.mostRecentlyAddedItems);
+        console.log('most recently added', this.mostRecentlyAddedItems);
 
 
         }else{
           // alert("no item to display");
-          this. items = []
+          this. mostRecentlyAddedItems = []
           this.isnull = true;
           const element = document.querySelector("#top");
         }
@@ -1072,10 +1108,17 @@ this.item_obj_array.forEach(el=>{
                 "docs":data.data
               }]
             }
-          this.items = data.data;
+          this.mostRecentlyAddedItems = data.data;
+          this.mostRecentlyAddedItems = this.mostRecentlyAddedItems.map(function(item) {
+            return item.docs;
+          });
+
+
+          this.mostRecentlyAddedItems = [].concat.apply([], this.mostRecentlyAddedItems);
+          console.log('most recently added', this.mostRecentlyAddedItems);
 
           }else{
-            this.items = []
+            this.mostRecentlyAddedItems = []
             this.isnull = true;
             const element = document.querySelector("#top");
           }
@@ -1097,11 +1140,20 @@ this.item_obj_array.forEach(el=>{
               "docs":data.data
             }]
           }
-        this.items = data.data;
-        console.log('item',local_data)
+        this.mostRecentlyAddedItems = data.data;
+
+        this.mostRecentlyAddedItems = this.mostRecentlyAddedItems.map(function(item) {
+          return item.docs;
+        });
+
+
+        this.mostRecentlyAddedItems = [].concat.apply([], this.mostRecentlyAddedItems);
+        console.log('most recently added', this.mostRecentlyAddedItems);
+
+
 
         }else{
-          this.items = []
+          this.mostRecentlyAddedItems = []
           this.isnull = true;
           const element = document.querySelector("#top");
         }
@@ -1118,8 +1170,8 @@ this.item_obj_array.forEach(el=>{
 mostlyViewed(){
 
   console.log(this.searchtype)
-  this.issearched = true;
-  this.isviewmore =false
+  // this.issearched = true;
+  // this.isviewmore =false
   if(this.auth.isAuthenticated()){
 
     this.nodeapi.mostViewedWithPrice().subscribe((data)=>{
@@ -1134,7 +1186,14 @@ mostlyViewed(){
             "docs":data.data
           }]
         }
-      this.items = data.data;
+      this.mostViewedItems = data.data;
+      this.mostViewedItems = this.mostViewedItems.map(function(item) {
+        return item.docs;
+      });
+
+
+      this.mostViewedItems = [].concat.apply([], this.mostViewedItems);
+      console.log('most recently added', this.mostViewedItems);
 
 
       }else{
@@ -1155,10 +1214,17 @@ mostlyViewed(){
               "docs":data.data
             }]
           }
-        this.items = data.data;
+        this.mostViewedItems = data.data;
+        this.mostViewedItems = this.mostViewedItems.map(function(item) {
+          return item.docs;
+        });
+
+
+        this.mostViewedItems = [].concat.apply([], this.mostViewedItems);
+        console.log('most recently added', this.mostViewedItems);
 
         }else{
-          this.items = []
+          this.mostViewedItems = []
           this.isnull = true;
           const element = document.querySelector("#top");
         }
@@ -1180,11 +1246,16 @@ mostlyViewed(){
             "docs":data.data
           }]
         }
-      this.items = data.data;
-      console.log('item',local_data)
+      this.mostViewedItems = data.data;
+      this.mostViewedItems = this.mostViewedItems.map(function(item) {
+        return item.docs;
+      });
 
+
+      this.mostViewedItems = [].concat.apply([], this.mostViewedItems);
+      console.log('most recently added', this.mostViewedItems);
       }else{
-        this.items = []
+        this.mostViewedItems = []
         this.isnull = true;
         const element = document.querySelector("#top");
       }
@@ -1226,8 +1297,8 @@ decSubCount(num){
 
 productWithDeals(){
   console.log(this.searchtype)
-  this.issearched = true;
-  this.isviewmore =false
+  // this.issearched = true;
+  // this.isviewmore =false
   if(this.auth.isAuthenticated()){
 
     this.nodeapi.searchByDealsWithPrice().subscribe((data)=>{
@@ -1242,12 +1313,18 @@ productWithDeals(){
             "docs":data.data
           }]
         }
-      this.items = data.data;
+      this.dealItems = data.data;
+      this.dealItems = this.dealItems.map(function(item) {
+        return item.docs;
+      });
 
+
+      this.dealItems = [].concat.apply([], this.dealItems);
+      console.log('most recently added', this.dealItems);
 
       }else{
         // alert("no item to display");
-        this. items = []
+        this. dealItems = []
         this.isnull = true;
         const element = document.querySelector("#top");
       }
@@ -1263,10 +1340,17 @@ productWithDeals(){
               "docs":data.data
             }]
           }
-        this.items = data.data;
+        this.dealItems = data.data;
+        this.dealItems = this.dealItems.map(function(item) {
+          return item.docs;
+        });
+
+
+        this.dealItems = [].concat.apply([], this.dealItems);
+        console.log('most recently added', this.dealItems);
 
         }else{
-          this.items = []
+          this.dealItems = []
           this.isnull = true;
           const element = document.querySelector("#top");
         }
@@ -1288,11 +1372,18 @@ productWithDeals(){
             "docs":data.data
           }]
         }
-      this.items = data.data;
+      this.dealItems = data.data;
       console.log('item',local_data)
+      this.dealItems = this.dealItems.map(function(item) {
+        return item.docs;
+      });
+
+
+      this.dealItems = [].concat.apply([], this.dealItems);
+      console.log('most recently added', this.dealItems);
 
       }else{
-        this.items = []
+        this.dealItems = []
         this.isnull = true;
         const element = document.querySelector("#top");
       }
@@ -1397,7 +1488,7 @@ for(let key in this.counter_map){
   this.getDiscountedPrice(product['price'], product['offer_value']) : product['price'];
   price = discounted_price*<number>this.counter_map[key];
   // console.log(product)
-  
+
   let data =     {
     "cancel_status":"Pending",
     "supplier_id":product['supplier_id'],
@@ -1452,12 +1543,12 @@ console.log(this.item_obj_array)
 //       confirmButtonColor: '#0a3163'
 //     }).then((result) => {
 
-      
+
 //       this.route.navigate(['/customer/cart'])
 
 
 //     });
-    
+
 //   }
 
 //   })
@@ -1580,19 +1671,19 @@ async toCart2(doc,number){
     // this.tax=1.1
     // this.shipping_cost = 1;
     var total_quantity;
-    
+
     var cart_total;
    var tax_amount;
     var price = 0;
     var customer;
-    
+
     var cart_amount;
     if(this.number!==0){
       this.item_obj_array.forEach(el=>{
         this.quantity += el['quantity']
         price = price + el['total']
         console.log('total',typeof el['total'])
-      
+
       })
       console.log('price',price)
     if(this.auth.isAuthenticated() ){
@@ -1685,14 +1776,14 @@ console.log('data', data);
             this.item_obj_array.forEach(element => {
               console.log(element)
               quantity = quantity+element['quantity']
-              
+
             });
             console.log("quantity",this.quantity);
             // console.log("document",doc)
             cart_amount = res.data[0].total_amount+price;
             tax_amount = cart_amount/(1+(this.tax/100));
             let total_quantity = res.data[0].total_quantity+this.quantity;
-          
+
             let bundle={
               "supplier_id":doc.supplier_id,
               "bundle_id":doc.bundle_number,
